@@ -50,6 +50,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -197,3 +199,6 @@ PAYMENT_METHODS = {
 }
 ADMIN_EMAIL = 'skiiidawg34@gmail.com'  # Update with your admin email
 SITE_URL = 'https://teslainvest.com'  # Update with your site URL
+
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
