@@ -202,3 +202,7 @@ SITE_URL = 'https://teslainvest.com'  # Update with your site URL
 
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
