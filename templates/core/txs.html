@@ -1,0 +1,72 @@
+<!-- Recent Transactions -->
+
+{% load humanize %}
+<div class="rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4">Recent Transactions</h2>
+    <!-- From Uiverse.io by seyed-mohsen-mousavi -->
+    {% if not recent_transactions %}
+    <div class="min-h-36 flex flex-col items-center justify-center border border-white/30 py-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" class="text-gray-600" height="24" fill="currentColor"
+            viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path d="M5 21h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2M5 5h14v14H5z">
+            </path>
+            <path d="M7 15h10v2H7zm0-8h6v6H7z"></path>
+        </svg>
+        <p class="text-gray-600">Your wallet transactions will appear here.</p>
+        <!-- <a href="{% url 'buy_stock' %}" class=" inline-block text-blue-600 hover:underline">Buy Stock</a> -->
+
+
+    </div>
+
+    {% else %}
+
+    <div class="divide-y flex flex-col space-y-2">
+        <div class="bg-black border shadow flex flex-col">
+            {% for tx in recent_transactions %}
+
+            <div class="flex flex-col gap-2 w-full sm:text-xs">
+                <div
+                    class="succsess-alert p-3 cursor-default flex items-center justify-between w-full h-12 sm:h-14 bg-black px-[10px]">
+                    <div class="flex gap-2 items-center">
+                        <div class="text-[#2b9875] bg-white/5 backdrop-blur-xl p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="my-2">
+                            <h4 class="text-white text-lg">{{ tx.get_transaction_type_display }}</h4>
+                            <p class="text-gray-500 text-sm">{{ tx.created_at|date:"M d, H:i" }}</p>
+                            <!--  -->
+                        </div>
+                    </div>
+                    <h4 class="text-2xl font-bold">
+                        {% if tx.transaction_type == 'deposit' %} +${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'withdrawal' %} -${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'buy_stock' %} -${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'buy_vehicle_share' %} -${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'buy_vehicle' %} -${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'sell_stock' %} +${{ tx.amount|floatformat:2|intcomma }}
+                        {% else %} ${{ tx.amount|floatformat:2|intcomma }}{% endif %}
+
+                    </h4>
+                </div>
+            </div>
+            <div class="px-3">
+                <hr class="px-3 border-white/30">
+            </div>
+            {% endfor %}
+
+        </div>
+
+
+
+
+    </div>
+    <a href="{% url 'transaction_list' %}" class="mt-4 inline-block text-blue-600 hover:underline">View All
+        →</a>
+    {% endif %}
+
+</div>

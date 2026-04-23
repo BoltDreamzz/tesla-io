@@ -13,7 +13,7 @@ def dashboard(request):
     user = request.user
     wallet = user.wallet
     holdings = user.holding_set.all()
-    recent_transactions = user.transactions.order_by('-created_at')[:5]
+    recent_transactions = user.transactions.all().order_by('-created_at')[:5]
     context = {
         'wallet': wallet,
         'holdings': holdings,

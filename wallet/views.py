@@ -418,5 +418,8 @@ def withdraw(request):
 
 @login_required
 def transaction_list(request):
-    transactions = request.user.transactions.all().order_by('-created_at')
-    return render(request, 'wallet/transaction_list.html', {'transactions': transactions})
+    user = request.user
+
+    # transactions = request.user.transactions.all().order_by('-created_at')
+    recent_transactions = user.transactions.all().order_by('-created_at')[:5]
+    return render(request, 'wallet/transaction_list.html', {'recent_transactions': recent_transactions})

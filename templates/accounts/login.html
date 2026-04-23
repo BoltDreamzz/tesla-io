@@ -83,7 +83,7 @@
             <div>
                 <button type="submit" id="loginButton"
                     class="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-0 shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100">
-                    <span class="btn-text">Create account</span>
+                    <span class="btn-text">Sign in</span>
                     <span class="btn-loading hidden items-center">
                         <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 24 24">
@@ -168,53 +168,31 @@
         const form = document.getElementById('loginForm');
         const submitButton = document.getElementById('loginButton');
 
-        if (form && submitButton) {
-            form.addEventListener('submit', function (e) {
-                // Get button elements
-                const textSpan = submitButton.querySelector('.btn-text');
-                const loadingSpan = submitButton.querySelector('.btn-loading');
+        if (!form || !submitButton) return;
 
-                // Disable button
-                submitButton.disabled = true;
+        const textSpan = submitButton.querySelector('.btn-text');
+        const loadingSpan = submitButton.querySelector('.btn-loading');
 
-                // Show loading spinner, hide text
-                if (textSpan && loadingSpan) {
-                    textSpan.classList.add('hidden');
-                    loadingSpan.classList.remove('hidden');
-                    loadingSpan.classList.add('flex');
-                }
-
-                // Form will submit normally
-                // If there's an error, the page will reload with error messages
-            });
-        }
-    });
-
-    // Optional: Add form validation before submit
-    const form = document.querySelector('form');
-    if (form) {
         form.addEventListener('submit', function (e) {
             const username = document.getElementById('{{ form.username.id_for_label }}').value.trim();
-            const password = document.getElementById('{{ form.password.id_for_label }}').value;
+            const password = document.getElementById('{{ form.password.id_for_label }}').value.trim();
 
+            // Prevent submit if empty (same idea as register validation)
             if (!username || !password) {
                 e.preventDefault();
-                alert('Please fill in both username and password fields.');
-
-                // Reset button if validation fails
-                const submitButton = document.getElementById('loginButton');
-                const textSpan = submitButton.querySelector('.btn-text');
-                const loadingSpan = submitButton.querySelector('.btn-loading');
-
-                submitButton.disabled = false;
-                if (textSpan && loadingSpan) {
-                    textSpan.classList.remove('hidden');
-                    loadingSpan.classList.add('hidden');
-                    loadingSpan.classList.remove('flex');
-                }
+                return;
             }
+
+            // Disable button and show spinner
+            submitButton.disabled = true;
+
+            textSpan.classList.add('hidden');
+            loadingSpan.classList.remove('hidden');
+            loadingSpan.classList.add('flex');
         });
-    }
+    });
+
+    
 </script>
 
 <style>
