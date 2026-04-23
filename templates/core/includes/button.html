@@ -1,0 +1,46 @@
+<button type="submit" 
+        onclick="handleButtonClick(this)"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition duration-200 disabled:opacity-70 disabled:cursor-not-allowed">
+    <span class="btn-text">Submit</span>
+    <span class="btn-loading hidden">
+        <svg class="animate-spin inline-block h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Processing...
+    </span>
+</button>
+
+<script>
+function handleButtonClick(button) {
+    // Don't do anything if already disabled
+    if (button.disabled) return;
+    
+    // Disable button
+    button.disabled = true;
+    
+    // Hide text, show loading spinner
+    const textSpan = button.querySelector('.btn-text');
+    const loadingSpan = button.querySelector('.btn-loading');
+    
+    if (textSpan && loadingSpan) {
+        textSpan.classList.add('hidden');
+        loadingSpan.classList.remove('hidden');
+    }
+    
+    // The form will submit automatically since it's type="submit"
+}
+</script>
+
+<style>
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+.hidden {
+    display: none;
+}
+</style>

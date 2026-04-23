@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="text-5xl font-bold text-gray-800 mb-4">Invest in Tesla, Build your Future</h1>
+    <p class="text-xl text-gray-600 mb-8">Secure, all-in-one platform for Tesla stocks and ecosystem assets.</p>
+    {% if not user.is_authenticated %}
+        <a href="{% url 'signup' %}" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700">Get Started</a>
+    {% else %}
+        <a href="{% url 'dashboard' %}" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700">Go to Dashboard</a>
+    {% endif %}
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">Invest in TSLA</h3>
+        <p class="text-gray-600">Buy and sell Tesla stocks with ease.</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">Secure Wallet</h3>
+        <p class="text-gray-600">Your funds are safe with our secure wallet system.</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">Easy deposits</h3>
+        <p class="text-gray-600">Deposit funds quickly and start investing.</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold mb-2">Track your holdings</h3>
+        <p class="text-gray-600">Monitor your portfolio in real-time.</p>
+    </div>
+</div>
+{% endblock %}

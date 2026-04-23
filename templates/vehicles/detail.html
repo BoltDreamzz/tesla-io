@@ -1,0 +1,191 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="mb-4">
+        <a href="{% url 'vehicles:vehicle_list' %}" class="text-blue-600 hover:underline">← Back to Vehicles</a>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Image -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            {% if vehicle.image %}
+            <img src="{{ vehicle.image.url }}" alt="{{ vehicle.name }}" class="w-full h-96 object-cover">
+            {% else %}
+            <div class="w-full h-96 bg-gray-200 flex items-center justify-center">
+                <svg class="h-24 w-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Details -->
+        <div class="space-y-6">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">{{ vehicle.name }}</h1>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="px-2 py-1 text-xs rounded-full 
+                        {% if vehicle.condition == 'new' %}bg-green-100 text-green-800
+                        {% elif vehicle.condition == 'used' %}bg-yellow-100 text-yellow-800
+                        {% else %}bg-blue-100 text-blue-800{% endif %}">
+                        {{ vehicle.get_condition_display }}
+                    </span>
+                    <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                        {{ vehicle.year }}
+                    </span>
+                </div>
+                
+                <p class="text-3xl font-bold text-red-600 mb-2">${{ vehicle.price|floatformat:0 }}</p>
+                <p class="text-gray-600 mb-4">or ${{ vehicle.share_price }}/share</p>
+            </div>
+            
+            <!-- Specifications -->
+            <div class="grid grid-cols-2 gap-4 py-4 border-y border-gray-200">
+                <div>
+                    <p class="text-gray-600 text-sm">Range</p>
+                    <p class="font-semibold">{{ vehicle.battery_range }} miles</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 text-sm">0-60 mph</p>
+                    <p class="font-semibold">{{ vehicle.acceleration }} seconds</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 text-sm">Color</p>
+                    <p class="font-semibold">{{ vehicle.color }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 text-sm">Autopilot</p>
+                    <p class="font-semibold">{{ vehicle.autopilot|yesno:"Yes,No" }}</p>
+                </div>
+            </div>
+            
+            <!-- Features -->
+            {% if vehicle.features %}
+            <div>
+                <h3 class="font-semibold mb-2">Features</h3>
+                <ul class="list-disc list-inside text-gray-600">
+                    {% for feature in vehicle.features.split %}
+                    <li>{{ feature }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <!-- Shares Progress -->
+            <div class="bg-gray-50 rounded-lg p-4">
+                <p class="font-semibold mb-2">Share Ownership</p>
+                <div class="flex justify-between text-sm mb-1">
+                    <span>{{ vehicle.available_shares }}/{{ vehicle.total_shares }} shares available</span>
+                    <span>{{ vehicle.sold_percentage|floatformat:0 }}% sold</span>
+                </div>
+                <div class="bg-gray-200 rounded-full h-2 mb-2">
+                    <div class="bg-blue-600 h-2 rounded-full" style="width: {{ vehicle.sold_percentage }}%"></div>
+                </div>
+                {% if user_shares > 0 %}
+                <p class="text-sm text-green-600 mt-2">✓ You own {{ user_shares }} shares in this vehicle</p>
+                {% endif %}
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="space-y-3">
+                <button onclick="openShareModal()" 
+                        class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
+                        {% if vehicle.available_shares == 0 %}disabled{% endif %}>
+                    {% if vehicle.available_shares == 0 %}Sold Out{% else %}Buy Shares{% endif %}
+                </button>
+                
+                <button onclick="openPurchaseModal()" 
+                        class="w-full border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition font-semibold">
+                    Buy Full Vehicle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Share Purchase Modal -->
+<div id="shareModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">Buy Shares</h3>
+            <button onclick="closeShareModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+        
+        <p class="text-gray-600 mb-4">Vehicle: {{ vehicle.name }}</p>
+        <p class="text-gray-600 mb-2">Share Price: ${{ vehicle.share_price }}</p>
+        <p class="text-gray-600 mb-4">Your Balance: ${{ wallet_balance|floatformat:2 }}</p>
+        
+        <form method="post" action="{% url 'vehicles:buy_shares' vehicle.id %}" id="shareForm">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Number of Shares</label>
+                {{ share_form.shares }}
+                <p class="text-sm text-gray-500 mt-1">Maximum: {{ vehicle.available_shares }} shares</p>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-lg font-semibold">Total: $<span id="totalCost">0.00</span></p>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Confirm Purchase
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Full Purchase Modal -->
+<div id="purchaseModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">Buy Full Vehicle</h3>
+            <button onclick="closePurchaseModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+        
+        <p class="text-gray-600 mb-2">Vehicle: {{ vehicle.name }}</p>
+        <p class="text-gray-600 mb-2">Price: ${{ vehicle.price|floatformat:2 }}</p>
+        <p class="text-gray-600 mb-4">Your Balance: ${{ wallet_balance|floatformat:2 }}</p>
+        
+        <form method="post" action="{% url 'vehicles:buy_vehicle' vehicle.id %}">
+            {% csrf_token %}
+            {{ purchase_form.as_p }}
+            <button type="submit" class="w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 mt-4">
+                Confirm Purchase
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openShareModal() {
+        document.getElementById('shareModal').classList.remove('hidden');
+    }
+    
+    function closeShareModal() {
+        document.getElementById('shareModal').classList.add('hidden');
+    }
+    
+    function openPurchaseModal() {
+        document.getElementById('purchaseModal').classList.remove('hidden');
+    }
+    
+    function closePurchaseModal() {
+        document.getElementById('purchaseModal').classList.add('hidden');
+    }
+    
+    // Calculate total cost
+    const sharesInput = document.getElementById('shares-input');
+    const pricePerShare = {{ vehicle.share_price }};
+    const totalSpan = document.getElementById('totalCost');
+    
+    if (sharesInput) {
+        sharesInput.addEventListener('input', function() {
+            const shares = parseFloat(this.value) || 0;
+            const total = shares * pricePerShare;
+            totalSpan.textContent = total.toFixed(2);
+        });
+    }
+</script>
+{% endblock %}

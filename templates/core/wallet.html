@@ -1,0 +1,13 @@
+<div class="stats rounded-0">
+  <div class="stat">
+    <div class="stat-title text-success">Account balance</div>
+    <div class="stat-value">${{ wallet.balance|floatformat:2 }}</div>
+    <div class="stat-actions">
+      <a href="{%url 'deposit' %}" class="btn btn-xs btn-primary">Deposit</a>
+            <a href="{%url 'withdraw' %}" class="btn btn-xs btn-primary">Withdraw</a>
+
+    </div>
+  </div>
+
+  
+</div>

@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold mb-6">Profile Settings</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="mt-6">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Update Profile</button>
+            <a href="{% url 'password_change' %}" class="ml-4 text-blue-600 hover:underline">Change Password</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

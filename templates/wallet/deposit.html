@@ -1,0 +1,124 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+
+
+
+<div class="max-w-lg h-screen mx-auto rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-6">Deposit Funds</h2>
+    <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Note</strong>: Minimum deposit is
+        <strong>$500</strong>, transactions
+        below the limit will be declined.
+    </p>
+    <br>
+
+    <form method="post" class="space-y-6" id="depositForm">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div>
+            <button type="submit" id="depositButton"
+                class="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-0 shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100">
+
+                <span class="btn-text">Submit Deposit</span>
+
+                <span class="btn-loading hidden items-center">
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 
+                        0 0 5.373 0 12h4zm2 
+                        5.291A7.962 7.962 0 
+                        014 12H0c0 3.042 
+                        1.135 5.824 3 
+                        7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    Processing...
+                </span>
+
+            </button>
+        </div>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <div class="max-w-xl mx-auto border rounded-0 overflow-hidden">
+        <details class="group max-w-xl mx-auto border border-gray-200 bg-white shadow-sm open:shadow-md transition">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2">
+                <div class="flex items-center gap-3 font-semibold text-gray-800">
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path
+                            d="M8.19 15.08c.26.36.62 1.38.81 2.05v2.86c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-2.86c.2-.68.56-1.7.82-2.06.35-.5.72-.93 1.08-1.36 1.03-1.21 2.1-2.46 2.1-4.72 0-3.86-3.14-7-7-7s-7 3.14-7 7c0 2.29 1.07 3.53 2.1 4.73.36.42.73.85 1.09 1.35ZM11 20v-2h2.02L13 20zm1-16c2.76 0 5 2.24 5 5 0 1.53-.64 2.28-1.62 3.42-.37.43-.79.93-1.2 1.51-.37.53-.7 1.42-.92 2.07h-2.52c-.21-.65-.55-1.55-.93-2.08-.41-.57-.83-1.06-1.2-1.49C7.64 11.3 6.99 10.55 6.99 9c0-2.76 2.24-5 5-5Z">
+                        </path>
+                        <path d="M12 7V5C9.79 5 8 6.79 8 9h2c0-1.1.9-2 2-2"></path>
+                    </svg>
+                    <span>How to Deposit</span>
+                </div>
+
+                <!-- Arrow -->
+                <svg class="h-5 w-5 text-gray-500 transition-transform duration-300 group-open:rotate-180" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </summary>
+
+            <!-- Animated content -->
+            <div class="grid grid-rows-[0fr] transition-all duration-300 group-open:grid-rows-[1fr]">
+                <div class="overflow-hidden px-5 pb-5 text-sm text-gray-600">
+                    <ol class="list-decimal space-y-2 pl-5 text-sm">
+                        <li>Enter your preferred amount in the amount box above.</li>
+                        <li>Select your proposed payment method from the list of provided payment methods.</li>
+                        <li>Click on the Submit button to confirm the transaction.</li>
+
+
+                    </ol>
+                </div>
+            </div>
+        </details>
+        <script>
+            function toggleDeposit(button) {
+                const body = button.parentElement.querySelector('div');
+                const icon = button.querySelector('svg');
+
+                body.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            }
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('depositForm');
+                const submitButton = document.getElementById('depositButton');
+
+                if (form && submitButton) {
+                    form.addEventListener('submit', function () {
+
+                        const textSpan = submitButton.querySelector('.btn-text');
+                        const loadingSpan = submitButton.querySelector('.btn-loading');
+
+                        // Disable button immediately
+                        submitButton.disabled = true;
+
+                        // Swap text → loading spinner
+                        if (textSpan && loadingSpan) {
+                            textSpan.classList.add('hidden');
+                            loadingSpan.classList.remove('hidden');
+                            loadingSpan.classList.add('flex');
+                        }
+
+                        // Form submits normally
+                    });
+                }
+            });
+        </script>
+    </div>
+</div>
+<br><br>
+
+{% endblock %}

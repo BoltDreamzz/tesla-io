@@ -1,0 +1,448 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-md mx-auto rounded-lg shadow-md p-8">
+    <div class="flex items-center justify-center">
+        <img src="{%static 'home_media/tesla_1.png'%}" alt="" class="max-w-[1.8em] w-auto">
+    </div>
+    <h2 class="text-2xl font-bold mb-2 text-center">Create your account</h2>
+    <p class="mt-4 text-center text-sm mb-6">
+        Already have an account? <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Log in</a>
+    </p>
+
+    <form method="post" id="registerForm">
+        {% csrf_token %}
+
+        <!-- Username Field -->
+        <div class="mb-4">
+            <label for="{{ form.username.id_for_label }}" class="block text-sm font-bold mb-2">
+                Username
+            </label>
+            {{ form.username }}
+            {% if form.username.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div class="mb-4">
+            <label for="{{ form.email.id_for_label }}" class="block text-sm font-bold mb-2">
+                Email
+            </label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Password Field with Show/Hide -->
+        <div class="mb-4">
+            <label for="{{ form.password1.id_for_label }}" class="block text-sm font-bold mb-2">
+                Password
+            </label>
+            <div class="relative">
+                {{ form.password1 }}
+                <button type="button" onclick="togglePassword('{{ form.password1.id_for_label }}', this)"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Password Strength Indicator -->
+            <div class="mt-2">
+                <div class="flex items-center space-x-2">
+                    <div class="flex-1 h-2 bg-gray-200 rounded overflow-hidden">
+                        <div id="strengthBar" class="h-full w-0 transition-all duration-300 ease-in-out"></div>
+                    </div>
+                    <span id="strengthText" class="text-xs font-medium">Not entered</span>
+                </div>
+                <div id="strengthRequirements" class="mt-2 text-xs space-y-1">
+                    <p id="reqLength" class="text-gray-500">✗ 8+ characters</p>
+                    <p id="reqUpper" class="text-gray-500">✗ Uppercase letter</p>
+                    <p id="reqLower" class="text-gray-500">✗ Lowercase letter</p>
+                    <p id="reqNumber" class="text-gray-500">✗ Number</p>
+                    <p id="reqSpecial" class="text-gray-500">✗ Special character (!@#$%^&*)</p>
+                </div>
+            </div>
+
+            {% if form.password1.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.password1.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Confirm Password Field with Show/Hide -->
+        <div class="mb-4">
+            <label for="{{ form.password2.id_for_label }}" class="block text-sm font-bold mb-2">
+                Confirm Password
+            </label>
+            <div class="relative">
+                {{ form.password2 }}
+                <button type="button" onclick="togglePassword('{{ form.password2.id_for_label }}', this)"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+            </div>
+            <p id="passwordMatch" class="text-xs mt-1 hidden"></p>
+            {% if form.password2.errors %}
+            <p class="text-red-500 text-xs mt-1">{{ form.password2.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="mt-4">
+            <label class="inline-flex items-center">
+                <input type="checkbox" name="terms" id="termsCheckbox" required class="form-checkbox text-blue-600">
+                <span class="ml-2 text-sm text-gray-600">I agree to the <a href="#"
+                        class="text-blue-600 hover:underline">Terms and Conditions</a></span>
+            </label>
+        </div>
+
+        <!-- Submit Button with Loading State -->
+        <button type="submit" id="submitBtn"
+            class="w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 mt-6 transition duration-200 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:bg-red-600">
+            <span class="btn-text">Create Account</span>
+            <span class="btn-loading hidden items-center">
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+                Creating account...
+            </span>
+        </button>
+        <!-- Simple note about email -->
+        <div class="mt-4 pt-4 border-t border-gray-200">
+            <p class="text-xs text-gray-500 text-center">
+                Make sure to enter a valid email address. You'll need to verify it to access your account.
+            </p>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Toggle password visibility
+    function togglePassword(inputId, button) {
+        const passwordInput = document.getElementById(inputId);
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Change the eye icon based on visibility
+        const svg = button.querySelector('svg');
+        if (type === 'text') {
+            // Eye with slash (visible password)
+            svg.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 012.937-4.158m4.956-1.95A10.05 10.05 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.05 10.05 0 01-2.937 4.158m-4.956 1.95L3 3" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            `;
+        } else {
+            // Regular eye (hidden password)
+            svg.innerHTML = `
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            `;
+        }
+    }
+
+    // Password strength checker
+    const passwordInput = document.getElementById('{{ form.password1.id_for_label }}');
+    const confirmPasswordInput = document.getElementById('{{ form.password2.id_for_label }}');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+    const submitBtn = document.getElementById('submitBtn');
+    const termsCheckbox = document.getElementById('termsCheckbox');
+
+    const reqLength = document.getElementById('reqLength');
+    const reqUpper = document.getElementById('reqUpper');
+    const reqLower = document.getElementById('reqLower');
+    const reqNumber = document.getElementById('reqNumber');
+    const reqSpecial = document.getElementById('reqSpecial');
+    const passwordMatch = document.getElementById('passwordMatch');
+
+    function checkPasswordStrength(password) {
+        let strength = 0;
+        let requirements = {
+            length: password.length >= 8,
+            upper: /[A-Z]/.test(password),
+            lower: /[a-z]/.test(password),
+            number: /[0-9]/.test(password),
+            special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+        };
+
+        // Update requirement indicators
+        updateRequirement(reqLength, requirements.length);
+        updateRequirement(reqUpper, requirements.upper);
+        updateRequirement(reqLower, requirements.lower);
+        updateRequirement(reqNumber, requirements.number);
+        updateRequirement(reqSpecial, requirements.special);
+
+        // Calculate strength
+        if (requirements.length) strength++;
+        if (requirements.upper) strength++;
+        if (requirements.lower) strength++;
+        if (requirements.number) strength++;
+        if (requirements.special) strength++;
+
+        return { strength, requirements };
+    }
+
+    function updateRequirement(element, isMet) {
+        if (isMet) {
+            element.classList.remove('text-gray-500');
+            element.classList.add('text-green-600');
+            element.innerHTML = '✓ ' + element.innerHTML.substring(2);
+        } else {
+            element.classList.remove('text-green-600');
+            element.classList.add('text-gray-500');
+            element.innerHTML = '✗ ' + element.innerHTML.substring(2);
+        }
+    }
+
+    function updateStrengthIndicator(strength, requirements) {
+        let color, text, width;
+
+        switch (strength) {
+            case 0:
+                color = 'bg-gray-300';
+                text = 'Very Weak';
+                width = '20%';
+                break;
+            case 1:
+                color = 'bg-red-500';
+                text = 'Weak';
+                width = '40%';
+                break;
+            case 2:
+                color = 'bg-orange-500';
+                text = 'Fair';
+                width = '60%';
+                break;
+            case 3:
+                color = 'bg-yellow-500';
+                text = 'Good';
+                width = '80%';
+                break;
+            case 4:
+                color = 'bg-green-500';
+                text = 'Strong';
+                width = '100%';
+                break;
+            case 5:
+                color = 'bg-green-600';
+                text = 'Very Strong';
+                width = '100%';
+                break;
+            default:
+                color = 'bg-gray-300';
+                text = 'Not entered';
+                width = '0%';
+        }
+
+        strengthBar.className = `h-full ${color} transition-all duration-300`;
+        strengthBar.style.width = width;
+        strengthText.textContent = text;
+        strengthText.className = `text-xs font-medium ${strength >= 4 ? 'text-green-600' : strength >= 2 ? 'text-orange-500' : 'text-red-500'
+            }`;
+
+        return strength >= 4;
+    }
+
+    function checkPasswordMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+
+        if (confirmPassword.length > 0) {
+            if (password === confirmPassword) {
+                passwordMatch.textContent = '✓ Passwords match';
+                passwordMatch.classList.remove('text-red-500', 'hidden');
+                passwordMatch.classList.add('text-green-600');
+                passwordMatch.classList.remove('hidden');
+                return true;
+            } else {
+                passwordMatch.textContent = '✗ Passwords do not match';
+                passwordMatch.classList.remove('text-green-600', 'hidden');
+                passwordMatch.classList.add('text-red-500');
+                passwordMatch.classList.remove('hidden');
+                return false;
+            }
+        } else {
+            passwordMatch.classList.add('hidden');
+            return false;
+        }
+    }
+
+    function validateForm() {
+        const password = passwordInput.value;
+        const { strength, requirements } = checkPasswordStrength(password);
+        const isStrongEnough = strength >= 4;
+        const doPasswordsMatch = checkPasswordMatch();
+        const termsChecked = termsCheckbox ? termsCheckbox.checked : false;
+
+        // Enable/disable submit button based on validation
+        if (password.length === 0 && !termsChecked) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+            const isValid = isStrongEnough && doPasswordsMatch && termsChecked;
+            submitBtn.disabled = !isValid;
+            if (isValid) {
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+    }
+
+    // Loading button functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('registerForm');
+        const submitButton = document.getElementById('submitBtn');
+
+        if (form && submitButton) {
+            form.addEventListener('submit', function (e) {
+                // Get button elements
+                const textSpan = submitButton.querySelector('.btn-text');
+                const loadingSpan = submitButton.querySelector('.btn-loading');
+
+                // Check if form is valid before showing loading
+                const password = passwordInput.value;
+                const { strength } = checkPasswordStrength(password);
+                const isStrongEnough = strength >= 4;
+                const doPasswordsMatch = checkPasswordMatch();
+                const termsChecked = termsCheckbox ? termsCheckbox.checked : false;
+
+                // If form is invalid, don't show loading
+                if (!isStrongEnough || !doPasswordsMatch || !termsChecked) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Disable button and show loading spinner
+                submitButton.disabled = true;
+
+                // Show loading spinner, hide text
+                if (textSpan && loadingSpan) {
+                    textSpan.classList.add('hidden');
+                    loadingSpan.classList.remove('hidden');
+                    loadingSpan.classList.add('flex');
+                }
+
+                // Form will submit normally
+                // If there's an error, the page will reload with error messages
+            });
+        }
+    });
+
+    // Event listeners for validation
+    if (passwordInput) {
+        passwordInput.addEventListener('input', function () {
+            const password = this.value;
+            if (password.length === 0) {
+                // Reset everything when password is empty
+                strengthBar.style.width = '0%';
+                strengthText.textContent = 'Not entered';
+                strengthText.className = 'text-xs font-medium text-gray-500';
+                strengthBar.className = 'h-full bg-gray-300';
+
+                const requirements = ['reqLength', 'reqUpper', 'reqLower', 'reqNumber', 'reqSpecial'];
+                requirements.forEach(req => {
+                    const element = document.getElementById(req);
+                    element.classList.remove('text-green-600');
+                    element.classList.add('text-gray-500');
+                    element.innerHTML = '✗ ' + element.innerHTML.substring(2);
+                });
+            } else {
+                const { strength, requirements } = checkPasswordStrength(password);
+                updateStrengthIndicator(strength, requirements);
+            }
+            validateForm();
+        });
+    }
+
+    if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', validateForm);
+    }
+
+    if (termsCheckbox) {
+        termsCheckbox.addEventListener('change', validateForm);
+    }
+
+    // Initial validation
+    validateForm();
+</script>
+
+<style>
+    /* Custom styling for form inputs */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        padding-right: 2.5rem;
+        outline: none;
+        transition: all 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+        border-color: transparent;
+        box-shadow: 0 0 0 2px #3b82f6;
+    }
+
+    /* Style for checkboxes */
+    .form-checkbox {
+        border-radius: 0.25rem;
+        border-color: #d1d5db;
+        color: #2563eb;
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .form-checkbox:focus {
+        box-shadow: 0 0 0 2px #3b82f6;
+    }
+
+    /* Spinner animation */
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+
+    /* Disabled button styles */
+    button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    /* Smooth transitions */
+    input,
+    button {
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+{% endblock %}

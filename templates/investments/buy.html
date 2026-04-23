@@ -1,0 +1,263 @@
+{% extends 'core/base.html' %}
+{% block title %}Buy shares{% endblock %}
+
+
+{% block content %}
+
+<div class="flex p-2">
+    {%include 'core/wallet.html'%}
+</div>
+<br>
+
+<!-- Instruction Modal -->
+<div id="sharesInstructionModal" class="fixed inset-0 z-50 hidden items-center justify-center">
+
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-role="modal-backdrop"></div>
+
+    <!-- Modal Card -->
+    <div class="relative bg-black border border-2 w-[95%] max-w-lg rounded-xl shadow-2xl p-6 z-10">
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-white">Start Buying in 3 solid steps.</h2>
+            <button data-role="modal-close" class="text-gray-500 hover:text-red-500 text-2xl leading-none">
+                &times;
+            </button>
+        </div>
+
+        <div class="space-y-3 text-sm text-white mb-4">
+            <!-- <h4 class="text-lg"></h4> -->
+            <div class="max-w-4xl ml-3 grid grid-cols-1 gap-3">
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path
+                            d="M9 2h2v3H9zM2 9h3v2H2zm18.37 4.93c.38-.15.63-.52.63-.92s-.24-.77-.62-.93l-12-5a.98.98 0 0 0-1.09.22c-.29.29-.37.72-.22 1.09l5 12c.16.37.52.62.92.62.41 0 .77-.25.92-.63l1.44-3.59 4.93 4.93 1.41-1.41-4.93-4.93 3.59-1.44Zm-6.3.7-1.09 2.73-3.12-7.5 7.5 3.12-2.73 1.09c-.25.1-.46.3-.56.56M3.96 2.54l-.71.71-.71.71 1.25 1.25 1.25 1.25.71-.71.71-.71-1.25-1.25z">
+                        </path>
+                    </svg>
+                    Enter quantity of shares eg: 5.
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path
+                            d="M12 2a2 2 0 1 0 0 4 2 2 0 1 0 0-4m-2 16h4v-5h2V9c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v4h2z">
+                        </path>
+                        <path
+                            d="M16 14.3v2.03c2.63.47 4 1.3 4 1.66 0 .51-2.75 2-8 2s-8-1.49-8-2c0-.36 1.37-1.2 4-1.66V14.3c-3.31.52-6 1.72-6 3.7 0 2.75 5.18 4 10 4s10-1.25 10-4c0-1.98-2.69-3.18-6-3.7">
+                        </path>
+                    </svg>
+                    Preview order to confirm amount.
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M5 2H2v2h2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4h2V2zm13 18H6V4h12z"></path>
+                        <path
+                            d="M12 15c-1.84 0-1.99-.86-2-1H8c0 .92.66 2.55 3 2.92V18h2v-1.09c1.97-.33 3-1.63 3-2.91 0-1.12-.52-3-4-3-2 0-2-.63-2-1 0-.48.7-1 2-1 1.18 0 1.39.64 1.4 1.02l1-.02h1c0-1.03-.67-2.47-2.4-2.88V6h-2v1.09C9.03 7.42 8 8.72 8 10c0 1.12.52 3 4 3 2 0 2 .68 2 1 0 .42-.62 1-2 1">
+                        </path>
+                    </svg>
+                    Make payments through your wallet balance.
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path
+                            d="m21.49 7.13-9-5a.99.99 0 0 0-.97 0l-9.01 5C2.19 7.31 2 7.64 2 8v3c0 .55.45 1 1 1h2v4H3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h18c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1h-2v-4h2c.55 0 1-.45 1-1V8a1 1 0 0 0-.51-.87M7 12h2v4H7zm6 0v4h-2v-4zm7 6v2H4v-2zm-3-2h-2v-4h2zm3-6H4V8.59l8-4.44 8 4.44z">
+                        </path>
+                        <path d="M12 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3"></path>
+                    </svg>
+                    Withdraw earnings subsequently.
+                </div>
+
+            </div>
+
+            <!-- <ol class="list-decimal ml-5 space-y-2">
+                <li>Select your preferred investment plan.</li>
+                <li>Choose a payment method (crypto or bank transfer).</li>
+                <li>Make the payment using the exact amount shown.</li>
+                <li>Upload proof of payment on the next screen.</li>
+                <li>Wait for confirmation from the admin.</li>
+            </ol> -->
+            <p class="text-red-500 font-semibold flex">
+                Don't have enough funds in your wallet? <a href="{% url 'deposit' %}"
+                    class="text-blue-500 ml-2 font-bold flex items-center"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path d="M5 2H2v2h2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4h2V2zm13 18H6V4h12z"></path>
+                        <path
+                            d="M12 15c-1.84 0-1.99-.86-2-1H8c0 .92.66 2.55 3 2.92V18h2v-1.09c1.97-.33 3-1.63 3-2.91 0-1.12-.52-3-4-3-2 0-2-.63-2-1 0-.48.7-1 2-1 1.18 0 1.39.64 1.4 1.02l1-.02h1c0-1.03-.67-2.47-2.4-2.88V6h-2v1.09C9.03 7.42 8 8.72 8 10c0 1.12.52 3 4 3 2 0 2 .68 2 1 0 .42-.62 1-2 1">
+                        </path>
+                    </svg> Add funds</a>
+            </p>
+        </div>
+
+        <div class="mt-6 text-right">
+            <button data-role="modal-close" class="px-4 py-2 bg-red-500 text-white rounded-0">
+                Got it
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("sharesInstructionModal");
+        const closeButtons = document.querySelectorAll('[data-role="modal-close"]');
+        const backdrop = document.querySelector('[data-role="modal-backdrop"]');
+
+        function openModal() {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeModal() {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        // Open after 3 seconds
+        setTimeout(openModal, 3000);
+
+        // Close actions
+        closeButtons.forEach(btn => btn.addEventListener("click", closeModal));
+        backdrop.addEventListener("click", closeModal);
+
+        // ESC key closes
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") closeModal();
+        });
+    });
+</script>
+
+<div class="max-w-lg min-h-64 mx-auto rounded-lg shadow-md">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold">Buy Tesla Stock ({{ stock.symbol }})</h2>
+        <span class="font-bold flex gap-1 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                fill="currentColor" viewBox="0 0 24 24">
+                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                <path
+                    d="M6.65 16h10.69c.64 0 .99-.76.56-1.24l-5.35-6.11a.753.753 0 0 0-1.13 0l-5.35 6.11c-.42.48-.08 1.24.56 1.24Z">
+                </path>
+            </svg><span class="text-blue-600">1 share = ${{ stock.current_price|floatformat:2 }}</span></span>
+    </div>
+
+    <!-- <p class="mb-2">Current Wallet Balance: <span class="font-bold">${{ wallet.balance|floatformat:2 }}</span></p> -->
+    <!-- <p class="mb-4">Current Price: 
+        </p> -->
+    <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Note</strong>: Minimum quantity one can purchase is
+        <strong>4 shares</strong>.,
+        transactions
+        below the limit may be declined.
+    </p>
+    <br>
+
+    <form method="post" id="buy-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+
+        <!-- <p class="text-sm text-gray-600 mt-2">Total Cost: </p> -->
+        <br>
+        <a class="w-full bg-red-600 cursor-pointer text-white w-full px-4 py-2 hover:bg-red-700 mt-6"
+            onclick="my_modal_5.showModal()">Preview
+            Order</a>
+
+        <!-- <button type="submit" class=""> -->
+        <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+            <div class="stats shadow">
+                
+
+                
+
+                
+            </div>
+            <div class="modal-box bg-black text-white">
+                <h3 class="text-lg font-bold">Confirm purchase</h3>
+                <div class="stat place-items-center">
+                    <div class="stat-title">Total Cost:</div>
+                    <div class="stat-value text-secondary">$<span id="total-cost">0.00</span></div>
+                    <div class="stat-desc text-secondary">↗︎ 40 (2%)</div>
+                </div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="w-full bg-red-600 text-white px-4 py-2 hover:bg-red-700 mt-6"
+                            type="submit">Preview
+                            Order</button>
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+    </form>
+
+    <script>
+        const quantityInput = document.getElementById('id_quantity');
+        const price = {{ stock.current_price }};
+        const totalSpan = document.getElementById('total-cost');
+        quantityInput.addEventListener('input', function () {
+            const qty = parseFloat(this.value) || 4;
+            totalSpan.textContent = (qty * price).toFixed(2);
+        });
+    </script>
+    <br>
+    <hr>
+    <br>
+    <div class="max-w-xl mx-auto border rounded-0 overflow-hidden">
+        <details class="group max-w-xl mx-auto border border-gray-200 bg-white shadow-sm open:shadow-md transition">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2">
+                <div class="flex items-center gap-3 font-semibold text-gray-800">
+                    <!-- Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path
+                            d="M8.19 15.08c.26.36.62 1.38.81 2.05v2.86c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-2.86c.2-.68.56-1.7.82-2.06.35-.5.72-.93 1.08-1.36 1.03-1.21 2.1-2.46 2.1-4.72 0-3.86-3.14-7-7-7s-7 3.14-7 7c0 2.29 1.07 3.53 2.1 4.73.36.42.73.85 1.09 1.35ZM11 20v-2h2.02L13 20zm1-16c2.76 0 5 2.24 5 5 0 1.53-.64 2.28-1.62 3.42-.37.43-.79.93-1.2 1.51-.37.53-.7 1.42-.92 2.07h-2.52c-.21-.65-.55-1.55-.93-2.08-.41-.57-.83-1.06-1.2-1.49C7.64 11.3 6.99 10.55 6.99 9c0-2.76 2.24-5 5-5Z">
+                        </path>
+                        <path d="M12 7V5C9.79 5 8 6.79 8 9h2c0-1.1.9-2 2-2"></path>
+                    </svg>
+                    <span>How to Buy TSLA Stock</span>
+                </div>
+
+                <!-- Arrow -->
+                <svg class="h-5 w-5 text-gray-500 transition-transform duration-300 group-open:rotate-180" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </summary>
+
+            <!-- Animated content -->
+            <div class="grid grid-rows-[0fr] transition-all duration-300 group-open:grid-rows-[1fr]">
+                <div class="overflow-hidden px-5 pb-5 text-sm text-gray-600">
+                    <ol class="list-decimal space-y-2 pl-5 text-sm">
+                        <li>Enter your preferred amount in the amount box above.</li>
+                        <li>Select your proposed payment method from the list of provided payment methods.</li>
+                        <li>Click on the Submit button to confirm the transaction.</li>
+
+
+                    </ol>
+                </div>
+            </div>
+        </details>
+        <script>
+            function toggleDeposit(button) {
+                const body = button.parentElement.querySelector('div');
+                const icon = button.querySelector('svg');
+
+                body.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            }
+        </script>
+    </div>
+
+</div>
+
+<!-- Open the modal using ID.showModal() method -->
+
+
+{% endblock %}

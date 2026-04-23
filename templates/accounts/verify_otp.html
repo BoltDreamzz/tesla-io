@@ -1,0 +1,187 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Verify OTP {% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-4 py-12">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+        <div class="text-center">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
+                <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Verify Your Email</h2>
+            <p class="text-gray-600 mb-6">
+                We've sent a 6-digit verification code to<br>
+                <strong class="text-blue-600">{{ user.email }}</strong>
+            </p>
+        </div>
+
+        <form method="post" class="space-y-6" id="otpForm">
+            {% csrf_token %}
+            
+            <!-- OTP Input Field -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2 text-center">
+                    Enter Verification Code
+                </label>
+                <div class="flex justify-center">
+                    <input type="text" 
+                           name="otp" 
+                           id="otpInput"
+                           class="w-48 text-center text-3xl tracking-widest border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="000000"
+                           maxlength="6"
+                           autocomplete="off"
+                           required>
+                </div>
+                <p class="text-xs text-gray-500 text-center mt-2">
+                    Code expires in <span id="timer" class="font-mono font-bold">10:00</span>
+                </p>
+            </div>
+
+            <!-- Error Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{% if message.tags == 'success' %}bg-green-50 border-green-200 text-green-600{% else %}bg-red-50 border-red-200 text-red-600{% endif %} border rounded-lg p-3">
+                        <p class="text-sm">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+            <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                {% for error in form.otp.errors %}
+                <p class="text-sm text-red-600">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Submit Button -->
+            <button type="submit" id="verifyBtn"
+                    class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="btn-text">Verify Email</span>
+                <span class="btn-loading hidden">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Verifying...
+                </span>
+            </button>
+        </form>
+
+        <!-- Resend Section -->
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">
+                Didn't receive the code?
+                <a href="{% url 'resend_otp' %}" 
+                   class="text-blue-600 hover:text-blue-800 font-medium">
+                    Resend Code
+                </a>
+            </p>
+            <p class="text-xs text-gray-500 mt-4">
+                Check your spam folder if you don't see the email.
+            </p>
+        </div>
+
+        <!-- Wrong Email Section -->
+        <div class="mt-6 pt-6 border-t border-gray-200">
+            <p class="text-sm text-center">
+                Wrong email address?
+                <a href="{% url 'signup' %}" class="text-blue-600 hover:underline">
+                    Register again with correct email
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // OTP Input - Auto submit when 6 digits entered
+    const otpInput = document.getElementById('otpInput');
+    
+    if (otpInput) {
+        otpInput.addEventListener('input', function(e) {
+            // Only allow numbers
+            this.value = this.value.replace(/[^0-9]/g, '');
+            
+            // Auto submit if 6 digits entered
+            if (this.value.length === 6) {
+                document.getElementById('verifyBtn').click();
+            }
+        });
+    }
+    
+    // Countdown timer for OTP expiry (10 minutes)
+    let otpExpiryTime = localStorage.getItem('otpExpiryTime');
+    const timerElement = document.getElementById('timer');
+    
+    function startOTPExpiryTimer() {
+        if (!otpExpiryTime) {
+            // Set expiry to 10 minutes from now
+            otpExpiryTime = new Date().getTime() + (10 * 60 * 1000);
+            localStorage.setItem('otpExpiryTime', otpExpiryTime);
+        }
+        
+        function updateExpiryTimer() {
+            const now = new Date().getTime();
+            const distance = parseInt(otpExpiryTime) - now;
+            
+            if (distance <= 0) {
+                if (timerElement) {
+                    timerElement.textContent = '00:00';
+                    timerElement.classList.add('text-red-600');
+                }
+                return;
+            }
+            
+            const minutes = Math.floor(distance / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if (timerElement) {
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            setTimeout(updateExpiryTimer, 1000);
+        }
+        
+        updateExpiryTimer();
+    }
+    
+    // Start timer if element exists
+    if (timerElement) {
+        startOTPExpiryTimer();
+    }
+    
+    // Form submission loading state
+    const form = document.getElementById('otpForm');
+    const verifyBtn = document.getElementById('verifyBtn');
+    
+    if (form && verifyBtn) {
+        form.addEventListener('submit', function(e) {
+            const textSpan = verifyBtn.querySelector('.btn-text');
+            const loadingSpan = verifyBtn.querySelector('.btn-loading');
+            
+            if (textSpan && loadingSpan) {
+                verifyBtn.disabled = true;
+                textSpan.classList.add('hidden');
+                loadingSpan.classList.remove('hidden');
+                loadingSpan.classList.add('flex');
+            }
+        });
+    }
+</script>
+
+<style>
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+</style>
+{% endblock %}

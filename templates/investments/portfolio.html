@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-bold mb-4">My Portfolio</h2>
+    <p class="text-xl mb-6">Total Value: <span class="font-bold">${{ total_value|floatformat:2 }}</span></p>
+
+    {% if holdings %}
+        <table class="min-w-full divide-y divide-gray-200 mb-8">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shares</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg Buy</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Current Value</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for holding in holdings %}
+                <tr>
+                    <td class="px-6 py-4">{{ holding.stock.symbol }} - {{ holding.stock.name }}</td>
+                    <td class="px-6 py-4">{{ holding.quantity|floatformat:4 }}</td>
+                    <td class="px-6 py-4">${{ holding.average_buy_price|floatformat:2 }}</td>
+                    <td class="px-6 py-4">${{ holding.current_value|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-gray-600 mb-6">You don't own any shares yet. <a href="{% url 'buy_stock' %}" class="text-blue-600">Buy now</a>.</p>
+    {% endif %}
+
+    <h3 class="text-xl font-bold mb-4">Recent Investment Transactions</h3>
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead>
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shares</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+            {% for tx in transactions %}
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ tx.created_at|date:"Y-m-d H:i" }}</td>
+                <td class="px-6 py-4">{{ tx.get_transaction_type_display }}</td>
+                <td class="px-6 py-4">{{ tx.stock.symbol }}</td>
+                <td class="px-6 py-4">{{ tx.quantity|floatformat:4 }}</td>
+                <td class="px-6 py-4">${{ tx.price_per_share|floatformat:2 }}</td>
+                <td class="px-6 py-4">${{ tx.total_amount|floatformat:2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="px-6 py-4 text-center text-gray-500">No investment transactions yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

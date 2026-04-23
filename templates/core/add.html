@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar with Sidebar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold text-indigo-600">Logo</a>
+                </div>
+
+                <!-- Desktop Navigation Links (hidden on mobile) -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                        <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">About</a>
+                        <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">Services</a>
+                        <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button (hamburger / X) -->
+                <div class="md:hidden">
+                    <button 
+                        @click="mobileMenuOpen = !mobileMenuOpen" 
+                        type="button" 
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
+                        aria-expanded="false"
+                        :aria-expanded="mobileMenuOpen.toString()"
+                    >
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Hamburger icon (visible when menu closed) -->
+                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- X icon (visible when menu open) -->
+                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Sidebar (slides in from right) -->
+        <div 
+            x-show="mobileMenuOpen" 
+            x-transition:enter="transition ease-out duration-300 transform"
+            x-transition:enter-start="translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in duration-300 transform"
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="translate-x-full"
+            class="fixed inset-y-0 right-0 w-64 bg-white shadow-lg z-40 md:hidden"
+            @click.away="mobileMenuOpen = false"
+        >
+            <div class="flex flex-col h-full">
+                <div class="flex justify-end p-4">
+                    <button @click="mobileMenuOpen = false" class="text-gray-500 hover:text-indigo-600">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex flex-col space-y-2 px-4">
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium transition">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium transition">About</a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium transition">Services</a>
+                    <a href="#" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium transition">Contact</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Backdrop overlay (optional, closes sidebar when clicked) -->
+        <div 
+            x-show="mobileMenuOpen" 
+            x-transition.opacity.duration.300 
+            class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            @click="mobileMenuOpen = false"
+        ></div>
+    </nav>
+
+    <!-- Page content (just for demo) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-3xl font-bold text-gray-800">Welcome to the Responsive Navbar Demo</h1>
+        <p class="mt-4 text-gray-600">Resize the browser window to see the hamburger menu and sidebar in action. Click the hamburger icon to open the sidebar, and click the "X" or anywhere outside to close it.</p>
+    </div>
+
+    <script>
+        // Initialize Alpine.js data
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('navbar', () => ({
+                mobileMenuOpen: false
+            }))
+        })
+    </script>
+
+    <!-- If you prefer not to use Alpine.js, you can replace with plain JS -->
+</body>
+</html>

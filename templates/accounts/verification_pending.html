@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto h-screen flex items-center justify-center">
+    <div class="rounded-lg shadow-md p-8 w-full">
+        <div class="text-center">
+            <div class="flex items-center justify-center mb-6">
+                <img src="{%static 'home_media/leta.png'%}" alt="" class="max-w-[32%] w-auto">
+            </div>
+            <h2 class="text-2xl font-bold mb-4">Verify Your Email Address</h2>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <p class="text-gray-700 mb-2">
+                    We've sent a verification code to:
+                </p>
+                <p class="text-lg font-semibold text-blue-600">
+                    {{ user.email }}
+                </p>
+                <div class="flex gap-2">
+                    <div class="mt-3 pt-2 border-t border-blue-200">
+                        <p class="text-sm text-gray-600 mb-2">
+                            Wrong email address?
+                        </p>
+                        <a href="{% url 'signup' %}"
+                            class="inline-block text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                            ← Correct email
+                        </a>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-blue-200">
+                        <p class="text-sm text-gray-600 mb-2">
+                            Did'nt get a code ?
+                        </p>
+                        <a href="{% url 'resend_verification' %}"
+                            class="inline-block text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                            Resend email
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 text-left">
+                <p class="text-sm text-yellow-700">
+                    <strong>Important:</strong> The verification code expires in 10 minutes.
+                    After verification, you'll have full access to all investment features.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- <p class="text-gray-600">
+                    Didn't receive the code? Check your spam folder or request a new one.
+                </p> -->
+
+                <div class="flex flex-col justify-center space-y-2 items-center w-full">
+                    <!-- Simple Resend Button (no AJAX) -->
+                    <a href="{% url 'verify_otp' %}"
+                        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition inline-block">
+                        Verify now
+                    </a>
+
+                    <a href="/" class="text-red-600 text-sm hover:text-red-800 hover:underline mt-2">
+                        cancel
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500">
+                    Need help? Contact our support team at support@teslainvest.com
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

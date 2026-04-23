@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeslaInvest</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- <link rel="stylesheet" href="{%static 'css/style.css'%}"> -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400..800&display=swap" rel="stylesheet">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+</head>
+
+<div class="drawer lg:drawer-open">
+    <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content">
+        <!-- Navbar -->
+        <nav class="navbar w-full bg-black text-white sticky top-0 z-50">
+            <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
+                <!-- Sidebar toggle icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                    <path d="M4 11h11v2H4zm0-5h16v2H4zm0 10h8v2H4zm15-3h-2v3h-3v2h3v3h2v-3h3v-2h-3z"></path>
+                </svg>
+            </label>
+            <div class="px-4">
+                <div class="flex items-center">
+                    <a href="{% url 'landing' %}" class="text-xl font-bold text-gray-800"> <img
+                            src="{%static 'home_media/tslainv.png'%}" alt="" class="max-h-[1em] w-auto">
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <!-- Page content here -->
+        <div class="">
+
+            <div class="bg-black text-white">
+                <nav class="bg-black text-white shadow-lg">
+                    <div class="max-w-7xl mx-auto px-4">
+                        <div class="flex justify-between items-center">
+
+
+                        </div>
+                    </div>
+                </nav>
+
+                <main class="max-w-7xl mx-auto px-4 py-8 h-screen">
+                    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+                    <!-- Include your custom JavaScript if necessary -->
+                    {% if messages %}
+                    {% for message in messages %}
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+
+                            Toastify({
+                                text: "{{ message }}",
+                                duration: 3500, // Display duration
+                                close: true, // Show close button
+                                gravity: "top", // `top` or `bottom`
+                                position: "center", // `left`, `center` or `right`
+                                style: {
+                                    background: "#d90429", // Custom background color
+                                    // background-image: linear-gradient(to right, #434343 0%, black 100%);
+                                    color: "#ffffff", // Custom text color
+                                    // width: "250px", // Custom width
+                                    // height: "100px", // Custom height
+                                    borderRadius: "15px", // Custom border radius
+                                    fontSize: "18px", // Custom font size
+                                    padding: "10px 25px" // Custom padding
+                                }
+                            }).showToast();
+
+                        });
+
+
+
+                    </script>
+                    {% endfor %}
+
+                    {% endif %}
+
+                    {% block content %}{% endblock %}
+                </main>
+                <br><br><br><br>
+                
+
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer-side is-drawer-close:overflow-visible">
+        <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+        <div
+            class="flex min-h-full flex-col items-start bg-black text-white is-drawer-close:w-14 is-drawer-open:w-64 w-[300px]">
+            <!-- Sidebar content here -->
+
+            <ul class="menu flex flex-col grow w-80">
+                <!-- List item -->
+                <li class="min-h-24">
+
+                </li>
+                {%if request.user.is_authenticated%}
+
+                <li class="p-2 max-w-50">
+                    <button onClick="window.location.href='{% url 'dashboard' %}'"
+                        class="is-drawer-close:tooltip is-drawer-close:tooltip-right {%if request.path == '/dashboard/'%} border-l-2 text-red-600{%endif%} hover:bg-gray-100 p-2 hover:text-black"
+                        data-tip="Homepage">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round"
+                            stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"
+                            class="my-1.5 inline-block size-4">
+                            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                            <path
+                                d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
+                            </path>
+                        </svg>
+                        <span class="is-drawer-close:hidden">Home</span>
+                    </button>
+                </li>
+                <li class="p-2 max-w-50">
+                    <button onClick="window.location.href='{% url 'deposit' %}'"
+                        class="is-drawer-close:tooltip is-drawer-close:tooltip-right {%if request.path == '/wallet/deposit/'%} border-l-2 text-red-600{%endif%} hover:bg-gray-100 p-2 hover:text-black"
+                        data-tip="Homepage">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M5 2H2v2h2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4h2V2zm13 18H6V4h12z"></path>
+                            <path d="M14 13h2v5h-2zm-6 0h3v5H8zm6-7h2v5h-2z"></path>
+                        </svg>
+                        <span class="is-drawer-close:hidden">Deposit</span>
+                    </button>
+                </li>
+                <li class="p-2 max-w-50">
+                    <button onClick="window.location.href='{% url 'withdraw' %}'"
+                        class="is-drawer-close:tooltip is-drawer-close:tooltip-right {%if request.path == '/wallet/withdraw/'%} border-l-2 text-red-600{%endif%} hover:bg-gray-100 p-2 hover:text-black"
+                        data-tip="Homepage">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path
+                                d="M21 8H7c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h14c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1m-1 8c-1.1 0-2 .9-2 2h-8c0-1.1-.9-2-2-2v-4c1.1 0 2-.9 2-2h8c0 1.1.9 2 2 2z">
+                            </path>
+                            <path d="M18 4H3c-.55 0-1 .45-1 1v11h2V6h14zm-4 8a2 2 0 1 0 0 4 2 2 0 1 0 0-4"></path>
+                        </svg>
+                        <span class="is-drawer-close:hidden">Withdraw</span>
+                    </button>
+                </li>
+                <li class="p-2 max-w-50">
+                    <button onClick="window.location.href='{% url 'buy_stock' %}'"
+                        class="is-drawer-close:tooltip is-drawer-close:tooltip-right {%if request.path == '/invest/buy/'%} border-l-2 text-red-600{%endif%} hover:bg-gray-100 p-2 hover:text-black"
+                        data-tip="Homepage">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path
+                                d="M10 5H9V2H7v3H6c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1M9 17H7V7h2zm9-10h-1V4h-2v3h-1c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1m-1 8h-2V9h2z">
+                            </path>
+                        </svg>
+                        <span class="is-drawer-close:hidden">Buy Stock</span>
+                    </button>
+                </li>
+                <li class="p-2 max-w-50">
+                    <button onClick="window.location.href='{% url 'portfolio' %}'"
+                        class="is-drawer-close:tooltip is-drawer-close:tooltip-right {%if request.path == '/invest/portfolio/'%} border-l-2 text-red-600{%endif%} hover:bg-gray-100 p-2 hover:text-black"
+                        data-tip="Homepage">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path d="M4 2H2v19c0 .55.45 1 1 1h19v-2H4z"></path>
+                            <path
+                                d="M9.17 6.83c.13-.49.58-.83 1.08-.83s.95.34 1.08.83l2.4 8.86c.37 1.36 1.61 2.31 3.02 2.31s2.65-.95 3.02-2.31l1.2-4.43-1.93-.52-1.2 4.43c-.13.49-.58.83-1.08.83s-.95-.34-1.08-.83l-2.4-8.86C12.91 4.95 11.67 4 10.26 4s-2.65.95-3.02 2.31l-1.2 4.43 1.93.52z">
+                            </path>
+                        </svg>
+                        <span class="is-drawer-close:hidden">Portfolio</span>
+                    </button>
+                </li>
+                <li class="p-2 max-w-50">
+                    <button onClick="window.location.href='{% url 'transaction_list' %}'"
+                        class="is-drawer-close:tooltip is-drawer-close:tooltip-right {%if request.path == '/wallet/transactions/'%} border-l-2 text-red-600 {%endif%}hover:bg-gray-100 p-2 hover:text-black"
+                        data-tip="Homepage">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path
+                                d="M5 21h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2M5 5h14v14H5z">
+                            </path>
+                            <path d="M7 15h10v2H7zm0-8h6v6H7z"></path>
+                        </svg>
+                        <span class="is-drawer-close:hidden">Transactions</span>
+                    </button>
+                </li>
+
+                <!-- List item -->
+                <li class="p-2 max-w-50">
+                    <button onClick="window.location.href='{% url 'profile' %}'"
+                        class="is-drawer-close:tooltip is-drawer-close:tooltip-right hover:bg-gray-100 {%if request.path == '/accounts/profile/'%} border-l-2 text-red-600 {%endif%} p-2 hover:text-black"
+                        data-tip="Homepage">
+                        <!-- Home icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path
+                                d="M18 22V9.86c1.72-.45 3-2 3-3.86 0-2.21-1.79-4-4-4s-4 1.79-4 4c0 1.86 1.28 3.41 3 3.86V22zM15 6c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2M6 2v12.14c-1.72.45-3 2-3 3.86 0 2.21 1.79 4 4 4s4-1.79 4-4c0-1.86-1.28-3.41-3-3.86V2zm3 16c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2">
+                            </path>
+                        </svg>
+                        <span class="is-drawer-close:hidden">Settings</span>
+                    </button>
+                </li>
+                {%if request.user.email_verified%}
+
+                <li class="p-2 ">
+                    <a href="#" class="border-2 text-center text-error border-red-500 w-70">Logout</a>
+                </li>
+
+                {%endif%}
+                {%else%}
+                <div class="flex flex-col items-start p-1">
+                    <!-- <span class="text-sm font-bold">
+                        Vehicles
+                    </span> -->
+                    <div class="grid grid-cols-2 p-2 xs:grid-cols-1">
+                        <img src="https://digitalassets.tesla.com/tesla-contents/image/upload/f_auto,q_auto,w_220,c_scale/dpr_2.0/Mega-Menu-Vehicles-Model-S-New-NA-TW-KR.png"
+                            alt="Model S" class="w-30 h-auto">
+                        <img src="https://digitalassets.tesla.com/tesla-contents/image/upload/f_auto,q_auto,w_220,c_scale/dpr_2.0/Mega-Menu-Vehicles-Cybertruck-1x.png"
+                            alt="Cybertruck" class="w-30 h-auto">
+                        <img src="https://digitalassets.tesla.com/tesla-contents/image/upload/f_auto,q_auto,w_220,c_scale/dpr_2.0/Mega-Menu-Vehicles-Model-3-Performance-LHD.png"
+                            alt="Model 3">
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Invest in Tesla, The Future Is Autonomous</h4>
+                    <p class="mb-2">As our Full Self-Driving technology continues to advance, we get closer to making a
+                        fully autonomous future possible.</p>
+                    <a href="#" class="btn bg-red-500 w-70 text-black">Sign in</a>
+
+                </div>
+
+
+                <!-- <li class="p-2 ">
+                </li> -->
+                {%endif%}
+            </ul>
+
+        </div>
+        
+    </div>
+
+    
+</div>
+
+
+
+</html>

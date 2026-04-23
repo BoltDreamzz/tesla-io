@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">My Vehicle Purchases</h1>
+        <a href="{% url 'vehicles:vehicle_list' %}" class="text-blue-600 hover:underline">
+            Browse More Vehicles →
+        </a>
+    </div>
+    
+    {% if purchases %}
+        <div class="space-y-4">
+            {% for purchase in purchases %}
+            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-xl font-semibold">{{ purchase.vehicle.name }}</h3>
+                            <span class="px-2 py-1 text-xs rounded-full
+                                {% if purchase.status == 'completed' %}bg-green-100 text-green-800
+                                {% elif purchase.status == 'pending' %}bg-yellow-100 text-yellow-800
+                                {% else %}bg-red-100 text-red-800{% endif %}">
+                                {{ purchase.get_status_display }}
+                            </span>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-2">{{ purchase.vehicle.year }} {{ purchase.vehicle.get_model_display }}</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-3">
+                            <div>
+                                <span class="font-medium">Order #:</span>
+                                <span class="font-mono text-xs">{{ purchase.transaction_reference }}</span>
+                            </div>
+                            <div>
+                                <span class="font-medium">Purchased:</span>
+                                {{ purchase.created_at|date:"M d, Y H:i" }}
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded p-3 text-sm">
+                            <p class="font-medium mb-1">Delivery Details:</p>
+                            <p class="text-gray-600">{{ purchase.delivery_address }}</p>
+                            <p class="text-gray-600">📞 {{ purchase.contact_phone }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-right ml-6">
+                        <p class="text-3xl font-bold text-red-600">${{ purchase.purchase_price|floatformat:2 }}</p>
+                        <a href="{% url 'transaction_list' %}" 
+                           class="inline-block mt-3 text-sm text-blue-600 hover:underline">
+                            View Transaction →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-12 bg-white rounded-lg shadow-md">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            <p class="text-gray-500 mt-4">You haven't purchased any vehicles yet.</p>
+            <a href="{% url 'vehicles:vehicle_list' %}" class="inline-block mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                Browse Vehicles
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

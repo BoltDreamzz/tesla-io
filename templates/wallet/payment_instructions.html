@@ -1,0 +1,416 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+
+
+<style>
+    /* Custom styling for file input */
+    input[type="file"] {
+        cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button {
+        background-color: #3b82f6;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-right: 12px;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background-color: #2563eb;
+    }
+</style>
+{% if payment_info %}
+
+
+
+
+<!-- Shares Guide Modal (Variant 2) -->
+<div id="sharesGuideModal" class="fixed inset-0 z-50 hidden items-end justify-center">
+
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/50" data-role="guide-backdrop"></div>
+
+    <!-- Sliding Panel -->
+    <div id="guidePanel"
+        class="relative w-full max-w-2xl bg-white rounded-t-2xl p-6 shadow-2xl transform translate-y-full transition-transform duration-500">
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Quick Guide to Buying Shares</h2>
+            <button data-role="guide-close" class="text-gray-400 hover:text-red-500 text-2xl leading-none">
+                &times;
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+            <div class="p-3 bg-gray-50 rounded-lg">
+                <strong>Step 1</strong>
+                <p>Pick a share plan that matches your budget.</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-lg">
+                <strong>Step 2</strong>
+                <p>Use the displayed wallet or bank details to pay.</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-lg">
+                <strong>Step 3</strong>
+                <p>Screenshot or save your payment receipt.</p>
+            </div>
+            <div class="p-3 bg-gray-50 rounded-lg">
+                <strong>Step 4</strong>
+                <p>Upload the proof so admin can verify quickly.</p>
+            </div>
+        </div>
+
+        <div class="mt-6 text-right">
+            <button data-role="guide-close" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Understood
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("sharesGuideModal");
+        const panel = document.getElementById("guidePanel");
+        const closes = document.querySelectorAll('[data-role="guide-close"]');
+        const backdrop = document.querySelector('[data-role="guide-backdrop"]');
+
+        function openGuide() {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+
+            // allow DOM paint before animating
+            setTimeout(() => {
+                panel.classList.remove("translate-y-full");
+            }, 50);
+        }
+
+        function closeGuide() {
+            panel.classList.add("translate-y-full");
+            setTimeout(() => {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+            }, 400);
+        }
+
+        // Auto open after 3 seconds
+        setTimeout(openGuide, 3000);
+
+        closes.forEach(btn => btn.addEventListener("click", closeGuide));
+        backdrop.addEventListener("click", closeGuide);
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") closeGuide();
+        });
+    });
+</script>
+
+<div class="min-h-screen">
+    <div class="container max-w-5xl">
+        <!-- <div class="bg-white/5 backdrop-blur-2xl border border-gray-700 rounded-lg p-3"> -->
+        <!-- <h2 class="text-3xl font-bold mb-6 text-center">Payment Instructions</h2> -->
+
+        <!-- <div class="mb-8 p-4 bg-yellow-500/10 border border-yellow-500/50 rounded-0">
+            <p class="text-yellow-500 text-center">
+                Send the sum of<br>
+                <span class="text-3xl font-bold">
+
+                </span> <br>
+            </p>
+        </div> -->
+
+        <div class="mb-8">
+            <h3 class="text-2xl font-bold mb-4">Send payment to:</h3>
+
+            {% if payment_info.type == 'bank' %}
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <p><strong>Bank Name:</strong> {{ payment_info.bank_name }}</p>
+                <p><strong>Account Name:</strong> {{ payment_info.account_name }}</p>
+                <p><strong>Account Number:</strong> {{ payment_info.account_number }}</p>
+            </div>
+            {% else %}
+            <div class="bg-black p-3 rounded-lg">
+                <div class="text-center">
+                    {% if qr_code_base64 %}
+                    <div class="p-3">
+                        <div class="bg-white rounded-lg inline-block">
+                            <img src="{{ qr_code_base64 }}" alt="QR Code" class="w-48 h-48 mx-auto">
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2">Scan with your wallet app</p>
+
+                        <p>
+                            <code class="bg-gray-900 p-2 block mt-2 break-all">{{ payment_info.address }}</code>
+                        </p>
+                        <button onclick="copyToClipboard('{{ payment_info.address }}')"
+                            class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded btn btn-sm">
+                            Copy
+                        </button>
+                        <br>
+                    </div>
+
+                    {% else %}
+                    <div class="bg-gray-700 p-4 rounded-lg inline-block">
+                        <div class="w-48 h-48 flex items-center justify-center text-gray-400">
+                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <br>
+                <p class="flex items-center justify-between"><strong>Network:</strong> <span
+                        class="text-warning text-2xl">{{ transaction.payment_method }} {{ payment_info.network }}</span>
+                </p>
+                <!-- <br> -->
+                <p class="flex items-center justify-between"><strong>Amount:</strong> <span
+                        class="text-warning text-2xl">${{ transaction.amount|intcomma }}</span>
+                </p>
+
+                <p class="text-sm mt-4 px-3 py-4 text-xs bg-warning text-black"><strong>Note</strong>: Avoid loss of
+                    funds by
+                    sending the corresponding amount and currency network.</p>
+                <br>
+                <!-- <br> -->
+
+            </div>
+            {% endif %}
+            <br>
+            <div class="w-full flex flex-col space-y-2 items-center justify-center">
+                <button class="btn w-full bg-red-500 rounded-0 px-3 py-2 text-white" onclick="my_modal_5.showModal()">I
+                    have paid</button>
+                <a href="/" data-role="terminate-link" class="btn btn-link text-red-500">
+                    <span class="link-text">Terminate transaction</span>
+                    <span class="link-loading hidden">Terminating...</span>
+                </a>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const link = document.querySelector('[data-role="terminate-link"]');
+                const text = link.querySelector(".link-text");
+                const loading = link.querySelector(".link-loading");
+
+                link.addEventListener("click", function (e) {
+                    // prevent double clicks
+                    e.preventDefault();
+
+                    // lock UI
+                    link.style.pointerEvents = "none";
+                    link.classList.add("opacity-60", "cursor-not-allowed");
+
+                    text.classList.add("hidden");
+                    loading.classList.remove("hidden");
+
+                    // continue navigation after UI update
+                    setTimeout(() => {
+                        window.location.href = link.href;
+                    }, 150);
+                });
+            });
+        </script>
+
+        <!-- </div> -->
+    </div>
+</div>
+{% else %}
+
+<div class="py-12 flex flex-col items-center justify-center">
+    <div class="flex items-center justify-center">
+        <img src="{%static 'home_media/errr.png'%}" alt="" class="max-w-[4.8em] w-auto">
+    </div>
+    <h3 class="text-2xl font-bold mb-4">Session Expired</h3>
+    <p class="text-gray-400 mb-4 text-center">
+        Try to refresh the page or go back to the dashboard and initiate a new transaction.
+    </p>
+    <div class="flex justify-center gap-6 flex-wrap">
+        <a href="{% url 'deposit' %}"
+            class=" bg-red-600 text-white btn rounded-0 font-medium tracking-wide hover:bg-gray-200 transition duration-300">
+            Go back
+        </a>
+
+    </div>
+
+</div>
+{% endif %}
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+        alert('Address copied to clipboard!');
+    }
+</script>
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box bg-black">
+        <div class="flex items-center justify_between">
+
+            <h3 class="text-2xl font-bold mb-4">Upload proof</h3>
+
+        </div>
+        <p class="py-4">
+        <div class="border-t border-gray-700 pt-8">
+            <div class="flex justify-between items-center">
+                <!-- <h3 class="text-2xl font-bold mb-4">Confirm Your Payment</h3> -->
+
+
+            </div>
+
+            <!-- <p class="text-gray-400 mb-4">
+                After sending the payment, please fill out the form below to confirm your deposit.
+            </p> -->
+
+
+
+
+
+            <form method="POST" enctype="multipart/form-data" class="space-y-6" id="paymentForm">
+                {% csrf_token %}
+
+                <!-- Prepopulated Reference (Read-only) -->
+
+
+                <!-- Upload Screenshot -->
+                <div>
+                    <label class="block text-gray-300 mb-2">
+                        Upload Payment Screenshot/Proof
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <div
+                        class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center hover:border-blue-500 transition">
+                        {{ form.proof_of_payment }}
+                        <div id="fileInfo" class="mt-2 text-sm text-gray-400"></div>
+                    </div>
+                    <!-- <p class="text-gray-500 text-sm mt-1">
+                        Upload a screenshot showing the transaction ID/hash and amount sent
+                    </p> -->
+                </div>
+
+                <!-- Warning Box -->
+                <div class="bg-yellow-500/10 border border-yellow-500/50 rounded-lg p-4">
+                    <div class="flex gap-2">
+                        <svg class="w-5 h-5 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <p class="text-yellow-500 text-sm">
+                            <strong>Important:</strong> Ensure your screenshot clearly shows:
+                            <br>- Amount sent (${{ transaction.amount }})
+                            <br>- Recipient address (for crypto) or account number (for bank)
+                        </p>
+                    </div>
+                </div>
+
+                <button type="submit" id="paymentSubmitButton" data-role="submit-btn"
+                    class="w-full flex justify-center items-center py-3 px-6 rounded-lg font-bold text-white bg-green-500 hover:bg-green-600 transition duration-200 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100">
+
+                    <span class="btn-text">Submit Payment Confirmation</span>
+
+                    <span class="btn-loading hidden items-center">
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 
+                  0 0 5.373 0 12h4zm2 
+                  5.291A7.962 7.962 0 
+                  014 12H0c0 3.042 
+                  1.135 5.824 3 
+                  7.938l3-2.647z"></path>
+                        </svg>
+                        Uploading proof...
+                    </span>
+                </button>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+            </form>
+        </div>
+        </p>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+                const button = document.querySelector('[data-role="submit-btn"]');
+                const text = button.querySelector(".btn-text");
+                const loading = button.querySelector(".btn-loading");
+
+                form.addEventListener("submit", function () {
+                    // prevent double submit
+                    button.disabled = true;
+
+                    // swap UI
+                    text.classList.add("hidden");
+                    loading.classList.remove("hidden");
+                    loading.classList.add("flex");
+                });
+            });
+        </script>
+
+    </div>
+</dialog>
+<script>
+
+
+    // File upload preview and validation
+    document.querySelector('input[type="file"]').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const fileInfo = document.getElementById('fileInfo');
+
+        if (file) {
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            if (file.size > maxSize) {
+                alert('File size must be less than 5MB');
+                this.value = '';
+                fileInfo.innerHTML = '';
+                return;
+            }
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('Only JPG, PNG, and PDF files are allowed');
+                this.value = '';
+                fileInfo.innerHTML = '';
+                return;
+            }
+
+            // Show file info
+            const fileSize = (file.size / 1024 / 1024).toFixed(2);
+            fileInfo.innerHTML = `<span class="text-green-500">✓ ${file.name}</span> <span class="text-gray-500">(${fileSize} MB)</span>`;
+        } else {
+            fileInfo.innerHTML = '';
+        }
+    });
+
+    // Form submission validation
+    document.getElementById('paymentForm').addEventListener('submit', function (e) {
+        const fileInput = document.querySelector('input[type="file"]');
+        if (!fileInput.files || fileInput.files.length === 0) {
+            e.preventDefault();
+            alert('Please upload a payment screenshot or proof before submitting.');
+            return false;
+        }
+
+        const referenceInput = document.querySelector('#id_payment_reference');
+        if (!referenceInput.value.trim()) {
+            e.preventDefault();
+            alert('Payment reference is required.');
+            return false;
+        }
+    });
+</script>
+
+{% endblock %}

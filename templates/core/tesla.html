@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{%block title%}{%endblock%} | Tesla</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- <link rel="stylesheet" href="{%static 'css/style.css'%}"> -->
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400..800&display=swap" rel="stylesheet">
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
+</head>
+
+<!-- <body> -->
+
+
+
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* subtle animation */
+  .fade-up {
+    animation: fadeUp 1s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeUp {
+    from {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>
+
+
+<body class="bg-black text-white overflow-x-hidden">
+
+
+  <!-- ================= NAV ================= -->
+  <nav
+    class="fixed flex justify-between items-center top-0 w-full z-50 backdrop-blur-xl bg-black/30 border-b border-white/10">
+    <div class="w-full mx-auto px-8 py-5 flex justify-between items-center">
+      <div class="text-xl font-light w-full flex justify-between items-center">
+        <img src="{%static 'home_media/tesla_2.png'%}" alt="" class="max-h-[1.5em] w-auto">
+        {%if request.user.is_authenticated%}
+        <a href="{% url 'dashboard' %}" class="btn p-2 m-2 btn-ghost rounded-full">
+          <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path
+              d="M8.5 10.5c0 2 1.5 3.5 3.5 3.5s3.5-1.5 3.5-3.5S14 7 12 7s-3.5 1.5-3.5 3.5m5 0c0 .88-.62 1.5-1.5 1.5s-1.5-.62-1.5-1.5S11.12 9 12 9s1.5.62 1.5 1.5">
+            </path>
+            <path
+              d="m20.53 7.15-8-5c-.32-.2-.74-.2-1.06 0l-8 5c-.29.18-.47.5-.47.85v8c0 .34.18.67.47.85l8 5a1.01 1.01 0 0 0 1.06 0l8-5c.29-.18.47-.5.47-.85V8c0-.34-.18-.67-.47-.85M12 19.82l-3.1-1.94c.55-.56 1.29-.88 2.1-.88h2c.8 0 1.55.32 2.1.88zm7-4.38-2.19 1.37A4.97 4.97 0 0 0 13 15h-2c-1.48 0-2.87.68-3.81 1.81L5 15.44V8.55l7-4.38 7 4.38z">
+            </path>
+          </svg>
+        </a>
+        {%else%}
+
+        <a href="{% url 'signup' %}" class="btn text-black btn-sm">Sign in</a>
+
+
+        {%endif%}
+      </div>
+
+    </div>
+
+  </nav>
+
+
+  <!-- ================= HERO ================= -->
+  <section class="relative h-screen flex items-center justify-center text-center">
+
+    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=2100&q=90"
+      class="absolute inset-0 w-full h-full object-cover">
+
+    <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black"></div>
+
+    <div class="relative z-10 max-w-5xl px-6 fade-up">
+      <div class="flex items-center justify-center p-2">
+        <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tag.js"></script>
+
+        <tv-ticker-tag symbol="NASDAQ:TSLA"></tv-ticker-tag>
+
+      </div>
+      <h1 class="text-6xl md:text-8xl font-light leading-tight mb-8">
+        Invest in
+        <span class="font-semibold">Tesla, Build your Future..</span>
+      </h1>
+
+      <p class="text-xl text-white max-w-2xl mx-auto mb-12">
+        A vertically integrated investment and acquisition platform engineered
+        for Tesla equity holders and luxury vehicle clientele.
+      </p>
+
+      <div class="flex justify-center gap-6 flex-wrap">
+        <a href="{% url 'buy_stock' %}"
+          class="px-10 py-4 bg-white text-black font-medium tracking-wide hover:bg-gray-200 transition duration-300">
+          Start Investing
+        </a>
+        <a href="#invest"
+          class="px-10 py-4 border border-white hover:bg-white hover:text-black transition duration-300">
+          Explore Tesla
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= INVESTMENT SECTION ================= -->
+  <section id="invest" class="py-32 bg-black">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="text-start p-2" data-aos="fade-up">
+        <button class="mb-4">
+          Interest earned <div class="badge badge-sm badge-success">+ $240.67</div>
+        </button>
+        <h2 class="text-5xl font-bold mb-6">Join the List of Institutional-Grade Investors.</h2>
+        <p class="text-gray-400 max-w-3xl mx-auto flex gap-2 mb-6">
+          <svg class="w-24 h-24 -mt-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path
+              d="M14.5 11h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-5c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5m.5-6h4v4h-4zM9.5 3h-5C3.67 3 3 3.67 3 4.5v15c0 .83.67 1.5 1.5 1.5h5c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5M9 19H5V5h4zm7.16-2.4-1.98-1.83-1.36 1.46 3.42 3.17 4.98-5.21-1.44-1.38z">
+            </path>
+          </svg>
+          With the Integration of Advanced analytics, Precision allocations and Real-time performance dashboards.
+          <br>
+          <br>
+          Embrace the freedom of the world's largest fast-charging network, where you can finally hit the road for that
+          epic trip you've always dreamed of—all while jamming to Caraoke, streaming on Tesla Theater and letting the
+          in-car Trip Planner guide your journey. Terms and conditions apply.
+        </p>
+        <a href="{% url 'buy_stock' %}" class="flex hap-2 hover:px-4 items-center p-2 bg-green-500 border text-black w-70">
+          <!-- <a href="/" class="">Start trading</a> --> <span>Start trading</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="" fill="currentColor" viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path d="M6 13h8.09l-3.3 3.29 1.42 1.42 5.7-5.71-5.7-5.71-1.42 1.42 3.3 3.29H6z"></path>
+          </svg>
+        </a>
+      </div>
+      <br>
+      <div class="text-start p-2" data-aos="fade-up">
+        <button class="mb-4">
+          Portfolio growth <div class="badge badge-sm badge-warning text-black">+ 7%</div>
+        </button>
+        <h2 class="text-5xl font-bold mb-6 flex">Achieve Alpha-Grade  with Confidence.</h2>
+        <p class="text-gray-400 max-w-3xl mx-auto flex gap-2 mb-6">
+          <svg class="w-24 h-24 -mt-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path
+              d="M14.5 11h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-5c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5m.5-6h4v4h-4zM9.5 3h-5C3.67 3 3 3.67 3 4.5v15c0 .83.67 1.5 1.5 1.5h5c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5M9 19H5V5h4zm7.16-2.4-1.98-1.83-1.36 1.46 3.42 3.17 4.98-5.21-1.44-1.38z">
+            </path>
+          </svg>
+          Powered by Institutional-grade analytics, algorithmic allocation strategies, and real-time performance tracking.
+          <br>
+          <br>
+          Unlock seamless access to the world’s most advanced execution network—engineered for speed, reliability, and
+          precision. Execute complex strategies with confidence using our institutional dashboard, comprehensive
+          research tools, and dedicated market insights. Terms and conditions apply.
+        </p>
+        <a href="{% url 'buy_stock' %}" class="flex hap-2 hover:px-4 items-center p-2 bg-warning border text-black w-70">
+          <!-- <a href="/" class="">Start trading</a> --> <span>Start growing</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="" fill="currentColor" viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path d="M6 13h8.09l-3.3 3.29 1.42 1.42 5.7-5.71-5.7-5.71-1.42 1.42 3.3 3.29H6z"></path>
+          </svg>
+        </a>
+      </div>
+      <br>
+      <div class="text-start p-2" data-aos="fade-up">
+        <button class="mb-4">
+          Efficiency gain <div class="badge badge-sm badge-primary">+ $10,000</div>
+        </button>
+        <h2 class="text-5xl font-bold mb-6">Elevate Your Strategy with Next-Generation Infrastructure.</h2>
+        <p class="text-gray-400 max-w-3xl mx-auto flex gap-2 mb-6">
+          <svg class="w-24 h-24 -mt-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path
+              d="M14.5 11h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-5c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5m.5-6h4v4h-4zM9.5 3h-5C3.67 3 3 3.67 3 4.5v15c0 .83.67 1.5 1.5 1.5h5c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5M9 19H5V5h4zm7.16-2.4-1.98-1.83-1.36 1.46 3.42 3.17 4.98-5.21-1.44-1.38z">
+            </path>
+          </svg>
+          Streamlined operations through automated execution, intelligent risk modeling, and dynamic portfolio tools.
+          <br>
+          <br>
+          Experience the freedom of a fully integrated ecosystem designed for modern investors. Execute with precision,
+          monitor with clarity, and adapt instantly using our adaptive dashboards, automated reporting, and
+          institutional-grade infrastructure. Terms and conditions apply.
+        </p>
+        <a href="{% url 'buy_stock' %}" class="flex hap-2 hover:px-4 items-center p-2 bg-primary border text-white w-70">
+          <!-- <a href="/" class="">Start trading</a> --> <span>Start building</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="" fill="currentColor" viewBox="0 0 24 24">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path d="M6 13h8.09l-3.3 3.29 1.42 1.42 5.7-5.71-5.7-5.71-1.42 1.42 3.3 3.29H6z"></path>
+          </svg>
+        </a>
+      </div>
+
+
+
+    </div>
+  </section>
+
+  <!-- <br> -->
+  <div id="vehicles" class="h-80 flex items-center justify-center relative">
+    <span class="text-[3.2em] text-center font-bold absolute top-15 left-0 right-0 z-19" data-aos="fade-down"
+      data-aos-duration="800">CYBERTRUCK</span>
+    <img src="{%static 'home_media/cbt.png'%}" alt="" class="z-20 max-w-[400px] w-auto" data-aos="fade-up"
+      data-aos-duration="500">
+
+  </div>
+  <br>
+  <div class="h-80 flex items-center justify-center relative">
+    <span class="text-[3.2em] text-center font-bold absolute top-15 left-0 right-0 z-19" data-aos="fade-up"
+      data-aos-duration="800">MODEL S</span>
+    <img src="{%static 'home_media/mdy.png'%}" alt="" class="z-20 max-w-[400px] w-auto" data-aos="fade-down"
+      data-aos-duration="500">
+
+  </div>
+  <br>
+  <div class="h-80 flex items-center justify-center relative">
+    <span class="text-[3.2em] text-center font-bold absolute top-15 left-0 right-0 z-19" data-aos="fade-down"
+      data-aos-duration="800">CYBER QUAD</span>
+    <img src="{%static 'home_media/cbq.png'%}" alt="" class="z-20 max-w-[200px] w-auto" data-aos="fade-up"
+      data-aos-duration="500">
+
+  </div>
+  <br>
+  <div class="grid md:grid-cols-2 gap-20 items-center px-8">
+
+
+    <!-- Right Text -->
+    <div
+      class="fade-up bg-white/5 backdrop-blur-2xl border border-red-500 p-6 rounded-0 shadow-2xl flex flex-col items-start">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mb-4 w-16 h-16" width="36" height="36" fill="currentColor"
+        viewBox="0 0 24 24">
+        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+        <path d="M4 2H2v19c0 .55.45 1 1 1h19v-2H4z"></path>
+        <path d="M6 6h2v7H6zm4-3h2v6h-2zm4 3h2v3h-2zm4 0h2v12h-2z"></path>
+      </svg>
+      <h3 class="text-3xl font-bold mb-4">Strategic Capital Architecture</h3>
+      <p class="text-gray-400 mb-6 leading-relaxed">
+        TeslaInvest provides curated stock acquisition pathways,
+        AI-powered predictive modeling, and diversified long-term equity
+        strategies designed for serious capital allocators.
+      </p>
+      <div class="flex hap-2 items-center p-2 bg-red-500 border text-white">
+        <a href="/" class="">Start trading</a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path d="M6 13h8.09l-3.3 3.29 1.42 1.42 5.7-5.71-5.7-5.71-1.42 1.42 3.3 3.29H6z"></path>
+        </svg>
+      </div>
+
+      <!-- <ul class="space-y-2 text-gray-300">
+            <li>• Algorithmic Market Analysis</li>
+            <li>• Risk Mitigation Framework</li>
+            <li>• Institutional Liquidity Support</li>
+            <li>• Secure Asset Custody</li>
+          </ul> -->
+    </div>
+    <!-- <br> -->
+    <div
+      class="fade-up bg-white/5 backdrop-blur-2xl border border-blue-500 p-6 rounded-0 shadow-2xl flex flex-col items-start">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mb-4 w-16 h-16" width="36" height="36" fill="currentColor"
+        viewBox="0 0 24 24">
+        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+        <path d="M9 5c-1.1 0-2 .9-2 2v8h2V7h2v8h2V7c0-1.1-.9-2-2-2H9zm4 0v10h2v-4h2c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-4zm2 2h2v2h-2V7zM5 19h14v2H5z"></path>
+      </svg>
+      <h3 class="text-3xl font-bold mb-4">Algorithmic Intelligence Framework</h3>
+      <p class="text-gray-400 mb-6 leading-relaxed">
+        Harness real-time market signals, machine learning forecasts, and
+        adaptive risk algorithms that optimize entry and exit points with
+        institutional-grade precision for sophisticated investors.
+      </p>
+      <div class="flex hap-2 items-center p-2 bg-blue-500 border text-white">
+        <a href="/" class="">Start analyzing</a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path d="M6 13h8.09l-3.3 3.29 1.42 1.42 5.7-5.71-5.7-5.71-1.42 1.42 3.3 3.29H6z"></path>
+        </svg>
+      </div>
+
+      <!-- <ul class="space-y-2 text-gray-300">
+            <li>• Algorithmic Market Analysis</li>
+            <li>• Risk Mitigation Framework</li>
+            <li>• Institutional Liquidity Support</li>
+            <li>• Secure Asset Custody</li>
+          </ul> -->
+    </div>
+    <!-- <br> -->
+    <div
+      class="fade-up bg-white/5 backdrop-blur-2xl border border-emerald-500 p-6 rounded-0 shadow-2xl flex flex-col items-start">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mb-4 w-16 h-16" width="36" height="36" fill="currentColor"
+        viewBox="0 0 24 24">
+        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.88 9.54L8.92 16.5l-1.41-1.41 4.96-4.96L10.34 8l5.65.01.01 5.65-2.12-2.12z"></path>
+      </svg>
+      <h3 class="text-3xl font-bold mb-4">Sustainable Wealth Architecture</h3>
+      <p class="text-gray-400 mb-6 leading-relaxed">
+        Build generational wealth through disciplined capital deployment,
+        defensive position management, and compounding strategies engineered
+        to preserve principal while capturing asymmetric upside potential.
+      </p>
+      <div class="flex hap-2 items-center p-2 bg-emerald-500 border text-white">
+        <a href="/" class="">Start preserving</a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path d="M6 13h8.09l-3.3 3.29 1.42 1.42 5.7-5.71-5.7-5.71-1.42 1.42 3.3 3.29H6z"></path>
+        </svg>
+      </div>
+
+      <!-- <ul class="space-y-2 text-gray-300">
+            <li>• Algorithmic Market Analysis</li>
+            <li>• Risk Mitigation Framework</li>
+            <li>• Institutional Liquidity Support</li>
+            <li>• Secure Asset Custody</li>
+          </ul> -->
+    </div>
+
+  </div>
+  <br>
+
+  
+  <!-- ================= FINAL CTA ================= -->
+  <section class="py-32 flex flex-col items-center justify-center bg-black text-center">
+
+
+    <h2 class="text-5xl font-light mb-6">Build Legacy Capital</h2>
+    <p class="text-gray-400 mb-12">Access private investor onboarding today.</p>
+
+    <a href="#" class="px-12 py-4 bg-white text-black tracking-wide hover:bg-gray-200 transition">
+      Claim free cybertruck
+    </a>
+
+  </section>
+  <!-- <br> -->
+  <!-- <div class="h-screen py-12 flex items-center justify-center">
+    <img src="{%static 'home_media/cbtt.png'%}" alt="" class="max-w-full h-auto w-auto">
+
+  </div> -->
+  <!-- <br> -->
+
+  <!-- ================= FOOTER ================= -->
+<div class="flex items-center justify-center">
+  <img src="{%static 'home_media/tesla_1.png'%}" alt="" class="max-w-[1.8em] w-auto">
+
+</div>
+  <br>
+  <script>
+    AOS.init();
+  </script>
+
+  <script>
+    // Initialize Alpine.js data
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('navbar', () => ({
+        mobileMenuOpen: false
+      }))
+    })
+  </script>
+</body>

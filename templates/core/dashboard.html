@@ -1,0 +1,133 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row gap-6 h-screen">
+    <!-- Sidebar -->
+    
+
+    <!-- Main Content -->
+    <div class="flex-1 space-y-6">
+        <!-- Wallet Card -->
+        <div class="w-full flex justify-between">
+            {%include 'core/wallet.html'%}
+            <div class="flex items-center justify-center">
+                <img src="{%static 'home_media/tesla_1.png'%}" alt="" class="max-w-[1.8em] w-auto mr-3">
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Portfolio Summary -->
+        <div class="rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-4">My Stock</h2>
+            {% if holdings %}
+            <p class="text-gray-600">TSLA: {{ holdings.0.quantity|floatformat:2 }} shares</p>
+            <p class="text-gray-600">Current value: ${{ holdings.0.current_value|floatformat:2 }}</p>
+            <p class="text-gray-600">+12% today</p>
+            <br>
+            <a href="{% url 'portfolio' %}" class="mt-4 inline-block text-blue-400 hover:underline">View Portfolio →</a>
+
+            {% else %}
+            <div class="min-h-36 flex flex-col items-center justify-center border border-white/30 py-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-600" width="24" height="24" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                    <path
+                        d="M10 5H9V2H7v3H6c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1M9 17H7V7h2zm9-10h-1V4h-2v3h-1c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1m-1 8h-2V9h2z">
+                    </path>
+                </svg>
+                <p class="text-gray-600">You don't have any stock yet.</p>
+                <a href="{% url 'buy_stock' %}" class=" inline-block btn btn-link text-blue-600 hover:underline">Buy
+                    Stock</a>
+
+
+            </div>
+            {% endif %}
+        </div>
+        <!-- <br> -->
+        
+        <!-- <br> -->
+        <!-- <div class="flex w-full items-center justify-between">
+            <a href="{% url 'vehicles:vehicle_list' %}" class="text-gray-800 btn w-50 hover:text-blue-600">Portfolio</a>
+            <a href="{% url 'vehicles:my_shares' %}" class="text-gray-800 btn w-50 hover:text-blue-600">My Shares</a>
+        </div> -->
+        <br>
+
+        <!-- Recent Transactions -->
+        <div class="rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-4">Recent Transactions</h2>
+            <!-- From Uiverse.io by seyed-mohsen-mousavi -->
+            {% if not recent_transactions %}
+            <div class="min-h-36 flex flex-col items-center justify-center border border-white/30 py-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" class="text-gray-600" height="24" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                    <path d="M5 21h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2M5 5h14v14H5z">
+                    </path>
+                    <path d="M7 15h10v2H7zm0-8h6v6H7z"></path>
+                </svg>
+                <p class="text-gray-600">Your wallet transactions will appear here.</p>
+                <!-- <a href="{% url 'buy_stock' %}" class=" inline-block text-blue-600 hover:underline">Buy Stock</a> -->
+
+
+            </div>
+
+            {% else %}
+
+            <ul class="divide-y flex flex-col space-y-2">
+                {% for tx in recent_transactions %}
+                <div class="alert alert-vertical sm:alert-horizontal">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        class="stroke-info h-6 w-6 shrink-0">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h3 class="font-bold">New message!</h3>
+                        <div class="text-xs">You have 1 unread message</div>
+                    </div>
+                    <!-- <button class="btn btn-sm">See</button> -->
+                </div>
+                <div class="flex flex-col gap-2 w-60 sm:w-72 text-[10px] sm:text-xs z-50">
+                    <div
+                        class="succsess-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-[#232531] px-[10px]">
+                        <div class="flex gap-2">
+                            <div class="text-[#2b9875] bg-white/5 backdrop-blur-xl p-1 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-white">done successfully :)</p>
+                                <p class="text-gray-500">This is the description section</p>
+                            </div>
+                        </div>
+                        <button
+                            class="text-gray-600 text-gray-600 hover:bg-white/5 p-1 rounded-md transition-colors ease-linear">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <li class="py-2 flex justify-between">
+                    <span></span>
+                    <span class="text-sm text-gray-500">{{ tx.created_at|date:"M d, H:i" }}</span>
+                </li>
+
+                {% endfor %}
+            </ul>
+            <a href="{% url 'transaction_list' %}" class="mt-4 inline-block text-blue-600 hover:underline">View All
+                →</a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

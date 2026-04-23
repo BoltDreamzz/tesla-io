@@ -1,0 +1,61 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Pending Transactions</h1>
+    
+    {% if pending_transactions %}
+    <div class="overflow-x-auto">
+        <table class="w-full bg-white/5 border border-gray-700">
+            <thead>
+                <tr class="border-b border-gray-700">
+                    <th class="p-3 text-left">Reference ID</th>
+                    <th class="p-3 text-left">User</th>
+                    <th class="p-3 text-left">Amount</th>
+                    <th class="p-3 text-left">Payment Method</th>
+                    <th class="p-3 text-left">Payment Reference</th>
+                    <th class="p-3 text-left">Proof</th>
+                    <th class="p-3 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in pending_transactions %}
+                <tr class="border-b border-gray-700 hover:bg-white/5">
+                    <td class="p-3">{{ transaction.reference_id }}</td>
+                    <td class="p-3">
+                        {{ transaction.user.username }}<br>
+                        <small class="text-gray-500">{{ transaction.user.email }}</small>
+                    </td>
+                    <td class="p-3">${{ transaction.amount }}</td>
+                    <td class="p-3">{{ transaction.get_payment_method_display }}</td>
+                    <td class="p-3">{{ transaction.payment_reference }}</td>
+                    <td class="p-3">
+                        {% if transaction.proof_of_payment %}
+                        <a href="{{ transaction.proof_of_payment.url }}" target="_blank" 
+                           class="text-blue-500 hover:underline">View Proof</a>
+                        {% endif %}
+                    </td>
+                    <td class="p-3">
+                        <div class="flex gap-2">
+                            <a href="{% url 'admin_process_transaction' transaction.id 'approve' %}" 
+                               class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                                Approve
+                            </a>
+                            <a href="{% url 'admin_process_transaction' transaction.id 'decline' %}" 
+                               class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                Decline
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <p class="text-gray-400">No pending transactions to review.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
