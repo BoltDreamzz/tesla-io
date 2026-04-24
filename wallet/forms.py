@@ -9,7 +9,7 @@ from .models import Transaction
 
 class DepositForm(forms.Form):
     PAYMENT_CHOICES = [
-        ('bank_transfer', 'Bank Transfer'),
+        # ('bank_transfer', 'Bank Transfer'),
         ('usdt', 'USDT (ERC-20)'),
         ('btc', 'Bitcoin'),
         ('usdc', 'USDC'),

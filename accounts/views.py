@@ -107,32 +107,57 @@ def custom_login(request):
     return render(request, 'accounts/login.html', {'form': form})
 
 
+# def signup(request):
+#     """Registration with OTP verification"""
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+        
+#         # Check for duplicate email before full validation
+#         email = request.POST.get('email')
+#         if email and User.objects.filter(email=email).exists():
+#             messages.info(request, 'This email is already registered. Please login instead.')
+#             return redirect('login')
+        
+#         if form.is_valid():
+#             user = form.save()
+#             request.session['pending_user_id'] = user.id
+#             # login(request, user)
+#             success, message = send_verification_otp(user, request)
+            
+#             if success:
+#                 messages.success(request, 'Account created! Please verify your email to finish up.')
+#                 return redirect('verify_otp')
+#             else:
+#                 messages.error(request, f'Failed to send verification code: {message}')
+#                 return redirect('verify_otp')
+#     else:
+#         form = SignUpForm()
+#     return render(request, 'accounts/signup.html', {'form': form})
+
 def signup(request):
-    """Registration with OTP verification"""
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        
-        # Check for duplicate email before full validation
+
         email = request.POST.get('email')
         if email and User.objects.filter(email=email).exists():
             messages.info(request, 'This email is already registered. Please login instead.')
             return redirect('login')
-        
+
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+
+            request.session['pending_user_id'] = user.id
+
             success, message = send_verification_otp(user, request)
-            
-            if success:
-                messages.success(request, 'Account created! Please verify your email to finish up.')
-                return redirect('verify_otp')
-            else:
-                messages.error(request, f'Failed to send verification code: {message}')
-                return redirect('verify_otp')
+
+            messages.success(request, 'Account created! Verify OTP to activate.')
+            return redirect('verify_otp')
     else:
         form = SignUpForm()
-    return render(request, 'accounts/signup.html', {'form': form})
 
+    return render(request, 'accounts/signup.html', {'form': form})
 
 
 # @login_required

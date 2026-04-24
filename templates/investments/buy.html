@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load humanize %}
 {% block title %}Buy shares{% endblock %}
 
 
@@ -85,8 +86,8 @@
             </ol> -->
             <p class="text-red-500 font-semibold flex">
                 Don't have enough funds in your wallet? <a href="{% url 'deposit' %}"
-                    class="text-blue-500 ml-2 font-bold flex items-center"><svg xmlns="http://www.w3.org/2000/svg"
-                        width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                    class="text-blue-500 ml-2 font-bold "><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        fill="currentColor" viewBox="0 0 24 24">
                         <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
                         <path d="M5 2H2v2h2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4h2V2zm13 18H6V4h12z"></path>
                         <path
@@ -160,45 +161,41 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-
-        <!-- <p class="text-sm text-gray-600 mt-2">Total Cost: </p> -->
-        <br>
-        <a class="w-full bg-red-600 cursor-pointer text-white w-full px-4 py-2 hover:bg-red-700 mt-6"
-            onclick="my_modal_5.showModal()">Preview
-            Order</a>
-
-        <!-- <button type="submit" class=""> -->
-        <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-            <div class="stats shadow">
-                
-
-                
-
-                
-            </div>
-            <div class="modal-box bg-black text-white">
-                <h3 class="text-lg font-bold">Confirm purchase</h3>
-                <div class="stat place-items-center">
-                    <div class="stat-title">Total Cost:</div>
-                    <div class="stat-value text-secondary">$<span id="total-cost">0.00</span></div>
-                    <div class="stat-desc text-secondary">↗︎ 40 (2%)</div>
-                </div>
-                <div class="modal-action">
-                    <form method="dialog">
-                        <button class="w-full bg-red-600 text-white px-4 py-2 hover:bg-red-700 mt-6"
-                            type="submit">Preview
-                            Order</button>
-                        <!-- if there is a button in form, it will close the modal -->
-                        <button class="btn">Close</button>
-                    </form>
-                </div>
-            </div>
-        </dialog>
+        <a class="w-full bg-red-600 cursor-pointer text-white px-4 py-2 hover:bg-red-700 mt-6"
+            onclick="document.getElementById('my_modal_5').showModal()">
+            Preview Order
+        </a>
     </form>
+
+    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box bg-black text-white">
+            <h3 class="text-lg font-bold">Confirm purchase</h3>
+
+            <div class="stat place-items-center">
+                <div class="stat-title">Total Cost:</div>
+                <div class="stat-value text-secondary">
+                    $<span id="total-cost">0.00</span>
+                </div>
+            </div>
+
+            <div class="modal-action flex flex-col gap-3 w-full">
+                <!-- This submits the REAL form -->
+                <button type="submit" form="buy-form"
+                    class="w-full bg-red-600 text-white px-4 py-2 hover:bg-red-700 mt-6">
+                    Confirm Order
+                </button>
+
+                <!-- This only closes modal -->
+                <button type="button" class="btn btn-link text-red-500" onclick="document.getElementById('my_modal_5').close()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </dialog>
 
     <script>
         const quantityInput = document.getElementById('id_quantity');
-        const price = {{ stock.current_price }};
+        const price = {{ stock.current_price| intcomma }};
         const totalSpan = document.getElementById('total-cost');
         quantityInput.addEventListener('input', function () {
             const qty = parseFloat(this.value) || 4;

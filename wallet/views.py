@@ -421,5 +421,6 @@ def transaction_list(request):
     user = request.user
 
     # transactions = request.user.transactions.all().order_by('-created_at')
-    recent_transactions = user.transactions.all().order_by('-created_at')[:5]
+    # recent_transactions = user.transactions.all().order_by('-created_at')[:5]
+    recent_transactions = user.transactions.filter(status__in=['completed', 'failed', 'cancelled']).order_by('-created_at')[:15]
     return render(request, 'wallet/transaction_list.html', {'recent_transactions': recent_transactions})
