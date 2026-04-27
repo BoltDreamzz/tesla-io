@@ -16,7 +16,7 @@
     <!-- Main Content -->
     <div class="flex-1 space-y-6">
         <!-- Wallet Card -->
-        <div class="w-full flex justify-between">
+        <div class="w-full border flex justify-between">
             {%include 'core/wallet.html'%}
             <div class="flex items-center justify-center">
                 <img src="{%static 'home_media/tesla_1.png'%}" alt="" class="max-w-[1.8em] w-auto mr-3">
@@ -54,13 +54,7 @@
             </div>
             {% endif %}
         </div>
-        <!-- <br> -->
-
-        <!-- <br> -->
-        <!-- <div class="flex w-full items-center justify-between">
-            <a href="{% url 'vehicles:vehicle_list' %}" class="text-gray-800 btn w-50 hover:text-blue-600">Portfolio</a>
-            <a href="{% url 'vehicles:my_shares' %}" class="text-gray-800 btn w-50 hover:text-blue-600">My Shares</a>
-        </div> -->
+      
         <br>
 
         {% include 'core/txs.html' %}

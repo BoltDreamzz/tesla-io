@@ -2,208 +2,23 @@
 {% load static %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto py-12 px-4">
-    <div class="rounded-lg shadow-md p-8 w-full bg-white">
-        <div class="text-center">
-            <div class="text-yellow-500 text-6xl mb-4">✉️</div>
-            <h2 class="text-2xl font-bold mb-4">Verify Your Email Address</h2>
-            
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <p class="text-gray-700 mb-2">
-                    We've sent a verification code to:
-                </p>
-                <p class="text-lg font-semibold text-blue-600">
-                    {{ user.email }}
-                </p>
-                <div class="mt-3 pt-2 border-t border-blue-200">
-                    <p class="text-sm text-gray-600 mb-2">
-                        Wrong email address?
-                    </p>
-                    <a href="{% url 'signup' %}" 
-                       class="inline-block text-sm text-blue-600 hover:text-blue-800 hover:underline">
-                        ← Click here to register again with the correct email
-                    </a>
-                </div>
-            </div>
-            
-            <!-- OTP Verification Form -->
-            <div class="bg-white rounded-lg mb-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Enter Verification Code</h3>
-                
-                <form method="post" action="{% url 'verify_otp' %}" class="space-y-4" id="otpForm">
-                    {% csrf_token %}
-                    
-                    <div>
-                        <input type="text" 
-                               name="otp" 
-                               id="otpInput"
-                               class="w-48 text-center text-2xl tracking-widest border border-gray-300 rounded-lg px-4 py-3 mx-auto block focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="000000"
-                               maxlength="6"
-                               autocomplete="off"
-                               required>
-                        <p class="text-xs text-gray-500 text-center mt-2">
-                            Code expires in <span id="timer" class="font-mono font-bold">10:00</span>
-                        </p>
-                    </div>
-                    
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="{% if message.tags == 'success' %}bg-green-50 border-green-200 text-green-600{% else %}bg-red-50 border-red-200 text-red-600{% endif %} border rounded-lg p-3">
-                                <p class="text-sm">{{ message }}</p>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                    
-                    <button type="submit" id="verifyBtn"
-                            class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200 inline-flex items-center justify-center disabled:opacity-50">
-                        <span class="btn-text">Verify Email</span>
-                        <span class="btn-loading hidden">
-                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Verifying...
-                        </span>
-                    </button>
-                </form>
-            </div>
-            
-            <div class="space-y-4">
-                <p class="text-gray-600">
-                    Didn't receive the code? Check your spam folder or request a new one.
-                </p>
-                
-                <div class="flex flex-col justify-center space-y-2 items-center w-full">
-                    <a href="{% url 'resend_otp' %}" 
-                       class="text-blue-600 hover:text-blue-800 font-medium">
-                        Resend Verification Code
-                    </a>
-                    
-                    <a href="{% url 'logout' %}" 
-                       class="text-red-600 text-sm hover:text-red-800 hover:underline mt-2">
-                        Logout
-                    </a>
-                </div>
-            </div>
-            
-            <div class="mt-6 pt-6 border-t border-gray-200">
-                <p class="text-sm text-gray-500">
-                    Need help? Contact our support team at support@teslainvest.com
-                </p>
-            </div>
-        </div>
-    </div>
+<div class="py-3 space-y-3 flex flex-col items-center ">
+    <h1 class="text-xl font-bold">Payment {{transaction.status}}</h1>
+    {% if transaction.status == 'pending' or transaction.status == 'payment_pending' %}
+    <p class="text-gray-600 text-center">Your payment is currently pending. Your wallet is expected to be creditted in a
+        few mins after we have verified your payment..</p>
+    {% elif transaction.status == 'completed' %}
+    <p class="text-gray-600 text-center">Your payment has been approved successfully. Your funds have been transferred
+        to your wallwt balance..</p>
+    {% else %}
+    <p class="text-gray-600 text-center">Your payment could not be completed. Try making another deposit.</p>
+
+    {% endif %}
+    <a href="{% url 'dashboard' %}" class="btn btn-link text-red-600 hover:underline">Go Home.</a>
+
+
 </div>
 
-<script>
-    // Auto-focus on OTP input when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        const otpInput = document.getElementById('otpInput');
-        if (otpInput) {
-            otpInput.focus();
-        }
-    });
-    
-    // OTP Input - Auto submit when 6 digits entered
-    const otpInput = document.getElementById('otpInput');
-    
-    if (otpInput) {
-        otpInput.addEventListener('input', function(e) {
-            // Only allow numbers
-            this.value = this.value.replace(/[^0-9]/g, '');
-            
-            // Auto submit if 6 digits entered
-            if (this.value.length === 6) {
-                document.getElementById('verifyBtn').click();
-            }
-        });
-    }
-    
-    // Countdown timer for OTP expiry (10 minutes)
-    let otpExpiryTime = localStorage.getItem('otpExpiryTime');
-    const timerElement = document.getElementById('timer');
-    
-    function startOTPExpiryTimer() {
-        if (!otpExpiryTime) {
-            // Set expiry to 10 minutes from now
-            otpExpiryTime = new Date().getTime() + (10 * 60 * 1000);
-            localStorage.setItem('otpExpiryTime', otpExpiryTime);
-        }
-        
-        function updateExpiryTimer() {
-            const now = new Date().getTime();
-            const distance = parseInt(otpExpiryTime) - now;
-            
-            if (distance <= 0) {
-                if (timerElement) {
-                    timerElement.textContent = '00:00';
-                    timerElement.classList.add('text-red-600');
-                }
-                return;
-            }
-            
-            const minutes = Math.floor(distance / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            if (timerElement) {
-                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-            
-            setTimeout(updateExpiryTimer, 1000);
-        }
-        
-        updateExpiryTimer();
-    }
-    
-    // Start timer if element exists
-    if (timerElement) {
-        startOTPExpiryTimer();
-    }
-    
-    // Form submission loading state
-    const form = document.getElementById('otpForm');
-    const verifyBtn = document.getElementById('verifyBtn');
-    
-    if (form && verifyBtn) {
-        form.addEventListener('submit', function(e) {
-            const textSpan = verifyBtn.querySelector('.btn-text');
-            const loadingSpan = verifyBtn.querySelector('.btn-loading');
-            
-            if (textSpan && loadingSpan) {
-                verifyBtn.disabled = true;
-                textSpan.classList.add('hidden');
-                loadingSpan.classList.remove('hidden');
-                loadingSpan.classList.add('flex');
-            }
-        });
-    }
-    
-    // Clear OTP expiry on successful verification (will be handled by redirect)
-    // If user verifies successfully, localStorage will be cleared on next visit
-    window.addEventListener('beforeunload', function() {
-        // Don't clear here, let it persist until expiration
-    });
-</script>
 
-<style>
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    
-    .animate-spin {
-        animation: spin 1s linear infinite;
-    }
-    
-    /* Disable number input spinners */
-    #otpInput::-webkit-outer-spin-button,
-    #otpInput::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    
-    #otpInput[type=number] {
-        -moz-appearance: textfield;
-    }
-</style>
+
 {% endblock %}

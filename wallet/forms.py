@@ -28,7 +28,7 @@ class DepositForm(forms.Form):
     payment_method = forms.ChoiceField(
         choices=PAYMENT_CHOICES,
         widget=forms.Select(attrs={
-            'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white focus:text-black'
+            'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
         })
     )
 

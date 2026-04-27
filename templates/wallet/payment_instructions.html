@@ -38,11 +38,11 @@
     <div class="absolute inset-0 bg-black/50" data-role="guide-backdrop"></div>
 
     <!-- Sliding Panel -->
-    <div id="guidePanel"
-        class="relative w-full max-w-2xl bg-white rounded-t-2xl p-6 shadow-2xl transform translate-y-full transition-transform duration-500">
+    <!-- <div id="guidePanel"
+        class="relative w-full max-w-2xl bg-black rounded-t-2xl p-4 shadow-2xl transform translate-y-full transition-transform duration-500">
 
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold">Quick Guide to Buying Shares</h2>
+            <h2 class="text-lg font-semibold">How to deposit funds`</h2>
             <button data-role="guide-close" class="text-gray-400 hover:text-red-500 text-2xl leading-none">
                 &times;
             </button>
@@ -72,7 +72,7 @@
                 Understood
             </button>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <script>
@@ -140,7 +140,7 @@
                 <div class="text-center">
                     {% if qr_code_base64 %}
                     <div class="p-3">
-                        <div class="bg-white rounded-lg inline-block">
+                        <div class="bg-white rounded-lg inline-block" id="wallet-card">
                             <img src="{{ qr_code_base64 }}" alt="QR Code" class="w-48 h-48 mx-auto">
                         </div>
                         <p class="text-sm text-gray-400 mt-2">Scan with your wallet app</p>
@@ -168,6 +168,7 @@
                     {% endif %}
                 </div>
                 <br>
+
                 <p class="flex items-center justify-between"><strong>Network:</strong> <span
                         class="text-warning text-2xl">{{ transaction.payment_method }} {{ payment_info.network }}</span>
                 </p>
@@ -254,11 +255,11 @@
     <div class="modal-box bg-black">
         <div class="flex items-center justify_between">
 
-            <h3 class="text-2xl font-bold mb-4">Upload proof</h3>
+            <h3 class="text-2xl font-bold mb-4">Almost done!</h3>
 
         </div>
         <p class="py-4">
-        <div class="border-t border-gray-700 pt-8">
+        <div class="border-gray-700">
             <div class="flex justify-between items-center">
                 <!-- <h3 class="text-2xl font-bold mb-4">Confirm Your Payment</h3> -->
 
@@ -305,7 +306,7 @@
                         </svg>
                         <p class="text-yellow-500 text-sm">
                             <strong>Important:</strong> Ensure your screenshot clearly shows:
-                            <br>- Amount sent (${{ transaction.amount }})
+                            <br>- Amount sent (${{ transaction.amount|intcomma }})
                             <br>- Recipient address (for crypto) or account number (for bank)
                         </p>
                     </div>
@@ -412,5 +413,66 @@
         }
     });
 </script>
+
+
+{% if payment_info %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const driver = window.driver.js.driver;
+
+        const hasSeenTour = localStorage.getItem("dashboard_tour_done");
+
+        function startTour() {
+            const tour = driver({
+                showProgress: true,
+                animate: true,
+                overlayOpacity: 0.7,
+                steps: [
+                    {
+                        element: '#wallet-card',
+                        popover: {
+                            title: 'Wallet QR',
+                            description: 'Scan QR code for easy payment.',
+                            position: 'bottom'
+                        }
+                    },
+                    {
+                        element: '#buy-shares-btn',
+                        popover: {
+                            title: 'Buy Tesla Shares',
+                            description: 'Click here to purchase shares. Minimum is 4 shares.',
+                            position: 'left'
+                        }
+                    },
+                    // {
+                    //     element: '#history-section',
+                    //     popover: {
+                    //         title: 'Transaction History',
+                    //         description: 'All your past investments and transactions appear here.',
+                    //         position: 'top'
+                    //     }
+                    // }
+                ],
+                onDestroyed: () => {
+                    localStorage.setItem("dashboard_tour_done", "true");
+                }
+            });
+
+            tour.drive();
+        }
+
+        // Auto start if not seen before
+        if (!hasSeenTour) {
+            startTour();
+        }
+
+        // Manual start button
+        const tourBtn = document.getElementById("start-tour-btn");
+        if (tourBtn) {
+            tourBtn.addEventListener("click", startTour);
+        }
+    });
+</script>
+{% endif %}
 
 {% endblock %}
