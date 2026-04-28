@@ -50,62 +50,50 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from django.contrib.auth.models import User
+from .forms import UserLoginForm
 
-def custom_login(request):
-    """Custom login view with email validation and proper error handling"""
-    
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        
-        # Get the username/email from the form
-        username_or_email = request.POST.get('username')
-        
-        # Check if the input is an email
-        if username_or_email and '@' in username_or_email:
-            # Try to find user by email
-            try:
-                user = User.objects.get(email=username_or_email)
-                username = user.username
-                # Update the form data with username
-                request.POST = request.POST.copy()
-                request.POST['username'] = username
-                # Recreate form with updated username
-                form = AuthenticationForm(request, data=request.POST)
-            except User.DoesNotExist:
-                # Email doesn't exist, redirect to signup
-                messages.warning(request, 'This email is not registered. Please create an account first.')
-                return redirect('signup')
-        
-        # Check if user exists (if input was username or we found email user)
-        if username_or_email:
-            # Check if user exists (using username)
-            user_exists = User.objects.filter(username=username_or_email).exists()
-            if not user_exists and '@' not in username_or_email:
-                messages.warning(request, 'This username does not exist. Please check your username or sign up.')
-                return redirect('signup')
-        
-        # Try to authenticate
+def login_view(request):
+    if request.method == "POST":
+        form = UserLoginForm(request.POST)
+
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        # 🔹 Early check — email must exist (same pattern as signup)
+        if email and not User.objects.filter(email=email).exists():
+            messages.warning(request, "This email is not registered. Please create an account.")
+            return redirect("signup")
+
         if form.is_valid():
-            # Get the authenticated user
-            user = form.get_user()
-            login(request, user)
-            
-            # Check if user wants to be remembered
-            if not request.POST.get('remember'):
-                request.session.set_expiry(0)  # Session expires when browser closes
-            
-            messages.success(request, f'Welcome back, {user.username}!')
-            return redirect('dashboard')  # Change to your home page URL name
-        else:
-            # Authentication failed (wrong password)
-            messages.error(request, 'Invalid username or password. Please try again.')
-            return render(request, 'accounts/login.html', {'form': form})
-    
-    else:
-        form = AuthenticationForm()
-    
-    return render(request, 'accounts/login.html', {'form': form})
+            # Get username from email
+            user_obj = User.objects.get(email=email)
 
+            user = authenticate(
+                request,
+                username=user_obj.username,
+                password=password
+            )
+
+            if user is not None:
+                # Ensure wallets exist
+                TotalWallet.objects.get_or_create(user=user)
+                InterestWallet.objects.get_or_create(user=user)
+
+                login(request, user)
+
+                messages.success(request, f"Welcome back, {user.username}!")
+
+                # Safe next redirect
+                next_url = request.POST.get("next") or request.GET.get("next")
+                return redirect(next_url) if next_url else redirect("dashboard")
+
+            else:
+                messages.error(request, "Invalid email or password.")
+
+    else:
+        form = UserLoginForm()
+
+    return render(request, "accounts/login.html", {"form": form})
 
 # def signup(request):
 #     """Registration with OTP verification"""
@@ -134,31 +122,56 @@ def custom_login(request):
 #         form = SignUpForm()
 #     return render(request, 'accounts/signup.html', {'form': form})
 
+# def signup(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+
+#         email = request.POST.get('email')
+#         if email and User.objects.filter(email=email).exists():
+#             messages.info(request, 'This email is already registered. Please login instead.')
+#             return redirect('login')
+
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.is_active = False
+#             user.save()
+
+#             request.session['pending_user_id'] = user.id
+
+#             success, message = send_verification_otp(user, request)
+
+#             messages.success(request, 'Account created! Verify OTP to activate.')
+#             return redirect('verify_otp')
+#     else:
+#         form = SignUpForm()
+
+#     return render(request, 'accounts/signup.html', {'form': form})
+
+
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
 
+        # Early duplicate email check (before form validation)
         email = request.POST.get('email')
         if email and User.objects.filter(email=email).exists():
             messages.info(request, 'This email is already registered. Please login instead.')
             return redirect('login')
 
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
+            user = form.save()  # user is active by default
 
-            request.session['pending_user_id'] = user.id
+            # Automatically log the user in
+            login(request, user)
 
-            success, message = send_verification_otp(user, request)
+            messages.success(request, 'Account created successfully. Login now!')
+            return redirect('login')  # or LOGIN_REDIRECT_URL
 
-            messages.success(request, 'Account created! Verify OTP to activate.')
-            return redirect('verify_otp')
     else:
         form = SignUpForm()
 
     return render(request, 'accounts/signup.html', {'form': form})
-
 
 # @login_required
 # def verify_otp(request):

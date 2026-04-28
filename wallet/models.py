@@ -14,7 +14,7 @@ class Deposit(models.Model):
     ]
     
     PAYMENT_METHODS = [
-        ('bank_transfer', 'Bank Transfer'),
+        # ('bank_transfer', 'Bank Transfer'),
         ('usdt', 'USDT'),
         ('btc', 'BTC'),
         ('usdc', 'USDC'),
