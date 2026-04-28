@@ -28,7 +28,7 @@ from . import views
 
 urlpatterns = [
     path('signup/', views.signup, name='signup'),
-     path('login/', views.login_view, name='login'),
+     path('login/', views.custom_login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('profile/', views.profile, name='profile'),
     path('password-change/', auth_views.PasswordChangeView.as_view(
