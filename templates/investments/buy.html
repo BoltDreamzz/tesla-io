@@ -126,13 +126,9 @@
 <div class="max-w-lg min-h-64 mx-auto rounded-lg bg-black shadow-md">
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold">Buy Tesla Stock ({{ stock.symbol }})</h2>
-        <span class="font-bold flex gap-1 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                fill="currentColor" viewBox="0 0 24 24">
-                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                <path
-                    d="M6.65 16h10.69c.64 0 .99-.76.56-1.24l-5.35-6.11a.753.753 0 0 0-1.13 0l-5.35 6.11c-.42.48-.08 1.24.56 1.24Z">
-                </path>
-            </svg><span class="text-blue-600">1 share = ${{ stock.current_price|floatformat:2 }}</span></span>
+
+
+
     </div>
 
     <!-- <p class="mb-2">Current Wallet Balance: <span class="font-bold">${{ wallet.balance|floatformat:2 }}</span></p> -->
@@ -145,7 +141,7 @@
     </p>
     <br>
 
-    <form method="post" id="buy-form" class="max-w-lg mx-auto shadow-md rounded-xl p-6 space-y-6">
+    <form method="post" id="buy-form" class="max-w-lg mx-auto shadow-md rounded-xl space-y-6">
         {% csrf_token %}
 
         <!-- Quantity Field -->
@@ -155,7 +151,7 @@
             </label>
 
             <input type="number" name="quantity" id="quantity-input" min="4" value="4" required
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition">
+                class="w-full border border-white rounded-0 px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition">
 
             <p class="text-xs text-gray-200">
                 Minimum purchase is <strong>4 shares</strong>.
@@ -163,12 +159,19 @@
         </div>
 
         <!-- Live Estimated Total -->
-        <div class="bg-gray-50 border rounded-lg p-4 flex justify-between items-center">
-            <span class="text-gray-600 font-medium">Estimated Total</span>
-            <span class="text-xl font-bold text-green-600">
-                $<span class="total-cost"></span>
-            </span>
+        <div class="flex flex-col p-4 border border-white rounded-0">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-200 font-medium">Estimated Total</span>
+                <span class="text-xl font-bold text-green-600">
+                    $<span class="total-cost"></span>
+                </span>
+
+
+            </div>
+            <span class="text-blue-600">1 TSLA = ${{ stock.current_price|floatformat:2 }}</span></span>
+
         </div>
+
 
         <!-- Preview Button -->
         <button type="button" onclick="document.getElementById('my_modal_5').showModal()"
@@ -183,26 +186,52 @@
 
             <div class="stat place-items-center">
                 <div class="stat-title">Total Cost:</div>
-                <div class="stat-value text-secondary">
-                    $<span class="total-cost"">0.00</span>
+                <div class="stat-value text-green-600">
+                    $<span class="total-cost">0.00</span>
                 </div>
             </div>
 
             <div class=" modal-action flex flex-col gap-3 w-full">
-                        <!-- This submits the REAL form -->
-                        <button type="submit" form="buy-form"
-                            class="w-full bg-red-600 text-white px-4 py-2 hover:bg-red-700 mt-6">
-                            Confirm Order
-                        </button>
+                <!-- This submits the REAL form -->
+                <button type="submit" form="buy-form" id="confirm-order-btn"
+                    class="w-full bg-red-600 text-white px-4 py-2 hover:bg-red-700 mt-6 flex items-center justify-center gap-2">
+                    <span class="btn-text">Confirm Order</span>
 
-                        <!-- This only closes modal -->
-                        <button type="button" class="btn btn-link text-red-500"
-                            onclick="document.getElementById('my_modal_5').close()">
-                            Close
-                        </button>
-                </div>
+                    <!-- Spinner -->
+                    <svg class="hidden animate-spin h-5 w-5 text-white" id="btn-spinner"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                </button>
+
+                <!-- This only closes modal -->
+                <button type="button" class="btn btn-link text-red-500"
+                    onclick="document.getElementById('my_modal_5').close()">
+                    Close
+                </button>
             </div>
+        </div>
     </dialog>
+
+    <script>
+        document.getElementById('confirm-order-btn').addEventListener('click', function () {
+            const btn = this;
+            const text = btn.querySelector('.btn-text');
+            const spinner = document.getElementById('btn-spinner');
+
+            // Prevent double click
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            // Change text
+            text.textContent = 'Processing...';
+
+            // Show spinner
+            spinner.classList.remove('hidden');
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -235,7 +264,6 @@
         });
     </script>
     <br>
-    <hr>
     <br>
     <div class="max-w-xl mx-auto border rounded-0 overflow-hidden">
         <details class="group max-w-xl mx-auto border border-gray-200 bg-white shadow-sm open:shadow-md transition">
