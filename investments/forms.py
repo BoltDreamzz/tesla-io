@@ -4,17 +4,15 @@ from .models import Stock
 from django import forms
 
 class BuyStockForm(forms.Form):
-    quantity = forms.DecimalField(
-        max_digits=12,
-        decimal_places=2,
-        min_value=4.00,
-        initial=4.00,  # ✅ pre-populates the input
-        widget=forms.NumberInput(attrs={
-            'class': 'w-full border border-gray-300 px-3 py-2',
-            'step': '1',          # prevents weird decimals
-            'min': '4',           # HTML validation
-        })
-    )
+    quantity = forms.IntegerField(
+    min_value=4,
+    initial=4,
+    widget=forms.NumberInput(attrs={
+        "id": "quantity-input",
+        "min": "4",
+        "class": "input imput-bordered w-full max-w-xs"
+    })
+)
 
     def __init__(self, *args, **kwargs):
         self.stock = kwargs.pop('stock', None)
