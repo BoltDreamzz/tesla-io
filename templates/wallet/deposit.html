@@ -8,15 +8,16 @@
 
 <div class="max-w-lg h-screen mx-auto rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-6">Deposit Funds</h2>
+     <div class="w-full flex items-center justify-center">
+        <img src="{% static 'home_media/pigg.png' %}" alt="" class="w-24 h-24 text-center">
+
+    </div>
     <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Note</strong>: Minimum deposit is
         <strong>$500</strong>, transactions
         below the limit will be declined.
     </p>
     <!-- <br> -->
-    <div class="w-full flex items-center justify-center">
-        <img src="{% static 'home_media/pigg.png' %}" alt="" class="w-24 h-24 text-center">
-
-    </div>
+   
     <!-- <br> -->
     <form method="post" class="space-y-6" id="depositForm">
         {% csrf_token %}

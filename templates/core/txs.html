@@ -1,19 +1,16 @@
 <!-- Recent Transactions -->
 
 {% load humanize %}
+{% load static %}
 <div class="rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-4">Recent Transactions</h2>
     <!-- From Uiverse.io by seyed-mohsen-mousavi -->
     {% if not recent_transactions %}
     <div class="min-h-36 flex flex-col items-center justify-center border border-white/30 py-3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" class="text-gray-600" height="24" fill="currentColor"
-            viewBox="0 0 24 24">
-            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-            <path d="M5 21h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2M5 5h14v14H5z">
-            </path>
-            <path d="M7 15h10v2H7zm0-8h6v6H7z"></path>
-        </svg>
-        <p class="text-gray-600">Your wallet transactions will appear here.</p>
+        <div class="w-full flex items-center justify-center">
+            <img src="{% static 'home_media/txs.png' %}" alt="" class="w-48 h-48 text-center">
+        </div>
+        <p class="text-gray-600 -mt-5">Your wallet transactions will appear here.</p>
         <!-- <a href="{% url 'buy_stock' %}" class=" inline-block text-blue-600 hover:underline">Buy Stock</a> -->
 
 
