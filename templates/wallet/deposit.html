@@ -8,7 +8,7 @@
 
 <div class="max-w-lg h-screen mx-auto rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-6">Deposit Funds</h2>
-     <div class="w-full flex items-center justify-center">
+    <div class="w-full flex items-center justify-center">
         <img src="{% static 'home_media/pigg.png' %}" alt="" class="w-24 h-24 text-center">
 
     </div>
@@ -17,7 +17,7 @@
         below the limit will be declined.
     </p>
     <!-- <br> -->
-   
+
     <!-- <br> -->
     <form method="post" class="space-y-6" id="depositForm">
         {% csrf_token %}
@@ -103,22 +103,23 @@
                 const submitButton = document.getElementById('depositButton');
 
                 if (form && submitButton) {
-                    form.addEventListener('submit', function () {
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const submitButton = document.getElementById('depositButton');
 
-                        const textSpan = submitButton.querySelector('.btn-text');
-                        const loadingSpan = submitButton.querySelector('.btn-loading');
+                        submitButton.addEventListener('click', function () {
+                            const textSpan = submitButton.querySelector('.btn-text');
+                            const loadingSpan = submitButton.querySelector('.btn-loading');
 
-                        // Disable button immediately
-                        submitButton.disabled = true;
+                            // Disable AFTER click, BEFORE submit
+                            submitButton.disabled = true;
 
-                        // Swap text → loading spinner
-                        if (textSpan && loadingSpan) {
-                            textSpan.classList.add('hidden');
-                            loadingSpan.classList.remove('hidden');
-                            loadingSpan.classList.add('flex');
-                        }
-
-                        // Form submits normally
+                            if (textSpan && loadingSpan) {
+                                textSpan.classList.add('hidden');
+                                loadingSpan.classList.remove('hidden');
+                                loadingSpan.classList.add('flex');
+                            }
+                            // DO NOT touch the form. Let browser submit naturally.
+                        });
                     });
                 }
             });
