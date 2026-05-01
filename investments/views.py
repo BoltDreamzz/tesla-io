@@ -207,6 +207,7 @@ from django.conf import settings
 
 
 # For MVP, we assume only one stock: TSLA
+
 def get_tsla_stock():
     stock, created = Stock.objects.get_or_create(
         symbol='TSLA',

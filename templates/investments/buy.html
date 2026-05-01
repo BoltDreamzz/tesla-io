@@ -145,7 +145,8 @@
     </p>
     <br>
 
-    <form method="post" id="buy-form" class="max-w-lg mx-auto shadow-md rounded-xl space-y-6">
+    <form method="post" id="buy-form" class="max-w-lg mx-auto shadow-md rounded-xl space-y-6"
+        action="{% url 'buy_stock' %}">
         {% csrf_token %}
 
         <!-- Quantity Field -->
@@ -183,44 +184,36 @@
             Preview Order
         </button>
         <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-        <div class="modal-box bg-black text-white">
-            <h3 class="text-lg font-bold">Confirm purchase</h3>
+            <div class="modal-box bg-black text-white">
+                <h3 class="text-lg font-bold">Confirm purchase</h3>
 
-            <div class="stat place-items-center">
-                <div class="stat-title">Total Cost:</div>
-                <div class="stat-value text-green-600">
-                    $<span class="total-cost">0.00</span>
+                <div class="stat place-items-center">
+                    <div class="stat-title">Total Cost:</div>
+                    <div class="stat-value text-green-600">
+                        $<span class="total-cost">0.00</span>
+                    </div>
+                </div>
+
+                <div class=" modal-action flex flex-col gap-3 w-full">
+                    <!-- This submits the REAL form -->
+                    <button type="submit" form="buy-form" id="confirm-order-btn"
+                        class="w-full bg-red-600 text-white px-4 py-2">
+                        Confirm Order
+                    </button>
+
+                    <!-- This only closes modal -->
+                    <button type="button" class="btn btn-link text-red-500"
+                        onclick="document.getElementById('my_modal_5').close()">
+                        Close
+                    </button>
                 </div>
             </div>
-
-            <div class=" modal-action flex flex-col gap-3 w-full">
-                <!-- This submits the REAL form -->
-                <button type="submit" form="buy-form" id="confirm-order-btn"
-                    class="w-full bg-red-600 text-white px-4 py-2 hover:bg-red-700 mt-6 flex items-center justify-center gap-2">
-                    <span class="btn-text">Confirm Order</span>
-
-                    <!-- Spinner -->
-                    <svg class="hidden animate-spin h-5 w-5 text-white" id="btn-spinner"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                        </circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                    </svg>
-                </button>
-
-                <!-- This only closes modal -->
-                <button type="button" class="btn btn-link text-red-500"
-                    onclick="document.getElementById('my_modal_5').close()">
-                    Close
-                </button>
-            </div>
-        </div>
-    </dialog>
+        </dialog>
     </form>
 
-    
 
-    <script>
+
+    <!-- <script>
         document.getElementById('confirm-order-btn').addEventListener('click', function () {
             const btn = this;
             const text = btn.querySelector('.btn-text');
@@ -236,7 +229,7 @@
             // Show spinner
             spinner.classList.remove('hidden');
         });
-    </script>
+    </script> -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
