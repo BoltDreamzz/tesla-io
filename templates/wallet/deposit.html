@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -11,8 +12,12 @@
         <strong>$500</strong>, transactions
         below the limit will be declined.
     </p>
-    <br>
+    <!-- <br> -->
+    <div class="w-full flex items-center justify-center">
+        <img src="{% static 'home_media/pigg.png' %}" alt="" class="w-24 h-24 text-center">
 
+    </div>
+    <!-- <br> -->
     <form method="post" class="space-y-6" id="depositForm">
         {% csrf_token %}
 

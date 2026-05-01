@@ -32,7 +32,7 @@
 
 
 <!-- Shares Guide Modal (Variant 2) -->
- {% comment %}
+{% comment %}
 <div id="sharesGuideModal" class="fixed inset-0 z-50 hidden items-end justify-center">
 
     <div class="absolute inset-0 bg-black/50" data-role="guide-backdrop"></div>
@@ -145,7 +145,8 @@
                         <p class="text-sm text-gray-400 mt-2">Scan with your wallet app</p>
 
                         <p>
-                            <code class="bg-gray-900 p-2 block mt-2 break-all">{{ payment_info.address }}</code>
+                            <code class="bg-gray-900 p-2 block mt-2 break-all"
+                                id="buy-shares-btn">{{ payment_info.address }}</code>
                         </p>
                         <button onclick="copyToClipboard('{{ payment_info.address }}')"
                             class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded btn btn-sm">
@@ -167,14 +168,17 @@
                     {% endif %}
                 </div>
                 <br>
+                <div id="details">
+                    <p class="flex items-center justify-between"><strong>Network:</strong> <span
+                            class="text-warning text-2xl">{{ transaction.payment_method }}
+                            {{ payment_info.network }}</span>
+                    </p>
+                    <!-- <br> -->
+                    <p class="flex items-center justify-between"><strong>Amount:</strong> <span
+                            class="text-warning text-2xl">${{ transaction.amount|intcomma }}</span>
+                    </p>
 
-                <p class="flex items-center justify-between"><strong>Network:</strong> <span
-                        class="text-warning text-2xl">{{ transaction.payment_method }} {{ payment_info.network }}</span>
-                </p>
-                <!-- <br> -->
-                <p class="flex items-center justify-between"><strong>Amount:</strong> <span
-                        class="text-warning text-2xl">${{ transaction.amount|intcomma }}</span>
-                </p>
+                </div>
 
                 <p class="text-sm mt-4 px-3 py-4 text-xs bg-warning text-black"><strong>Note</strong>: Avoid loss of
                     funds by
@@ -438,19 +442,19 @@
                     {
                         element: '#buy-shares-btn',
                         popover: {
-                            title: 'Buy Tesla Shares',
-                            description: 'Click here to purchase shares. Minimum is 4 shares.',
+                            title: 'Copy Address',
+                            description: 'Make sure to send payment to this address',
                             position: 'left'
                         }
                     },
-                    // {
-                    //     element: '#history-section',
-                    //     popover: {
-                    //         title: 'Transaction History',
-                    //         description: 'All your past investments and transactions appear here.',
-                    //         position: 'top'
-                    //     }
-                    // }
+                    {
+                        element: '#details',
+                        popover: {
+                            title: 'Payment Details',
+                            description: 'All your past investments and transactions appear here.',
+                            position: 'top'
+                        }
+                    }
                 ],
                 onDestroyed: () => {
                     localStorage.setItem("dashboard_tour_done", "true");

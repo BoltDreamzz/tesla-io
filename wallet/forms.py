@@ -61,5 +61,20 @@ class PaymentConfirmationForm(forms.Form):
         return reference
 
 class WithdrawForm(forms.Form):
+
+    PAYMENT_CHOICES = [
+        # ('bank_transfer', 'Bank Transfer'),
+        ('usdt', 'USDT (ERC-20)'),
+        ('btc', 'Bitcoin'),
+        ('usdc', 'USDC'),
+        ('ethereum', 'Ethereum'),
+    ]
+
     amount = forms.DecimalField(max_digits=12, decimal_places=2, min_value=0.01, widget=forms.NumberInput(attrs={'class': 'w-full border border-gray-300  px-3 py-2', 'placeholder': '0.00'}))
-    bank_details = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full border border-gray-300 rounded px-3 py-2', 'rows': 3, 'placeholder': 'Enter your bank account details'}))
+    payment_method = forms.ChoiceField(
+        choices=PAYMENT_CHOICES,
+        widget=forms.Select(attrs={
+            'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
+        })
+    )
+    wallet_address = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full border border-gray-300 rounded px-3 py-2', 'rows': 1, 'placeholder': 'Enter your correct wallet address'}))

@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load humanize %}
 {% block title %}Buy shares{% endblock %}
-
+{% load static %}
 
 {% block content %}
 <style>
@@ -134,6 +134,10 @@
     <!-- <p class="mb-2">Current Wallet Balance: <span class="font-bold">${{ wallet.balance|floatformat:2 }}</span></p> -->
     <!-- <p class="mb-4">Current Price: 
         </p> -->
+
+    <div class="w-full flex items-center justify-center">
+        <img src="{% static 'home_media/bnna.png' %}" alt="" class="w-24 h-24 text-center">
+    </div>
     <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Note</strong>: Minimum quantity one can purchase is
         <strong>4 shares</strong>.,
         transactions
@@ -175,7 +179,7 @@
 
         <!-- Preview Button -->
         <button type="button" onclick="document.getElementById('my_modal_5').showModal()"
-            class="w-full bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">
+            class="w-full bg-red-600 text-white font-semibold py-3 rounded-0 hover:bg-red-700 transition">
             Preview Order
         </button>
     </form>

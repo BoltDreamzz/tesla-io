@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -6,12 +7,16 @@
 
 <div class="max-w-lg h-screen mx-auto rounded-lg shadow-md">
     <h2 class="text-2xl font-bold mb-6">Withdraw Funds</h2>
-    <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Note</strong>: Minimum withdrawal is $50,
+    <div class="w-full flex items-center justify-center">
+        <img src="{% static 'home_media/wall.png' %}" alt="" class="w-24 h-24 text-center">
+    </div>
+    <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Note</strong>: Minimum withdrawal is <strong>$50</strong>,
         transactions
         below the limit may be declined.</p>
-    <br>
+    <!-- <br> -->
     <!-- Minimum withdrawal: $10
     <br> -->
+  
 
     <form method="post" class="space-y-2">
         {% csrf_token %}
@@ -53,7 +58,8 @@
                 <ol class="list-decimal space-y-2 pl-5 text-sm">
                     <li>Enter your preferred amount in the amount box above.</li>
                     <li>Select your proposed payment method from the list of provided payment methods.</li>
-                    <li>Click on the Submit button to confirm the transaction.</li>
+                    <li>Enter your corresponding wallet address e.g <strong>0xF6r347!N5in6....</strong></li>
+                    <li>Click on the <strong>Submit</strong> button to confirm the transaction.</li>
 
 
                 </ol>

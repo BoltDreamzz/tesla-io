@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Purchase</title>
+</head>
+
+<body>
+    <div style="padding: 20px;">
+        <h2>Stock Purchase Successful</h2>
+
+        <p>Hello {{ user.get_full_name|default:user.username }},</p>
+
+        <p>You have successfully purchased TSLA shares.</p>
+
+        <ul>
+            <li><strong>Stock:</strong> {{ stock.symbol }}</li>
+            <li><strong>Quantity:</strong> {{ quantity }}</li>
+            <li><strong>Price per share:</strong> ${{ price }}</li>
+            <li><strong>Total cost:</strong> ${{ total_cost }}</li>
+        </ul>
+
+        <p>Thank you for using tesla-io.</p>
+    </div>
+</body>
+
+</html>

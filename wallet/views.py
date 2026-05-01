@@ -399,13 +399,13 @@ def withdraw(request):
                 if amount > wallet.balance:
                     messages.error(request, 'Insufficient balance.')
                     return redirect('withdraw')
-                bank_details = form.cleaned_data['bank_details']
+                wallet_address = form.cleaned_data['wallet_address']
                 transaction = Transaction.objects.create(
                     user=request.user,
                     transaction_type='withdrawal',
                     amount=amount,
                     status='pending',
-                    description=f"Withdrawal request to {bank_details}"
+                    description=f"Withdrawal request to {wallet_address } via {payment_method}"
                 )
                 messages.success(request, f'Withdrawal request for ${amount} submitted. Reference ID: {transaction.reference_id}')
                 return redirect('transaction_list')
