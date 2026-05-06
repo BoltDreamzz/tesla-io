@@ -21,14 +21,14 @@ class DepositForm(forms.Form):
         decimal_places=2,
         min_value=10,
         widget=forms.NumberInput(attrs={
-            'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent',
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent',
             'placeholder': 'Enter amount (minimum $500)'
         })
     )
     payment_method = forms.ChoiceField(
         choices=PAYMENT_CHOICES,
         widget=forms.Select(attrs={
-            'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
         })
     )
 
@@ -47,7 +47,7 @@ class PaymentConfirmationForm(forms.Form):
     proof_of_payment = forms.FileField(
         required=True,
         widget=forms.FileInput(attrs={
-            'class': 'w-full p-3 bg-gray-800 border border-gray-700 rounded-lg',
+            'class': 'w-full p-3 bg-gray-800 border border-gray-700 rounded-0',
             'accept': 'image/*,.pdf',
             'required': 'required'
         }),
@@ -74,7 +74,7 @@ class WithdrawForm(forms.Form):
     payment_method = forms.ChoiceField(
         choices=PAYMENT_CHOICES,
         widget=forms.Select(attrs={
-            'class': 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
         })
     )
-    wallet_address = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full border border-gray-300 rounded px-3 py-2', 'rows': 1, 'placeholder': 'Enter your correct wallet address'}))
+    wallet_address = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full border border-gray-300 rounded-0 px-3 py-2', 'rows': 1, 'placeholder': 'Enter your correct wallet address'}))

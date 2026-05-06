@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Timer Widget | Elegant Neumorphic UI</title>
+  <!-- TailwindCSS + Google Fonts + FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    
+    /* Custom timer widget background with subtle glassmorphic + neumorphic twist */
+    .widget-bg {
+      background: linear-gradient(145deg, #1a1d2b, #0f111a);
+      box-shadow: 20px 20px 40px rgba(0,0,0,0.5), -8px -8px 16px rgba(255,255,255,0.05);
+      border-radius: 48px;
+    }
+    
+    /* Circular timer ring progress (SVG) */
+    .timer-ring-bg {
+      transition: stroke-dashoffset 0.2s linear;
+    }
+    
+    /* Flip animation for digits on change (optional but adds magic) */
+    .digit-flip {
+      transition: transform 0.15s ease;
+    }
+    
+    /* Button styles */
+    .widget-btn {
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+      backdrop-filter: blur(4px);
+    }
+    
+    .widget-btn:active {
+      transform: scale(0.96);
+    }
+    
+    /* Glow for active state */
+    .glow-active {
+      text-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+    }
+    
+    /* Custom digital segment style on numbers */
+    .timer-digits {
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#0a0c14] to-[#161a2a] p-5">
+  
+  <!-- Main Widget Card: Matches the reference design: "13:12", "14:44", "13:12" plus Timer label -->
+  <div class="widget-bg w-full max-w-md p-6 md:p-8 transition-all duration-300 border border-white/5">
+    
+    <!-- Header area: small indicator / icon (to match modern timer widget aesthetic) -->
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center gap-2 text-white/40 text-sm">
+        <i class="fas fa-hourglass-half text-cyan-400/70"></i>
+        <span class="tracking-wide">FOCUS TIMER</span>
+      </div>
+      <div class="text-white/30 text-xs">
+        <i class="far fa-circle"></i>
+      </div>
+    </div>
+    
+    <!-- Main timer display: three rows exactly as shown on the image:
+         First row: "13:12"
+         Second row: "14:44" 
+         Third row: "13:12"
+         plus label "Timer" somewhere, but typically a timer widget shows current/preset/lap
+         Based on the layout, we recreate with three time values and a "Timer" caption.
+    -->
+    
+    <!-- First Time Row (could be current timer or preset 1) -->
+    <div class="flex flex-col items-center justify-center mb-2">
+      <div class="text-white/50 text-[11px] font-semibold tracking-wider mb-1">CURRENT</div>
+      <div class="text-6xl md:text-7xl font-extrabold text-white timer-digits tracking-wider drop-shadow-lg" id="mainTimerDisplay">
+        13:12
+      </div>
+    </div>
+    
+    <!-- Middle Large Row: The prominent one “14:44” (like a target or lap time) -->
+    <div class="my-4 py-2 border-y border-white/10 flex flex-col items-center">
+      <div class="text-amber-400/60 text-[10px] uppercase font-semibold tracking-[0.2em] mb-1">NEXT SEGMENT</div>
+      <div class="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-400 timer-digits" id="targetTimerDisplay">
+        14:44
+      </div>
+    </div>
+    
+    <!-- Third Time Row (secondary reference, maybe previous lap) -->
+    <div class="flex flex-col items-center justify-center mt-2">
+      <div class="text-white/40 text-[11px] font-semibold tracking-wider mb-1">LAST LAP</div>
+      <div class="text-5xl md:text-6xl font-semibold text-white/80 timer-digits" id="lastTimerDisplay">
+        13:12
+      </div>
+    </div>
+    
+    <!-- Timer Label as per reference "Timer" -->
+    <div class="flex justify-center mt-5">
+      <div class="bg-white/5 backdrop-blur-sm rounded-full px-5 py-1.5 inline-flex items-center gap-2">
+        <i class="fas fa-stopwatch text-cyan-300 text-sm"></i>
+        <span class="text-white/80 font-medium tracking-wide text-sm">Timer</span>
+        <span class="text-cyan-300/50 text-xs ml-1"><i class="fas fa-chevron-right"></i></span>
+      </div>
+    </div>
+    
+    <!-- Widget interactive buttons: Play/Pause/Reset to mimic timer functionality like a real widget -->
+    <div class="flex justify-center gap-5 mt-7">
+      <button id="playPauseBtn" class="widget-btn w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-cyan-500/20 hover:border-cyan-400/50 transition-all group">
+        <i class="fas fa-play text-xl ml-0.5 group-active:scale-90"></i>
+      </button>
+      <button id="resetBtn" class="widget-btn w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white/80 flex items-center justify-center hover:bg-rose-500/20 hover:border-rose-400/50">
+        <i class="fas fa-arrow-rotate-right text-xl"></i>
+      </button>
+      <button id="modeBtn" class="widget-btn w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white/80 flex items-center justify-center hover:bg-emerald-500/20 hover:border-emerald-400/50">
+        <i class="fas fa-stopwatch text-lg"></i>
+      </button>
+    </div>
+    
+    <!-- Optional: Circular progress indicator (adds widget charm, matching timer concept) -->
+    <div class="relative flex justify-center mt-5">
+      <div class="w-16 h-16">
+        <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="5" />
+          <circle id="progressRing" cx="50" cy="50" r="44" fill="none" stroke="url(#ringGrad)" stroke-width="5" stroke-linecap="round" stroke-dasharray="276.46" stroke-dashoffset="276.46" />
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#22d3ee" />
+              <stop offset="100%" stop-color="#f59e0b" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="absolute inset-0 flex items-center justify-center text-[10px] text-white/40 font-mono mt-5">timer</div>
+    </div>
+    
+    <!-- Small status (live) extra text -->
+    <div class="text-center text-white/30 text-[10px] mt-4 font-mono flex justify-center gap-3">
+      <span><i class="far fa-clock"></i> <span id="statusPhase">Idle</span></span>
+      <span>•</span>
+      <span><i class="fas fa-hourglass-start"></i> Focus mode</span>
+    </div>
+  </div>
+
+  <script>
+    // ------------------------------------------------------------------
+    // TIMER WIDGET LOGIC
+    // Inspired by given screenshot: times 13:12 , 14:44 , 13:12 and "Timer" label. 
+    // But we make it a fully functional countdown / timer widget with elegant animations.
+    // The UI shows three static reference times + main countdown timer that can be started/stopped.
+    // On load, the main timer shows 13:12 (minutes:seconds). Target timer (14:44) is fixed as goal.
+    // Last timer (13:12) can also update on lap/reset or just reference.
+    // To combine the widget aesthetic: start countdown from 13:12 down to 0, then reset behavior.
+    // Additionally the "14:44" remains as a target / preset (like goal time). The widget matches label "Timer".
+    // We will implement:
+    // - Main display (first big line) = dynamic timer (13:12 initial)
+    // - Middle display 14:44 = fixed goal / preset time (doesn't change, but can be used for comparison)
+    // - Bottom row 13:12 = "Last lap" which will get updated when user resets or finishes.
+    // Plus progress ring animation that corresponds to current elapsed / total time ratio.
+    // All visual consistency with provided image.
+    // Also "Timer" label feels native.
+    
+    // DOM elements
+    const mainTimerEl = document.getElementById('mainTimerDisplay');
+    const targetTimerEl = document.getElementById('targetTimerDisplay');   // should be 14:44 fixed
+    const lastTimerEl = document.getElementById('lastTimerDisplay');       // initial 13:12
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const modeBtn = document.getElementById('modeBtn');
+    const progressRing = document.getElementById('progressRing');
+    const statusSpan = document.getElementById('statusPhase');
+    
+    // Timer states
+    let timerInterval = null;
+    let isRunning = false;
+    let currentTotalSeconds = 0;      // current countdown time in seconds
+    let initialTotalSeconds = 0;       // store initial (13:12 => 13*60+12 = 792 seconds)
+    let originalPresetSeconds = 792;    // 13:12 as default
+    
+    // last lap time storage
+    let lastLapSeconds = 792;           // 13:12
+    
+    // fixed target seconds for 14:44 = 14*60+44 = 884 seconds, display static.
+    const TARGET_SECONDS = 884;          // 14:44
+    
+    // Helper: format seconds to MM:SS (always two digits each)
+    function formatTime(seconds) {
+      if (isNaN(seconds)) seconds = 0;
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    // Update ring progress based on current seconds vs total initial seconds (for countdown)
+    function updateRingProgress(currentSec, totalSec) {
+      if (!totalSec || totalSec <= 0) {
+        progressRing.style.strokeDashoffset = 276.46;
+        return;
+      }
+      const circumference = 276.46; // 2 * pi * 44 ≈ 276.46
+      const elapsed = totalSec - currentSec;   // how many seconds elapsed from total
+      let fraction = Math.min(1, Math.max(0, elapsed / totalSec));
+      const dashOffset = circumference * (1 - fraction);
+      progressRing.style.strokeDashoffset = dashOffset;
+    }
+    
+    // Full UI update: main timer display + ring progression & status
+    function updateMainDisplay() {
+      if (!mainTimerEl) return;
+      mainTimerEl.innerText = formatTime(currentTotalSeconds);
+      updateRingProgress(currentTotalSeconds, initialTotalSeconds);
+      
+      // Add a subtle animation class on time change (just visual flair)
+      mainTimerEl.classList.add('scale-105', 'text-cyan-100');
+      setTimeout(() => {
+        if(mainTimerEl) mainTimerEl.classList.remove('scale-105', 'text-cyan-100');
+      }, 120);
+    }
+    
+    // Timer tick (countdown)
+    function timerTick() {
+      if (!isRunning) return;
+      if (currentTotalSeconds <= 0) {
+        // Timer finished!
+        if (isRunning) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          isRunning = false;
+          playPauseBtn.innerHTML = '<i class="fas fa-play text-xl ml-0.5"></i>';
+          statusSpan.innerText = 'Finished';
+          // Update last lap: store current finished state (zero) or last used?
+          // Better: update last lap to the initial preset value, so next start reference.
+          lastLapSeconds = initialTotalSeconds;
+          lastTimerEl.innerText = formatTime(lastLapSeconds);
+          // Flash effect
+          mainTimerEl.classList.add('text-amber-300', 'animate-pulse');
+          setTimeout(() => mainTimerEl.classList.remove('text-amber-300', 'animate-pulse'), 800);
+          // Optionally reset timer to initial preset after finish? Actually widget may stay at 00:00
+          // But better: shows 00:00 with ring empty. User can reset.
+          updateMainDisplay();
+        }
+        return;
+      }
+      currentTotalSeconds--;
+      updateMainDisplay();
+      
+      // extra effect: when less than 10 sec, subtle glow
+      if (currentTotalSeconds <= 10 && currentTotalSeconds > 0) {
+        mainTimerEl.classList.add('glow-active');
+      } else {
+        mainTimerEl.classList.remove('glow-active');
+      }
+    }
+    
+    // Start timer (countdown)
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      isRunning = true;
+      statusSpan.innerText = 'Running';
+      timerInterval = setInterval(timerTick, 1000);
+      playPauseBtn.innerHTML = '<i class="fas fa-pause text-xl"></i>';
+    }
+    
+    function pauseTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      isRunning = false;
+      statusSpan.innerText = 'Paused';
+      playPauseBtn.innerHTML = '<i class="fas fa-play text-xl ml-0.5"></i>';
+    }
+    
+    function resetTimerToPreset() {
+      // reset to original preset (13:12 or whatever current initialTotalSeconds)
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      isRunning = false;
+      // before reset, if we want to update last lap? Actually typical reset records previous value as last lap
+      if (currentTotalSeconds !== initialTotalSeconds) {
+        lastLapSeconds = currentTotalSeconds;
+        lastTimerEl.innerText = formatTime(lastLapSeconds);
+      }
+      currentTotalSeconds = initialTotalSeconds;
+      updateMainDisplay();
+      playPauseBtn.innerHTML = '<i class="fas fa-play text-xl ml-0.5"></i>';
+      statusSpan.innerText = 'Reset';
+      setTimeout(() => { if (!isRunning && statusSpan.innerText === 'Reset') statusSpan.innerText = 'Idle'; }, 1200);
+      mainTimerEl.classList.remove('glow-active');
+    }
+    
+    // Function to change preset (mode Button cycles timer preset between various times, but keep widget values consistent)
+    // But original reference includes 13:12, 14:44, 13:12 as static. The widget can cycle presets but still reflect the design.
+    // The mode will alternate between two presets (13:12 and 14:44) for main timer, which is interactive but smart.
+    // However targetTimerDisplay will always keep 14:44, mainTimer becomes either 13:12 or 14:44 based on mode.
+    // BUT we want to match exact displayed imagery: Widget looks like "13:12", "14:44", "13:12" all static but dynamic? Actually creating a functional timer with same digits enhances user experience.
+    // We'll implement mode to switch between two countdown profiles while preserving the design aesthetic.
+    let currentPresetMode = 0; // 0 -> 13:12 , 1 -> 14:44 (makes main timer switch)
+    
+    function switchPresetMode() {
+      if (isRunning) {
+        // If running, pause before mode change
+        pauseTimer();
+      }
+      // Toggle between 13:12 and 14:44 preset for main timer
+      if (currentPresetMode === 0) {
+        // switch to 14:44 preset for main timer
+        initialTotalSeconds = TARGET_SECONDS;  // 884 secs = 14:44
+        currentPresetMode = 1;
+        statusSpan.innerText = 'Target mode';
+      } else {
+        initialTotalSeconds = 792; // 13:12
+        currentPresetMode = 0;
+        statusSpan.innerText = 'Classic mode';
+      }
+      // set current seconds to new initial total seconds
+      currentTotalSeconds = initialTotalSeconds;
+      updateMainDisplay();
+      // If timer was running, keep paused, user will press play.
+      playPauseBtn.innerHTML = '<i class="fas fa-play text-xl ml-0.5"></i>';
+      // add little animation to target display to indicate mode change
+      targetTimerEl.classList.add('scale-110', 'text-amber-200');
+      setTimeout(() => targetTimerEl.classList.remove('scale-110', 'text-amber-200'), 250);
+      setTimeout(() => { if(!isRunning && statusSpan.innerText !== 'Paused') statusSpan.innerText = 'Idle'; }, 1500);
+    }
+    
+    // Set fixed values on load and correspond exactly as design: 
+    // main timer shows 13:12, middle shows 14:44, bottom shows 13:12 and "Timer" label.
+    function initializeWidget() {
+      // set target display permanently as 14:44
+      targetTimerEl.innerText = formatTime(TARGET_SECONDS);
+      // initial main timer base 13:12
+      initialTotalSeconds = 792;
+      currentTotalSeconds = initialTotalSeconds;
+      lastTimerEl.innerText = formatTime(lastLapSeconds);
+      updateMainDisplay();
+      statusSpan.innerText = 'Idle';
+      // Reset progress ring full (because current=initial)
+      updateRingProgress(currentTotalSeconds, initialTotalSeconds);
+      
+      // make sure timer not running initially
+      if (timerInterval) clearInterval(timerInterval);
+      isRunning = false;
+      playPauseBtn.innerHTML = '<i class="fas fa-play text-xl ml-0.5"></i>';
+      
+      // extra dynamic effect: on load, slight pulse to emphasize the timer digits
+      mainTimerEl.classList.add('animate-pulse');
+      setTimeout(() => mainTimerEl.classList.remove('animate-pulse'), 700);
+    }
+    
+    // Event Listeners
+    playPauseBtn.addEventListener('click', () => {
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        // before starting, ensure timer has positive seconds
+        if (currentTotalSeconds <= 0) {
+          // if at zero, reset to initial preset automatically
+          currentTotalSeconds = initialTotalSeconds;
+          updateMainDisplay();
+        }
+        startTimer();
+      }
+    });
+    
+    resetBtn.addEventListener('click', () => {
+      resetTimerToPreset();
+      // additional haptic: update last lap is already inside resetTimerToPreset
+    });
+    
+    modeBtn.addEventListener('click', () => {
+      switchPresetMode();
+    });
+    
+    // Optional: double tap / but that's extra
+    // Also ensure that when main timer finishes, update last lap value
+    // Override timerTick to update lastLapSeconds on natural finish? Already in finish case we set lastLapSeconds = initialTotalSeconds.
+    // Enhance finish case: when timer hits zero, update lastLap and also set bottom timer.
+    const originalTick = timerTick;
+    window.timerTick = timerTick; // just safety
+    
+    // Edge: manually sync last lap if user resets after finish. Good.
+    
+    // implement also clicking on last timer? not needed but elegant.
+    // update widget context: provide a 'lap' feel: reset button saves lap before reset.
+    // Already reset saves current (non original) as last lap.
+    
+    // Additional auto-correct for targetTimer Gradient and styles.
+    // The widget also displays 13:12 as both first and third lines - fully matches the image.
+    // On mode change, we preserve that the middle (target) row always shows 14:44 (unchanged) while main timer may toggle.
+    // But the image may represent custom timer values: we keep original as described: "13:12", "14:44","13:12".
+    // But gives functional timer: exactly recreation with progressive ring.
+    // Add minor digital flip effect to digits (CSS) on each update.
+    
+    // set initial for ring stroke.
+    function initRing() {
+      const circ = 276.46;
+      progressRing.style.strokeDasharray = circ;
+      progressRing.style.strokeDashoffset = circ;
+    }
+    
+    // extra reset ring
+    initRing();
+    
+    // Recreate the exact look as per screenshot: background, radials, subtle borders.
+    // Additionally, the timer label displayed at bottom mimics exactly "Timer"
+    // Also ensure that the "14:44" text is prominent.
+    
+    // run init
+    initializeWidget();
+    
+    // For live style adjustments: ensure the timer digits look sharp, font weight and all
+    const style = document.createElement('style');
+    style.textContent = `
+      .timer-digits {
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      }
+      #targetTimerDisplay {
+        background: linear-gradient(135deg, #FFB347, #FF8C42);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: none;
+      }
+      .widget-btn i {
+        transition: transform 0.1s;
+      }
+      @keyframes softPulse {
+        0% { opacity: 1; text-shadow: 0 0 0px cyan;}
+        100% { opacity: 1; text-shadow: 0 0 6px #22d3ee;}
+      }
+      .glow-active {
+        animation: softPulse 0.9s infinite alternate;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Final: ensure status text updates correctly when idle
+    // Additional manual fix to bottom left small icons: timer progress
+    // The "Timer" label section also shows "Timer" exactly. ok done.
+    // For accurate widget demonstration matching jpg: 13:12, 14:44, 13:12 will always be visible.
+    // Also if the user interacts with mode, the main timer toggles between 13:12 and 14:44 but target row is 14:44 unchanged,
+    // This creates rich widget behavior while preserving original layout core values.
+    // Also by default, third line always updates based on last lap (initial 13:12, changes on reset/finish). Perfect.
+    // Let's guarantee that on page load after few seconds, third line stays 13:12 until user interacts.
+    // Also the ring animation + timer widget gives very modern dashboard-like animation.
+    // All necessary.
+    
+    // Optional: add subtle tooltip for mode (Press to toggle between 13:12 / 14:44 preset)
+    modeBtn.title = "Switch preset: 13:12 ↔ 14:44";
+    resetBtn.title = "Reset & save lap";
+    playPauseBtn.title = "Start / Pause";
+  </script>
+</body>
+</html>

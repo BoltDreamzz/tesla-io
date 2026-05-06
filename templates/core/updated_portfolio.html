@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>CryptoVision | Portfolio Dashboard</title>
+  <!-- Google Fonts + Tailwind + DaisyUI (No TSX, pure HTML/CSS/JS) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.css" rel="stylesheet" type="text/css" />
+  <!-- Chart.js CDN for modern graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- small helper for number formatting -->
+  <style>
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    body { background: linear-gradient(145deg, #f8fafc 0%, #eef2f9 100%); }
+    /* custom glass-card effect for some panels */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(3px);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    .chart-container canvas {
+      max-height: 220px;
+      width: 100%;
+    }
+    .card-hover {
+      transition: all 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="p-4 md:p-6 antialiased">
+
+  <div class="max-w-7xl mx-auto">
+    <!-- HEADER with gradient and stats summary -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent">📊 CryptoPortfolio</h1>
+        <p class="text-gray-500 text-sm mt-1">mid-sophisticated · realtime metrics & visual analytics</p>
+      </div>
+      <div class="flex gap-2">
+        <div class="badge badge-lg badge-outline border-indigo-300 bg-white/60">🔄 Live Demo</div>
+        <div class="badge badge-lg badge-outline border-purple-300 bg-white/60">📈 7d trends</div>
+      </div>
+    </div>
+
+    <!-- TOP METRICS CARDS: Total Value, 24h Change, Dominance, Volume -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+      <!-- Total portfolio card -->
+      <div class="card card-side bg-base-100 shadow-xl rounded-2xl p-4 border border-indigo-100 card-hover glass-panel">
+        <div class="flex items-center justify-between w-full">
+          <div>
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Total Portfolio</p>
+            <p class="text-2xl font-bold text-gray-800 mt-1" id="totalValueDisplay">$127,450.80</p>
+            <div class="flex items-center gap-1 mt-1">
+              <span class="text-xs font-semibold text-green-600 bg-green-100 px-2 py-0.5 rounded-full" id="totalChangeBadge">▲ +4.32%</span>
+              <span class="text-xs text-gray-400">24h change</span>
+            </div>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-xl">💰</div>
+        </div>
+      </div>
+      <!-- 24h Volume Card -->
+      <div class="card card-side bg-base-100 shadow-xl rounded-2xl p-4 border border-indigo-100 card-hover glass-panel">
+        <div class="flex items-center justify-between w-full">
+          <div>
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">24h Trading Vol</p>
+            <p class="text-2xl font-bold text-gray-800" id="volumeDisplay">$8.42M</p>
+            <p class="text-xs text-gray-400 mt-1">aggregated spot</p>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-xl">📊</div>
+        </div>
+      </div>
+      <!-- BTC Dominance Card -->
+      <div class="card card-side bg-base-100 shadow-xl rounded-2xl p-4 border border-indigo-100 card-hover glass-panel">
+        <div class="flex items-center justify-between w-full">
+          <div>
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">BTC Dominance</p>
+            <p class="text-2xl font-bold text-gray-800" id="btcDomDisplay">48.2%</p>
+            <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2 max-w-[120px]">
+              <div class="bg-amber-500 h-1.5 rounded-full" style="width: 48.2%" id="domFillBar"></div>
+            </div>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 text-xl">₿</div>
+        </div>
+      </div>
+      <!-- Risk / Sharpe indicator (sophisticated touch) -->
+      <div class="card card-side bg-base-100 shadow-xl rounded-2xl p-4 border border-indigo-100 card-hover glass-panel">
+        <div class="flex items-center justify-between w-full">
+          <div>
+            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Risk Score</p>
+            <p class="text-2xl font-bold text-gray-800" id="riskScore">3.8 / 10</p>
+            <p class="text-xs text-gray-400 mt-1">⬇️ low volatility regime</p>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 text-xl">⚖️</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN GRID: 2 GRAPHS + ALLOCATION TABLE -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <!-- Line Chart: Portfolio Historical Performance (7d) -->
+      <div class="card bg-base-100 rounded-2xl shadow-xl p-5 border border-gray-100">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="font-semibold text-gray-700 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-500"></span>Portfolio Trend (7d)</h2>
+          <div class="tooltip" data-tip="based on weighted assets simulated returns">
+            <span class="text-gray-400 text-xs cursor-help">ⓘ</span>
+          </div>
+        </div>
+        <div class="chart-container relative h-56">
+          <canvas id="portfolioTrendChart" width="400" height="200" style="max-height: 200px; width:100%"></canvas>
+        </div>
+        <div class="text-xs text-gray-400 text-center mt-2 flex justify-center gap-4">
+          <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-indigo-500"></span> Index value</span>
+          <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Benchmark (BTC)</span>
+        </div>
+      </div>
+
+      <!-- Doughnut Chart: Asset Allocation -->
+      <div class="card bg-base-100 rounded-2xl shadow-xl p-5 border border-gray-100">
+        <h2 class="font-semibold text-gray-700 text-lg flex items-center gap-2 mb-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Current Allocation</h2>
+        <div class="flex flex-col md:flex-row items-center gap-3">
+          <div class="flex-1 min-w-[140px]">
+            <canvas id="allocationDoughnut" width="180" height="180" style="max-width: 180px; margin: 0 auto;"></canvas>
+          </div>
+          <div class="flex-1 text-sm space-y-2" id="allocationLegendList">
+            <!-- dynamic legend injected via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Holdings Table + additional metrics / yield info -->
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <!-- Asset table (main holdings) -->
+      <div class="xl:col-span-2 card bg-base-100 rounded-2xl shadow-xl p-5">
+        <div class="flex justify-between items-center border-b border-gray-100 pb-3 mb-2">
+          <h2 class="font-semibold text-gray-700 text-lg">📋 Asset Breakdown</h2>
+          <div class="badge badge-ghost badge-sm">real-time weighted</div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="table table-zebra w-full text-sm">
+            <thead>
+              <tr class="text-gray-500 border-b">
+                <th>Asset</th>
+                <th>Holdings</th>
+                <th>Price (USD)</th>
+                <th>Value</th>
+                <th>24h %</th>
+                <th>Alloc %</th>
+              </tr>
+            </thead>
+            <tbody id="assetsTableBody">
+              <!-- JS dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+        <div class="text-xs text-gray-400 mt-3 flex justify-between items-center">
+          <span>🔁 Simulated market data with real-time changes</span>
+          <span class="badge badge-outline badge-xs">mid-cap risk adjusted</span>
+        </div>
+      </div>
+
+      <!-- Right panel: Additional Metrics + Yield / Info -->
+      <div class="card bg-base-100 rounded-2xl shadow-xl p-5 flex flex-col gap-4">
+        <div class="border-b border-gray-100 pb-2">
+          <h2 class="font-semibold text-gray-700 flex items-center gap-2"><span>📈</span> Sophisticated Metrics</h2>
+        </div>
+        <div class="space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500 text-sm">Sharpe Ratio (1y)</span>
+            <span class="font-mono font-bold text-gray-800" id="sharpeRatio">1.84</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500 text-sm">Sortino Ratio</span>
+            <span class="font-mono font-bold text-gray-800" id="sortinoRatio">2.12</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500 text-sm">Volatility (30d)</span>
+            <span class="font-mono font-bold text-gray-800" id="volatility">32.4%</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500 text-sm">Total Yield (APY est.)</span>
+            <span class="font-mono font-bold text-emerald-600" id="apyEstimate">+6.8%</span>
+          </div>
+          <div class="divider my-1"></div>
+          <div class="bg-indigo-50 rounded-xl p-3">
+            <p class="text-xs font-medium text-indigo-800 flex items-center gap-1">🧠 Market Pulse</p>
+            <p class="text-xs text-gray-600 mt-1" id="marketInsight">BTC dominance consolidating; altcoin momentum neutral.</p>
+            <div class="mt-2 flex gap-2 text-[11px] text-gray-500">
+              <span>🌊 RSI: 54</span>
+              <span>📊 MVRV Z-Score: 0.9</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-auto pt-2">
+          <button id="refreshDataBtn" class="btn btn-sm btn-outline btn-primary w-full gap-1">
+            🔄 Refresh Metrics & Prices
+          </button>
+          <p class="text-[10px] text-gray-400 text-center mt-2">lightweight simulation — real correlation logic</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------------------- Portfolio Data Model (Mid-Sophisticated) -------------------------
+    // Asset definition: holdings, basePrice, 24h volatility factor and random walk but deterministic updates.
+    // We'll keep a dynamic price and allocate total portfolio value around $127k baseline, but with realistic percentage drifts.
+    
+    let assets = [
+      { name: "Bitcoin", symbol: "BTC", holdings: 1.45, price: 63250.00, change24: 2.15, allocPct: 0, color: "#F7931A" },
+      { name: "Ethereum", symbol: "ETH", holdings: 18.3, price: 3120.50, change24: 1.42, allocPct: 0, color: "#627EEA" },
+      { name: "Solana", symbol: "SOL", holdings: 320, price: 145.20, change24: 5.67, allocPct: 0, color: "#00FFA3" },
+      { name: "Cardano", symbol: "ADA", holdings: 8400, price: 0.452, change24: -0.87, allocPct: 0, color: "#0033AD" },
+      { name: "Chainlink", symbol: "LINK", holdings: 950, price: 14.35, change24: 2.33, allocPct: 0, color: "#2A5ADA" },
+      { name: "Arbitrum", symbol: "ARB", holdings: 4200, price: 1.12, change24: 3.21, allocPct: 0, color: "#2D3748" }
+    ];
+
+    // Helper: compute current portfolio total value based on live prices
+    function computePortfolioTotal() {
+      let total = 0;
+      assets.forEach(asset => { total += asset.holdings * asset.price; });
+      return total;
+    }
+
+    // Update allocation percentages & total value
+    function updateAllocationsAndTotals() {
+      let totalVal = computePortfolioTotal();
+      assets.forEach(asset => {
+        let assetValue = asset.holdings * asset.price;
+        asset.allocPct = (assetValue / totalVal) * 100;
+      });
+      return totalVal;
+    }
+
+    // Simulated price refresh: each asset price changes with a realistic random walk + makes 24h change float accordingly.
+    // Also updates the dominance and derived metrics.
+    function refreshMarketPrices() {
+      // subtle randomness but bounded, to mimic market moves
+      assets.forEach(asset => {
+        let volatilityFactor = (Math.random() * 1.5) - 0.3;   // between -0.3% and 1.2%
+        let priceShiftPercent = (volatilityFactor / 100) * (asset.symbol === 'BTC' ? 0.9 : 1.6);  // BTC less noisy
+        let newPrice = asset.price * (1 + priceShiftPercent);
+        // avoid negative or absurd
+        newPrice = Math.max(newPrice, asset.symbol === 'BTC' ? 20000 : 0.1);
+        let oldPrice = asset.price;
+        asset.price = parseFloat(newPrice.toFixed(2));
+        let dailyChangeRaw = ((asset.price - oldPrice) / oldPrice) * 100;
+        asset.change24 = parseFloat(dailyChangeRaw.toFixed(2));
+      });
+      
+      // after price updates, recompute total and dominance
+      let totalMarketCapWeighted = computeTotalMarketCapProxy(); // using a proxy: BTC influence + alts
+      updateDerivedMetrics();
+      renderAllUI();
+    }
+
+    // get total crypto "market cap" proxy (for dominance display) = BTC value * 21 + others proportion
+    function computeTotalMarketCapProxy() {
+      let btcAsset = assets.find(a => a.symbol === "BTC");
+      let btcPrice = btcAsset ? btcAsset.price : 63000;
+      let btcMarketProxy = btcPrice * 19500000; // just for dominance feel
+      let altsProxy = assets.filter(a => a.symbol !== "BTC").reduce((sum, a) => sum + (a.price * a.holdings * 120), 0);
+      return btcMarketProxy + altsProxy;
+    }
+    
+    function computeBtcDominance() {
+      let btcAsset = assets.find(a => a.symbol === "BTC");
+      if (!btcAsset) return 48;
+      let totalVal = computePortfolioTotal();
+      let btcHoldingValue = btcAsset.holdings * btcAsset.price;
+      let dominancePort = (btcHoldingValue / totalVal) * 100;
+      // map to global dominance feeling (around 46-53%)
+      let globalDom = 45 + (dominancePort - 35) * 0.45;
+      return Math.min(62, Math.max(38, globalDom));
+    }
+    
+    // sophisticated metrics: sharpe, sortino (annualized assumption) using history mock for demo
+    function updateDerivedMetrics() {
+      let totalVal = computePortfolioTotal();
+      let dom = computeBtcDominance();
+      document.getElementById('btcDomDisplay').innerText = dom.toFixed(1) + "%";
+      document.getElementById('domFillBar').style.width = dom + "%";
+      // total value and 24h change
+      let previousTotal = window._prevTotalVal || totalVal;
+      let totalChange = ((totalVal - previousTotal) / previousTotal) * 100;
+      if (!window._prevTotalVal) totalChange = 4.32;
+      window._prevTotalVal = totalVal;
+      document.getElementById('totalValueDisplay').innerHTML = `$${totalVal.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+      let changeClass = totalChange >=0 ? "text-green-600 bg-green-100" : "text-red-600 bg-red-100";
+      let changeSymbol = totalChange >=0 ? "▲ +" : "▼ ";
+      document.getElementById('totalChangeBadge').innerHTML = `${changeSymbol}${Math.abs(totalChange).toFixed(2)}%`;
+      document.getElementById('totalChangeBadge').className = `text-xs font-semibold px-2 py-0.5 rounded-full ${totalChange>=0 ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100'}`;
+      
+      // volume (simulate based on total value * 0.065)
+      let simulatedVolume = totalVal * 0.065 * (1 + (Math.random() * 0.05 - 0.025));
+      document.getElementById('volumeDisplay').innerHTML = `$${(simulatedVolume / 1e6).toFixed(2)}M`;
+      // risk score dynamic from volatility
+      let btc = assets.find(a=>a.symbol==="BTC");
+      let priceVolEst = Math.abs(btc.change24 * 0.7 + (Math.random() * 0.5));
+      let riskScoreNum = (priceVolEst / 8) * 10;
+      riskScoreNum = Math.min(9.2, Math.max(1.5, riskScoreNum));
+      document.getElementById('riskScore').innerHTML = riskScoreNum.toFixed(1) + " / 10";
+      // Sharpe, Sortino demo based on vol and returns
+      let sharpe = (Math.random() * 1.2 + 1.2).toFixed(2);
+      let sortino = (Math.random() * 0.8 + 1.7).toFixed(2);
+      let volatilityVal = (Math.abs(btc.change24) * 3 + 18 + Math.random() * 8).toFixed(1);
+      let apySim = (Math.random() * 5 + 4.2).toFixed(1);
+      document.getElementById('sharpeRatio').innerText = sharpe;
+      document.getElementById('sortinoRatio').innerText = sortino;
+      document.getElementById('volatility').innerHTML = volatilityVal + "%";
+      document.getElementById('apyEstimate').innerHTML = `+${apySim}%`;
+      
+      let insights = ["BTC dominance consolidating; altcoin momentum neutral.", "DeFi TVL rising, moderate risk appetite.", "Institutional flows support mid-caps.", "Stablecoin supply increasing — bullish signal.", "Gamma squeeze possible in ETH options."];
+      let idx = Math.floor(Math.random() * insights.length);
+      document.getElementById('marketInsight').innerHTML = insights[idx];
+    }
+    
+    // Update table rows and allocation legend / donut chart.
+    function renderAssetTable() {
+      let tbody = document.getElementById('assetsTableBody');
+      tbody.innerHTML = "";
+      let total = computePortfolioTotal();
+      assets.forEach(asset => {
+        let value = asset.holdings * asset.price;
+        let allocPercent = (value / total) * 100;
+        let changeClass = asset.change24 >= 0 ? "text-green-500" : "text-red-500";
+        let changeIcon = asset.change24 >= 0 ? "▲" : "▼";
+        let row = `<tr class="hover:bg-gray-50">
+          <td class="font-medium flex items-center gap-2"><span class="w-5 h-5 rounded-full" style="background:${asset.color}"></span>${asset.name} (${asset.symbol})</td>
+          <td>${asset.holdings.toLocaleString()}</td>
+          <td>$${asset.price.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+          <td>$${value.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+          <td class="${changeClass}">${changeIcon} ${Math.abs(asset.change24)}%</td>
+          <td><div class="flex items-center gap-1"><span class="text-xs">${allocPercent.toFixed(1)}%</span><progress class="progress progress-primary w-14 h-1.5" value="${allocPercent}" max="100"></progress></div></td>
+        </tr>`;
+        tbody.insertAdjacentHTML('beforeend', row);
+      });
+      // build allocation legend and update doughnut data
+      let legendDiv = document.getElementById('allocationLegendList');
+      legendDiv.innerHTML = "";
+      let allocData = [];
+      let labels = [];
+      let bgColors = [];
+      assets.forEach(asset => {
+        let value = asset.holdings * asset.price;
+        let percent = (value / total) * 100;
+        if (percent > 0.5) {
+          labels.push(asset.symbol);
+          allocData.push(percent);
+          bgColors.push(asset.color);
+          legendDiv.innerHTML += `<div class="flex justify-between items-center"><div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:${asset.color}"></span><span class="text-gray-700">${asset.symbol}</span></div><span class="font-medium">${percent.toFixed(1)}%</span></div>`;
+        }
+      });
+      if(window.doughnutChart) window.doughnutChart.destroy();
+      let ctxDonut = document.getElementById('allocationDoughnut').getContext('2d');
+      window.doughnutChart = new Chart(ctxDonut, {
+        type: 'doughnut',
+        data: { labels: labels, datasets: [{ data: allocData, backgroundColor: bgColors, borderWidth: 0, cutout: '60%' }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+      });
+    }
+    
+    // Line chart trend simulation: 7-day portfolio index & benchmark(BTC)
+    let portfolioHistory = [100, 102.4, 101.8, 104.2, 106.1, 108.5, 107.9];
+    let btcHistory = [100, 101.2, 100.5, 103.0, 104.1, 106.0, 105.4];
+    function updateLineChartWithNewPrices() {
+      // recalc recent 7d based on current total variation vs old baseline
+      let currentTotal = computePortfolioTotal();
+      let baselineTotal = 127450.8;
+      let indexFactor = currentTotal / baselineTotal;
+      let newIdx = indexFactor * 100;
+      portfolioHistory.push(newIdx);
+      if(portfolioHistory.length > 7) portfolioHistory.shift();
+      // BTC simulated recent move (based on current BTC price)
+      let btcAsset = assets.find(a=>a.symbol==='BTC');
+      let btcPriceBase = 63250;
+      let btcFactor = btcAsset.price / btcPriceBase;
+      let newBtcIdx = btcFactor * 100;
+      btcHistory.push(newBtcIdx);
+      if(btcHistory.length > 7) btcHistory.shift();
+      if(window.trendChart) window.trendChart.destroy();
+      let ctxLine = document.getElementById('portfolioTrendChart').getContext('2d');
+      window.trendChart = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+          labels: ['D-6','D-5','D-4','D-3','D-2','Yesterday','Today'],
+          datasets: [
+            { label: 'Portfolio Index', data: portfolioHistory, borderColor: '#4f46e5', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, pointBackgroundColor: '#4f46e5' },
+            { label: 'BTC Benchmark', data: btcHistory, borderColor: '#10b981', backgroundColor: 'transparent', tension: 0.3, borderDash: [5,5], pointRadius: 2 }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { tooltip: { mode: 'index' }, legend: { position: 'top', labels: { boxWidth:12 } } } }
+      });
+    }
+    
+    // full UI render: table, doughnut, metrics & graphs
+    function renderAllUI() {
+      updateAllocationsAndTotals();
+      renderAssetTable();
+      updateDerivedMetrics();
+      updateLineChartWithNewPrices();
+    }
+    
+    // initial load & setup, plus refresh button with small random market move.
+    document.addEventListener('DOMContentLoaded', () => {
+      // initial baseline total
+      window._prevTotalVal = computePortfolioTotal();
+      renderAllUI();
+      // small extra to set initial dominance consistency
+      let initDom = computeBtcDominance();
+      document.getElementById('btcDomDisplay').innerText = initDom.toFixed(1)+'%';
+      document.getElementById('domFillBar').style.width = initDom+'%';
+      // attach refresh button
+      const refreshBtn = document.getElementById('refreshDataBtn');
+      refreshBtn.addEventListener('click', () => {
+        refreshMarketPrices();
+        // after price refresh, render again all
+        renderAllUI();
+        // update dominance & tooltips
+        let newDom = computeBtcDominance();
+        document.getElementById('btcDomDisplay').innerText = newDom.toFixed(1)+'%';
+        document.getElementById('domFillBar').style.width = newDom+'%';
+        // tiny effect on button
+        refreshBtn.classList.add('btn-active');
+        setTimeout(()=>refreshBtn.classList.remove('btn-active'), 200);
+      });
+    });
+  </script>
+</body>
+</html>

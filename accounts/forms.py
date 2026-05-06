@@ -29,7 +29,7 @@ class SignUpForm(UserCreationForm):
         max_length=254, 
         required=True, 
         widget=forms.EmailInput(attrs={
-            'class': 'w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',
             'placeholder': 'your@email.com'
         })
     )
@@ -42,7 +42,7 @@ class SignUpForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             if hasattr(field.widget, 'attrs'):
-                field.widget.attrs['class'] = 'w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                field.widget.attrs['class'] = 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -57,7 +57,7 @@ class OTPVerificationForm(forms.Form):
         min_length=6,
         required=True,
         widget=forms.TextInput(attrs={
-            'class': 'w-full text-center text-2xl tracking-widest border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500',
+            'class': 'w-full text-center text-2xl tracking-widest border border-gray-300 rounded-0 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500',
             'placeholder': '000000',
             'autocomplete': 'off',
             'maxlength': '6'
@@ -69,26 +69,26 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('phone',)
         widgets = {
-            'phone': forms.TextInput(attrs={'class': 'w-full border border-gray-300 rounded px-3 py-2'}),
+            'phone': forms.TextInput(attrs={'class': 'w-full border border-gray-300 rounded-0 px-3 py-2'}),
         }
 
 class ResendVerificationForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
-            'class': 'w-full border border-gray-300 rounded px-3 py-2',
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2',
             'placeholder': 'Enter your email'
         })
     )
 
 
-# forms.py
+# forms.py  w-full max-w-xs
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={
-        "class": "form-control",
+        "class": "form-control input imput-bordered",
         "placeholder": "Email"
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        "class": "form-control",
+        "class": "form-control input imput-bordered",
         "placeholder": "Password"
     }))

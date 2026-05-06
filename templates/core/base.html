@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400..800&display=swap" rel="stylesheet">
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -170,7 +170,9 @@
                         <div class="flex gap-3 items-center">
                             <span class="is-drawer-close:hidden mr-4">Deposit</span>
 
-                            <span class="w-3 h-3 p-1 bg-red-600 rounded-full"></span>
+                            <!-- <span class="w-3 h-3 p-1 bg-red-600 rounded-full"></span> -->
+                               <kbd class="kbd text-black">1</kbd>
+
 
                         </div>
                     </button>
@@ -188,7 +190,15 @@
                             </path>
                             <path d="M18 4H3c-.55 0-1 .45-1 1v11h2V6h14zm-4 8a2 2 0 1 0 0 4 2 2 0 1 0 0-4"></path>
                         </svg>
-                        <span class="is-drawer-close:hidden">Withdraw</span>
+                        <div class="flex gap-3 items-center">
+                            <span class="is-drawer-close:hidden mr-4">Withdraw</span>
+
+                            <!-- <span class="w-3 h-3 p-1 bg-red-600 rounded-full"></span> -->
+                               <!-- <kbd class="kbd text-black">2</kbd> -->
+
+
+                        </div>
+                        <!-- <span class="is-drawer-close:hidden"></span> -->
                     </button>
                 </li>
                 <li class="p-2 max-w-50">
@@ -203,7 +213,15 @@
                                 d="M10 5H9V2H7v3H6c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1M9 17H7V7h2zm9-10h-1V4h-2v3h-1c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1m-1 8h-2V9h2z">
                             </path>
                         </svg>
-                        <span class="is-drawer-close:hidden">Buy Stock</span>
+                        <div class="flex gap-3 items-center">
+                            <span class="is-drawer-close:hidden mr-4">Buy stock</span>
+
+                            <!-- <span class="w-3 h-3 p-1 bg-red-600 rounded-full"></span> -->
+                               <kbd class="kbd text-black">2</kbd>
+
+
+                        </div>
+                        <!-- <span class="is-drawer-close:hidden">Buy Stock</span> -->
                     </button>
                 </li>
                 <li class="p-2 max-w-50">
@@ -278,7 +296,7 @@
                     <h4 class="text-xl font-bold mb-2">Invest in Tesla, The Future Is Autonomous</h4>
                     <p class="mb-2">As our Full Self-Driving technology continues to advance, we get closer to making a
                         fully autonomous future possible.</p>
-                    <a href="#" class="btn bg-red-500 w-70 text-black">Sign in</a>
+                    <a href="{% url 'login' %}" class="btn bg-red-500 w-70 text-black">Sign in</a>
 
                 </div>
 

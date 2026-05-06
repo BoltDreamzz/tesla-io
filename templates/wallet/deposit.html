@@ -79,16 +79,16 @@
             <div class="grid grid-rows-[0fr] transition-all duration-300 group-open:grid-rows-[1fr]">
                 <div class="overflow-hidden px-5 pb-5 text-sm text-gray-600">
                     <ol class="list-decimal space-y-2 pl-5 text-sm">
-                        <li>Enter your preferred amount in the amount box above.</li>
-                        <li>Select your proposed payment method from the list of provided payment methods.</li>
-                        <li>Click on the Submit button to confirm the transaction.</li>
+                        <li>Enter your preferred amount in the amount box above, min <strong>$500</strong>.</li>
+                        <li>Select your proposed payment method from the list of provided payment methods. eg. <strong>Etherum</strong></li>
+                        <li>Click on the <code class="p-1 border border-red-500">Submit</code> button to confirm the transaction.</li>
 
 
                     </ol>
                 </div>
             </div>
         </details>
-        <script>
+        <!-- <script>
             function toggleDeposit(button) {
                 const body = button.parentElement.querySelector('div');
                 const icon = button.querySelector('svg');
@@ -96,7 +96,7 @@
                 body.classList.toggle('hidden');
                 icon.classList.toggle('rotate-180');
             }
-        </script>
+        </script> -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const form = document.getElementById('depositForm');
