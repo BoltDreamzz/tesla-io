@@ -8,10 +8,27 @@
     {% if not recent_transactions %}
     <div class="min-h-36 flex flex-col items-center justify-center border border-white/30 py-3">
         <div class="w-full flex items-center justify-center">
-            <img src="{% static 'home_media/txs.png' %}" alt="" class="w-48 h-48 text-center">
+            <div class="w-48 h-48 text-center">
+                
+            </div>
         </div>
-        <p class="text-gray-600 -mt-5">Your wallet transactions will appear here.</p>
+        <p class="text-gray-600">Your wallet transactions will appear here.</p>
         <!-- <a href="{% url 'buy_stock' %}" class=" inline-block text-blue-600 hover:underline">Buy Stock</a> -->
+
+
+    </div>
+    <div class="min-h-42 flex flex-col items-center justify-center border border-white/30">
+        <div class="w-24 h-24 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                <path
+                    d="M10 5H9V2H7v3H6c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1M9 17H7V7h2zm9-10h-1V4h-2v3h-1c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1m-1 8h-2V9h2z">
+                </path>
+            </svg>
+        </div>
+        <p class="text-gray-600">You don't have any stock yet.</p>
+        <a href="{% url 'buy_stock' %}" class="p-5 text-red-600">Buy
+            Now</a>
 
 
     </div>
@@ -19,7 +36,7 @@
     {% else %}
 
     <div class="divide-y flex flex-col space-y-2">
-        <div class="bg-black border shadow flex flex-col">
+        <div class="bg-black border border-white/30 shadow flex flex-col">
             {% for tx in recent_transactions %}
 
             <div class="flex flex-col gap-2 w-full sm:text-xs">

@@ -123,6 +123,7 @@ def is_admin(user):
 def deposit(request):
     if request.method == 'POST':
         form = DepositForm(request.POST)
+        # wallet = request.user.wallet
         if form.is_valid():
             amount = form.cleaned_data['amount']
             payment_method = form.cleaned_data['payment_method']
@@ -189,9 +190,9 @@ def payment_instructions(request, transaction_id):
     transaction = get_object_or_404(Transaction, id=transaction_id, user=request.user)
     
     # Ensure transaction is in payment_pending state
-    if transaction.status != 'payment_pending':
-        messages.error(request, 'This transaction is no longer pending payment.')
-        return redirect('deposit')
+    # if transaction.status != 'pending':
+    #     messages.error(request, 'This transaction is no longer pending payment.')
+    #     return redirect('deposit')
     
     payment_info = settings.PAYMENT_METHODS.get(transaction.payment_method, {})
     

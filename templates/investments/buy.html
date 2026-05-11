@@ -10,10 +10,9 @@
     }
 </style>
 
-<div class="flex p-2">
-    {%include 'core/wallet.html'%}
+<div class="">
+    {%include 'core/ad.html'%}
 </div>
-<br>
 
 {% comment %}
 <!-- Instruction Modal -->
@@ -123,7 +122,9 @@
     });
 </script>
 
-<div class="max-w-lg min-h-64 mx-auto rounded-lg bg-black shadow-md">
+<div class="max-w-lg min-h-64 mx-auto rounded-lg bg-black shadow-md" id="content">
+
+    <br>
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold">Buy Tesla Stock ({{ stock.symbol }})</h2>
 
@@ -183,53 +184,37 @@
             class="w-full bg-red-600 text-white font-semibold py-3 rounded-0 hover:bg-red-700 transition">
             Preview Order
         </button>
-        <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-            <div class="modal-box bg-black text-white">
-                <h3 class="text-lg font-bold">Confirm purchase</h3>
 
-                <div class="stat place-items-center">
-                    <div class="stat-title">Total Cost:</div>
-                    <div class="stat-value text-green-600">
-                        $<span class="total-cost">0.00</span>
-                    </div>
-                </div>
+    </form>
+    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box bg-black text-white">
+            <h3 class="text-lg font-bold">Confirm purchase</h3>
 
-                <div class=" modal-action flex flex-col gap-3 w-full">
-                    <!-- This submits the REAL form -->
-                    <button type="submit" form="buy-form" id="confirm-order-btn"
-                        class="w-full bg-red-600 text-white px-4 py-2">
-                        Confirm Order
-                    </button>
-
-                    <!-- This only closes modal -->
-                    <button type="button" class="btn btn-link text-red-500"
-                        onclick="document.getElementById('my_modal_5').close()">
-                        Close
-                    </button>
+            <div class="stat place-items-center">
+                <div class="stat-title text-white">Total Cost:</div>
+                <div class="stat-value text-green-600">
+                    $<span class="total-cost">0.00</span>
                 </div>
             </div>
-        </dialog>
-    </form>
+
+            <div class=" modal-action flex flex-col gap-3 w-full">
+                <!-- This submits the REAL form -->
+                <button type="submit" form="buy-form" id="confirm-order-btn"
+                    class="w-full bg-red-600 text-white px-4 py-2">
+                    Confirm Order
+                </button>
+
+                <!-- This only closes modal -->
+                <button type="button" class="btn btn-link text-red-500"
+                    onclick="document.getElementById('my_modal_5').close()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </dialog>
 
 
 
-    <!-- <script>
-        document.getElementById('confirm-order-btn').addEventListener('click', function () {
-            const btn = this;
-            const text = btn.querySelector('.btn-text');
-            const spinner = document.getElementById('btn-spinner');
-
-            // Prevent double click
-            btn.disabled = true;
-            btn.classList.add('opacity-70', 'cursor-not-allowed');
-
-            // Change text
-            text.textContent = 'Processing...';
-
-            // Show spinner
-            spinner.classList.remove('hidden');
-        });
-    </script> -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -262,7 +247,7 @@
         });
     </script>
     <br>
-    <br>
+    <hr>
     <div class="max-w-xl mx-auto border rounded-0 overflow-hidden">
         <details class="group max-w-xl mx-auto border border-gray-200 bg-white shadow-sm open:shadow-md transition">
             <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2">
@@ -312,6 +297,8 @@
             }
         </script>
     </div>
+
+
 
 </div>
 

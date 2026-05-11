@@ -6,3 +6,12 @@ instance_class: F2
 
 env_variables:
   DJANGO_SETTINGS_MODULE: "tesla_invest.settings"
+  DATABASE_URL: "postgresql://postgres.okhclnvdammamieovrte:wl0MEnsf0ODoRyZw@aws-1-us-west-1.pooler.supabase.com:6543/postgres"
+
+
+handlers:
+  - url: /static
+    static_dir: staticfiles
+
+  - url: /.*
+    script: auto
