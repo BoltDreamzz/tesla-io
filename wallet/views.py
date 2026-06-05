@@ -290,40 +290,78 @@ def admin_transactions(request):
         'pending_transactions': pending_transactions
     })
 
+from django.db import transaction as db_transaction
+
 @login_required
 @user_passes_test(is_admin)
+# def admin_process_transaction(request, transaction_id, action):
+#     transaction = get_object_or_404(Transaction, id=transaction_id)
+    
+#     if transaction.status != 'pending':
+#         messages.error(request, 'This transaction has already been processed.')
+#         return redirect('admin_transactions')
+    
+#     if action == 'approve':
+#         # Add money to wallet
+#         wallet = transaction.user.wallet
+#         wallet.balance += transaction.amount
+#         wallet.save()
+        
+#         # Update transaction status
+#         transaction.status = 'completed'
+#         transaction.save()
+        
+#         # Notify user
+#         notify_user_of_approval(transaction)
+        
+#         messages.success(request, f'Approved deposit of ${transaction.amount} for {transaction.user.username}')
+        
+#     elif action == 'decline':
+#         transaction.status = 'failed'
+#         transaction.save()
+        
+#         # Notify user
+#         notify_user_of_decline(transaction)
+        
+#         messages.success(request, f'Declined deposit of ${transaction.amount} for {transaction.user.username}')
+    
+#     return redirect('admin_transactions')
+
 def admin_process_transaction(request, transaction_id, action):
-    transaction = get_object_or_404(Transaction, id=transaction_id)
-    
-    if transaction.status != 'pending':
-        messages.error(request, 'This transaction has already been processed.')
+
+    if request.method != "POST":
+        messages.error(request, "Invalid request method.")
         return redirect('admin_transactions')
-    
-    if action == 'approve':
-        # Add money to wallet
+
+    with db_transaction.atomic():
+
+        transaction = Transaction.objects.select_for_update().get(id=transaction_id)
+
+        if transaction.status != 'pending':
+            messages.error(request, 'This transaction has already been processed.')
+            return redirect('admin_transactions')
+
         wallet = transaction.user.wallet
-        wallet.balance += transaction.amount
-        wallet.save()
-        
-        # Update transaction status
-        transaction.status = 'completed'
-        transaction.save()
-        
-        # Notify user
-        notify_user_of_approval(transaction)
-        
-        messages.success(request, f'Approved deposit of ${transaction.amount} for {transaction.user.username}')
-        
-    elif action == 'decline':
-        transaction.status = 'failed'
-        transaction.save()
-        
-        # Notify user
-        notify_user_of_decline(transaction)
-        
-        messages.success(request, f'Declined deposit of ${transaction.amount} for {transaction.user.username}')
-    
+
+        if action == 'approve':
+            wallet.balance += transaction.amount
+            wallet.save()
+
+            transaction.status = 'completed'
+            transaction.save()
+
+            notify_user_of_approval(transaction)
+            messages.success(request, f'Approved ${transaction.amount} for {transaction.user.username}')
+
+        elif action == 'decline':
+            transaction.status = 'failed'
+            transaction.save()
+
+            notify_user_of_decline(transaction)
+            messages.success(request, f'Declined ${transaction.amount} for {transaction.user.username}')
+
     return redirect('admin_transactions')
+
 
 def notify_admin_of_payment(transaction):
     """Send email notification to admin about new payment submission"""
@@ -425,3 +463,71 @@ def transaction_list(request):
     # recent_transactions = user.transactions.all().order_by('-created_at')[:5]
     recent_transactions = user.transactions.filter(status__in=['completed', 'failed', 'cancelled']).order_by('-created_at')[:15]
     return render(request, 'wallet/transaction_list.html', {'recent_transactions': recent_transactions})
+
+
+
+
+from django.contrib.auth.decorators import user_passes_test
+
+from .forms import WalletUpdateForm
+from services.wallet_service import WalletService
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def update_wallet_view(request):
+
+    form = WalletUpdateForm()
+
+    if request.method == "POST":
+
+        form = WalletUpdateForm(request.POST)
+
+        if form.is_valid():
+
+            user = form.cleaned_data["user"]
+            amount = form.cleaned_data["amount"]
+            # direction = form.cleaned_data["direction"]
+            transaction_type = form.cleaned_data["transaction_type"]
+            description = form.cleaned_data["description"]
+
+            try:
+
+                WalletService.update_wallet(
+                    user=user,
+                    amount=amount,
+                    # direction=direction,
+                    transaction_type=transaction_type,
+                    performed_by=request.user,
+                    description=description
+                )
+
+                messages.success(
+                    request,
+                    "Wallet updated successfully."
+                )
+
+                return redirect("update_wallet")
+
+            except ValueError as e:
+
+                messages.error(
+                    request,
+                    str(e)
+                )
+
+            except Exception as e:
+
+                messages.error(
+                    request,
+                    f"Something went wrong., {str(e)}"
+                )
+
+    context = {
+        "form": form
+    }
+
+    return render(
+        request,
+        "wallet/update_wallet.html",
+        context
+    )

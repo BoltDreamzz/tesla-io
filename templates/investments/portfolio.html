@@ -1,63 +1,131 @@
 {% extends 'core/base.html' %}
+{% load humanize %}
+{% load static %}
 
 {% block content %}
-<div class="bg-white rounded-lg shadow-md p-6">
-    <h2 class="text-2xl font-bold mb-4">My Portfolio</h2>
-    <p class="text-xl mb-6">Total Value: <span class="font-bold">${{ total_value|floatformat:2 }}</span></p>
+<div class="min-h-screen p-3">
+    <h2 class="text-2xl font-bold">My Portfolio</h2>
+    <br>
+    <!-- <div class=""> -->
+    <div class="p-3 border border-white/30  overflow-x-auto">
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        class="inline-block h-8 w-8 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="stat-title text-white">Total Shares</div>
+                <div class="stat-value">{{ total_shares|floatformat:2 }}</div>
+                <!-- <div class="stat-desc">Jan 1st - Feb 1st</div> -->
+            </div>
 
-    {% if holdings %}
-        <table class="min-w-full divide-y divide-gray-200 mb-8">
-            <thead>
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shares</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg Buy</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Current Value</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                {% for holding in holdings %}
-                <tr>
-                    <td class="px-6 py-4">{{ holding.stock.symbol }} - {{ holding.stock.name }}</td>
-                    <td class="px-6 py-4">{{ holding.quantity|floatformat:4 }}</td>
-                    <td class="px-6 py-4">${{ holding.average_buy_price|floatformat:2 }}</td>
-                    <td class="px-6 py-4">${{ holding.current_value|floatformat:2 }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="text-gray-600 mb-6">You don't own any shares yet. <a href="{% url 'buy_stock' %}" class="text-blue-600">Buy now</a>.</p>
-    {% endif %}
 
-    <h3 class="text-xl font-bold mb-4">Recent Investment Transactions</h3>
-    <table class="min-w-full divide-y divide-gray-200">
-        <thead>
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shares</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-            {% for tx in transactions %}
-            <tr>
-                <td class="px-6 py-4 whitespace-nowrap">{{ tx.created_at|date:"Y-m-d H:i" }}</td>
-                <td class="px-6 py-4">{{ tx.get_transaction_type_display }}</td>
-                <td class="px-6 py-4">{{ tx.stock.symbol }}</td>
-                <td class="px-6 py-4">{{ tx.quantity|floatformat:4 }}</td>
-                <td class="px-6 py-4">${{ tx.price_per_share|floatformat:2 }}</td>
-                <td class="px-6 py-4">${{ tx.total_amount|floatformat:2 }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6" class="px-6 py-4 text-center text-gray-500">No investment transactions yet.</td>
-            </tr>
+
+            <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        class="inline-block h-8 w-8 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4">
+                        </path>
+                    </svg>
+                </div>
+                <div class="stat-title text-white">Total value</div>
+                <div class="stat-value">${{ total_value|floatformat:0|intcomma }}</div>
+                <div class="stat-desc">↘︎ 90 (4%)</div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="rounded-lg shadow-md my-3">
+                <h2 class="text-2xl font-bold mb-4">My Stock</h2>
+                {% if holdings %}
+                <div class="p-3 border border-white/30">
+                    <p class="text-green-500">TSLA: {{ holdings.0.quantity|floatformat:2 }} shares</p>
+                    <p class="text-white">Current value: ${{ holdings.0.current_value|floatformat:2|intcomma }}</p>
+                    <p class="text-white">+12% today</p>
+                </div>
+
+                <br>
+
+
+                {% else %}
+                <div class="min-h-42 flex flex-col items-center justify-center border border-white/30">
+                    <div class="w-24 h-24 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path
+                                d="M10 5H9V2H7v3H6c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1M9 17H7V7h2zm9-10h-1V4h-2v3h-1c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h1v3h2v-3h1c.55 0 1-.45 1-1V8c0-.55-.45-1-1-1m-1 8h-2V9h2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <p class="text-gray-600">You don't have any stock yet.</p>
+                    <a href="{% url 'buy_stock' %}" class="p-5 text-red-600">Buy
+                        Now</a>
+
+
+                </div>
+                {% endif %}
+            </div>
+    <br>
+    <div class="rounded-0 p-3">
+        <h2 class="text-2xl font-bold">My Vehicles</h2>
+
+        <div class="p-3 rounded shadow gird grid-cols-2">
+
+
+
+            {% for tier in achieved_tiers %}
+
+            <div class="relative w-40 h-40">
+
+                <!-- Bottom -->
+                <!-- <div class="absolute inset-0 translate-x-3 translate-y-3 rotate-[-8deg]
+        rounded-2xl border bg-base-200/10 shadow-md">
+                </div> -->
+
+                <!-- Middle -->
+                <div class="absolute inset-0 translate-x-1 translate-y-1 rotate-[6deg]
+        rounded-2xl border bg-base-200/20 shadow-lg">
+                </div>
+
+                <!-- Top -->
+                <div class="absolute inset-0 rounded-2xl border bg-black
+        shadow-2xl flex items-center flex-col justify-center">
+                    <img src="{% static tier.image %}" class="w-24 mx-auto">
+                    <!-- <span class="text-3xl font-bold">.</span> -->
+                    <a href="#" class="text-xs text-red-500">Claim vehicle.</a>
+                </div>
+                <!-- <span class="absolute top-0 left-0">
+
+                </span> -->
+
+            </div>
+
             {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endblock %}
+            
+
+
+            {% if next_tier %}
+            <span class="text-2xl my-3">Next vehicle is {{next_tier.vehicle}}</span>
+
+            {% endif %}
+
+
+
+        </div>
+    </div>
+    <br>
+
+    <!-- Portfolio Summary -->
+
+
+    <br>
+
+
+    <!-- </div> -->
+    {% endblock %}

@@ -1,0 +1,71 @@
+<div class="h-[500px] overflow-y-auto py-6">
+
+        <div class="space-y-[-60px]">
+
+            {% for notification in pending_transactions %}
+
+            <div class="sticky top-4 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] " style="
+                z-index: {{ forloop.revcounter }};
+                transform: scale(calc(1 - ({{ forloop.counter0 }} * 0.03)));
+            ">
+
+                <div class="
+                rounded-[28px]
+                backdrop-blur-2xl
+                border border-white/20
+                shadow-2xl
+                bg-white/70 dark:bg-zinc-900/70
+                p-4
+                h-24
+                flex items-start gap-3
+            ">
+
+                    <!-- Icon -->
+                    <div class="w-10 h-10 rounded-2xl bg-black text-white
+                    flex items-center justify-center shrink-0">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+
+                        </svg>
+
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex-1">
+
+                        <div class="flex items-center justify-between">
+
+                            <h3 class="font-semibold text-sm">
+                                <span>Deposit from {{ notification.user.username }}</span>
+
+                            </h3>
+
+                            <span class="text-xs opacity-60">
+                                {{ notification.created_at|date:"M d" }}
+                            </span>
+
+                        </div>
+
+                        <p class="text-sm mt-1 ml-2 font-medium">
+                            <!-- <strong>Amount:</strong> -->
+                            <span>
+                                <div class="badge badge-dash badge-accent">{{ notification.payment_method }}</div>
+                            </span>
+                            Please confirm ${{ notification.amount }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>

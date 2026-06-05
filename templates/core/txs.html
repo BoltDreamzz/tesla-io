@@ -7,17 +7,6 @@
     <!-- From Uiverse.io by seyed-mohsen-mousavi -->
     {% if not recent_transactions %}
     <div class="min-h-36 flex flex-col items-center justify-center border border-white/30 py-3">
-        <div class="w-full flex items-center justify-center">
-            <div class="w-48 h-48 text-center">
-                
-            </div>
-        </div>
-        <p class="text-gray-600">Your wallet transactions will appear here.</p>
-        <!-- <a href="{% url 'buy_stock' %}" class=" inline-block text-blue-600 hover:underline">Buy Stock</a> -->
-
-
-    </div>
-    <div class="min-h-42 flex flex-col items-center justify-center border border-white/30">
         <div class="w-24 h-24 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
@@ -26,17 +15,90 @@
                 </path>
             </svg>
         </div>
-        <p class="text-gray-600">You don't have any stock yet.</p>
-        <a href="{% url 'buy_stock' %}" class="p-5 text-red-600">Buy
-            Now</a>
-
+        <p class="text-gray-600">Your wallet transactions will appear here.</p>
+        {% if request.path == "/transactions/" %}
+        <a href="{% url 'dashboard' %}" class="p-5 text-red-600 hover:underline">Go home</a>
+        {% endif %}
 
     </div>
+
 
     {% else %}
 
     <div class="divide-y flex flex-col space-y-2">
+        {% if pending_transactions %}
+
+        <div class="sticky top-4 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] " style="
+                z-index: {{ forloop.revcounter }};
+                transform: scale(calc(1 - ({{ forloop.counter0 }} * 0.03)));
+            ">
+
+            <div class="
+                rounded-[28px]
+                backdrop-blur-2xl
+                border border-white/20
+                shadow-2xl
+                bg-white/70 dark:bg-zinc-900/70
+                p-3
+                h-24
+                flex items-start gap-3
+            ">
+
+                <!-- Icon -->
+                <div class="w-10 h-10 rounded-2xl bg-black text-white
+                    flex items-center justify-center shrink-0">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+
+                    </svg>
+
+                </div>
+
+                <!-- Content -->
+                {% comment %}
+                <div class="flex-1">
+
+                    <div class="flex items-center justify-between">
+
+                        <h3 class="font-semibold text-sm">
+                            <span>pending deposit of {{ pending_transactions.amount|intcomma }}. <div
+                                    class="badge badge-dash badge-accent">{{ pending_transactions.payment_method }}
+                                </div></span>
+
+                        </h3>
+
+                        <span class="text-xs opacity-60">
+                            {{ pending_transactions.created_at|date:"M d" }}
+                        </span>
+
+                    </div>
+
+                    <!-- <p class="text-sm mt-1 ml-2 font-medium">
+                            <span>
+                               
+                            </span>
+                        </p> -->
+
+                </div>
+                {% endcomment %}
+
+            </div>
+            <p class="text-xs mt-4 px-3 py-4 bg-warning text-black">Your deposit of {{ pending_transactions.amount|intcomma }} {{ pending_transactions.payment_method }} is being reviewed. You will be notified
+                    through your email when verification completes.
+                </p>
+
+        </div>
+
+
+        {% endif %}
         <div class="bg-black border border-white/30 shadow flex flex-col">
+
+
+
             {% for tx in recent_transactions %}
 
             <div class="flex flex-col gap-2 w-full sm:text-xs">
@@ -57,13 +119,24 @@
                         </div>
                     </div>
                     <h4 class="text-2xl font-bold">
-                        {% if tx.transaction_type == 'deposit' %} +${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'withdrawal' %} -${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'buy_stock' %} -${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'buy_vehicle_share' %} -${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'buy_vehicle' %} -${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'sell_stock' %} +${{ tx.amount|floatformat:2|intcomma }}
-                        {% else %} ${{ tx.amount|floatformat:2|intcomma }}{% endif %}
+                        {% if tx.transaction_type == 'deposit' and tx.status == 'declined' %}
+                        <span class="text-red-500">${{ tx.amount|floatformat:2|intcomma }}</span>
+
+                        {% elif tx.transaction_type == 'deposit' and tx.status == 'completed' %}
+                        <span class="text-green-500">${{ tx.amount|floatformat:2|intcomma }}</span>
+
+
+
+                        {% elif tx.transaction_type == 'withdrawal' %} ${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'buy_stock' %} ${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'buy_vehicle_share' %} ${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'buy_vehicle' %} ${{ tx.amount|floatformat:2|intcomma }}
+                        {% elif tx.transaction_type == 'sell_stock' %} ${{ tx.amount|floatformat:2|intcomma }}
+                        {% endif %}
+                        {% if tx.get_transaction_type_display == 'buy' %}
+                        <span class="text-red-500">${{ tx.amount|floatformat:2|intcomma }}</span>
+
+                        {% endif %}
 
                     </h4>
                 </div>
@@ -79,8 +152,10 @@
 
 
     </div>
+    {% if not request.path == '/wallet/transactions/' %}
     <a href="{% url 'transaction_list' %}" class="mt-4 inline-block text-blue-600 hover:underline">View All
         →</a>
+    {% endif %}
     {% endif %}
 
 </div>

@@ -173,8 +173,17 @@
                 </span>
 
 
+
             </div>
             <span class="text-blue-600">1 TSLA = ${{ stock.current_price|floatformat:2 }}</span></span>
+            <hr>
+            <div class="flex flex justify-between items-center my-2">
+                <span class="text-gray-200 font-medium">Wallet Balance</span>
+                <span class="text-xl font-bold text-green-600">
+                    <span class="">${{ wallet.balance|intcomma }}</span>
+                </span>
+            </div>
+
 
         </div>
 
@@ -199,10 +208,41 @@
 
             <div class=" modal-action flex flex-col gap-3 w-full">
                 <!-- This submits the REAL form -->
-                <button type="submit" form="buy-form" id="confirm-order-btn"
-                    class="w-full bg-red-600 text-white px-4 py-2">
-                    Confirm Order
+                <button type="submit" form="buy-form" id="buyButton" class="w-full flex justify-center items-center py-2 px-4 border border-transparent
+        shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700
+        disabled:opacity-70 disabled:cursor-not-allowed">
+
+                    <span class="btn-text">Submit Deposit</span>
+
+                    <span class="btn-loading hidden items-center">
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        Processing...
+                    </span>
                 </button>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const form = document.getElementById('buy-form');
+                        const button = document.getElementById('buyButton');
+
+                        if (!form || !button) return;
+
+                        const text = button.querySelector('.btn-text');
+                        const loading = button.querySelector('.btn-loading');
+
+                        form.addEventListener('submit', function () {
+                            button.disabled = true;
+                            text.classList.add('hidden');
+                            loading.classList.remove('hidden');
+                            loading.classList.add('flex');
+                        });
+                    });
+                </script>
 
                 <!-- This only closes modal -->
                 <button type="button" class="btn btn-link text-red-500"

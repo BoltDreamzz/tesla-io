@@ -62,6 +62,8 @@ class PaymentConfirmationForm(forms.Form):
 
 class WithdrawForm(forms.Form):
 
+
+
     PAYMENT_CHOICES = [
         # ('bank_transfer', 'Bank Transfer'),
         ('usdt', 'USDT (ERC-20)'),
@@ -78,3 +80,56 @@ class WithdrawForm(forms.Form):
         })
     )
     wallet_address = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full border border-gray-300 rounded-0 px-3 py-2', 'rows': 1, 'placeholder': 'Enter your correct wallet address'}))
+
+
+
+
+from decimal import Decimal
+
+from .models import Transaction
+from django.contrib.auth.models import User
+
+
+class WalletUpdateForm(forms.Form):
+
+    user = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.Select(attrs={
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
+        })
+    )
+
+    amount = forms.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        min_value=Decimal("1.00"),
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white',
+            'placeholder': 'Enter amount'
+        })
+    )
+
+    # direction = forms.ChoiceField(
+    #     choices=Transaction.DIRECTION_CHOICES,
+    #     widget=forms.Select(attrs={
+    #         'class': 'form-control'
+    #     })
+    # )
+
+    transaction_type = forms.ChoiceField(
+        choices=Transaction.TRANSACTION_TYPES,
+        help_text="Select 'Interest' preferrably. Others are handled automatically.",
+        widget=forms.Select(attrs={
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white'
+        })
+    )
+
+    description = forms.CharField(
+        required=True,
+        widget=forms.Textarea(attrs={
+            'class': 'w-full border border-gray-300 rounded-0 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-white',
+            'rows': 2,
+            'placeholder': 'Reason for adjustment'
+        }),
+        # default="Earned daily interest"
+    )

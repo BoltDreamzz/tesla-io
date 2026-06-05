@@ -38,3 +38,15 @@ class InvestmentTransaction(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.transaction_type} - {self.created_at}"
+    
+    def current_value(self):
+        """
+        Current market value of this holding.
+        """
+
+        if not self.stock or not self.stock.current_price:
+            from decimal import Decimal
+
+            return Decimal("0.00")
+
+        return self.quantity * self.stock.current_price

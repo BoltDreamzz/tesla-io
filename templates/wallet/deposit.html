@@ -12,10 +12,18 @@
         <img src="{% static 'home_media/pigg.png' %}" alt="" class="w-24 h-24 text-center">
 
     </div>
+    {% if messages %}
+    {% for i in messages %}
+    <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Error</strong>: {{i}}
+    </p>
+    {% endfor %}
+
+    {% else %}
     <p class="text-sm mt-4 px-3 py-4 bg-warning text-black"><strong>Note</strong>: Minimum deposit is
         <strong>$500</strong>, transactions
         below the limit will be declined.
     </p>
+    {% endif %}
     <!-- <br> -->
 
     <!-- <br> -->

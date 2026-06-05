@@ -85,10 +85,10 @@ class ResendVerificationForm(forms.Form):
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={
-        "class": "form-control input imput-bordered",
+        "class": "w-full border border-gray-300 rounded-0 px-3 py-2",
         "placeholder": "Email"
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        "class": "form-control input imput-bordered",
+        "class": "w-full border border-gray-300 rounded-0 px-3 py-2",
         "placeholder": "Password"
     }))

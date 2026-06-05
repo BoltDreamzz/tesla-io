@@ -1,7 +1,8 @@
+{% load humanize %}
 <div class="stats rounded-0">
   <div class="stat">
     <div class="stat-title text-success">Account balance</div>
-    <div class="stat-value">${{ wallet.balance|floatformat:2 }}</div>
+    <div class="stat-value">${{ wallet.balance|intcomma }}</div>
     <div class="stat-actions">
       <a href="{%url 'deposit' %}" class="btn btn-xs bg-red-500 rounded-0">Deposit</a>
             <a href="{%url 'withdraw' %}" class="btn btn-xs bg-red-500 rounded-0">Withdraw</a>

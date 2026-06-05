@@ -113,28 +113,11 @@
 {% endcomment %}
 <div class="min-h-screen">
     <div class="container max-w-5xl">
-        <!-- <div class="bg-white/5 backdrop-blur-2xl border border-gray-700 rounded-lg p-3"> -->
-        <!-- <h2 class="text-3xl font-bold mb-6 text-center">Payment Instructions</h2> -->
-
-        <!-- <div class="mb-8 p-4 bg-yellow-500/10 border border-yellow-500/50 rounded-0">
-            <p class="text-yellow-500 text-center">
-                Send the sum of<br>
-                <span class="text-3xl font-bold">
-
-                </span> <br>
-            </p>
-        </div> -->
 
         <div class="mb-8">
             <h3 class="text-2xl font-bold mb-4">Send payment to:</h3>
 
-            {% if payment_info.type == 'bank' %}
-            <div class="bg-gray-800 p-6 rounded-lg">
-                <p><strong>Bank Name:</strong> {{ payment_info.bank_name }}</p>
-                <p><strong>Account Name:</strong> {{ payment_info.account_name }}</p>
-                <p><strong>Account Number:</strong> {{ payment_info.account_number }}</p>
-            </div>
-            {% else %}
+
             <div class="bg-black p-3 rounded-lg">
                 <div class="text-center">
                     {% if qr_code_base64 %}
@@ -187,7 +170,6 @@
                 <!-- <br> -->
 
             </div>
-            {% endif %}
             <br>
             <div class="w-full flex flex-col space-y-2 items-center justify-center">
                 <button class="btn w-full bg-red-500 rounded-0 px-3 py-2 text-white" onclick="my_modal_5.showModal()">I

@@ -89,13 +89,14 @@ def custom_login(request):
             # Get the authenticated user
             user = form.get_user()
             login(request, user)
-            
+            next_url = request.POST.get("next")
+
             # Check if user wants to be remembered
             if not request.POST.get('remember'):
                 request.session.set_expiry(0)  # Session expires when browser closes
             
             messages.success(request, f'Welcome back, {user.username}!')
-            return redirect('dashboard')  # Change to your home page URL name
+            return redirect(next_url or 'dashboard')  # Change to your home page URL name
         else:
             # Authentication failed (wrong password)
             messages.error(request, 'Invalid username or password. Please try again.')

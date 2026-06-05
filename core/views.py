@@ -15,10 +15,12 @@ def dashboard(request):
     holdings = user.holding_set.all()
     # recent_transactions = user.transactions.all().order_by('-created_at')[:5]
     recent_transactions = user.transactions.filter(status__in=['completed', 'failed', 'cancelled']).order_by('-created_at')[:15]
+    pending_transactions = user.transactions.filter(status__in=['pending']).order_by('-created_at').first()
 
     context = {
         'wallet': wallet,
         'holdings': holdings,
         'recent_transactions': recent_transactions,
+        'pending_transactions': pending_transactions,
     }
     return render(request, 'core/dashboard.html', context)

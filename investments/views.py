@@ -355,7 +355,7 @@ def portfolio(request):
     # Use 'transactions' if you set related_name='transactions'
     # or use 'transaction_set' if you didn't set related_name
     recent_transactions = user.inv_transactions.order_by('-created_at')[:5]
-    holdings = Holding.objects.filter(user=request.user).select_related('stock')
+    holdings = InvestmentTransaction.objects.filter(user=request.user)# .select_related('stock')
     total_value = sum(h.current_value() for h in holdings)
     # Get recent investment transactions
     # transactions = InvestmentTransaction.objects.filter(user=request.user).order_by('-created_at')[:10]

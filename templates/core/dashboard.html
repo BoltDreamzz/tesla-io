@@ -16,7 +16,7 @@
     <!-- Main Content -->
     <div class="flex-1 space-y-3">
         <!-- Wallet Card -->
-        <div class="flex p-2">
+        <div class="flex p-2 border border-white/30 rounded-0">
             {%include 'core/wallet.html'%}
         </div>
         <a href="{% url 'buy_stock' %}" target="_blank" class="flex items-center justify-center">
@@ -65,11 +65,15 @@ all wheel drive" transform="translate(402 87)" fill="#fff" font-size="14" font-f
         <div class="rounded-lg shadow-md">
             <h2 class="text-2xl font-bold mb-4">My Stock</h2>
             {% if holdings %}
-            <p class="text-green-500">TSLA: {{ holdings.0.quantity|floatformat:2 }} shares</p>
-            <p class="text-white">Current value: ${{ holdings.0.current_value|floatformat:2 }}</p>
-            <p class="text-white">+12% today</p>
+            <div class="p-3 border border-white/30">
+                <p class="text-green-500">TSLA: {{ holdings.0.quantity|floatformat:2 }} shares</p>
+                <p class="text-white">Current value: ${{ holdings.0.current_value|floatformat:2|intcomma }}</p>
+                <p class="text-white">+12% today</p>
+            </div>
+
             <br>
-            <a href="{% url 'portfolio' %}" class="mt-4 inline-block text-blue-400 hover:underline">View Portfolio →</a>
+            <a href="{% url 'portfolio' %}" class="mt-4 inline-block text-blue-600 hover:underline">View Portfolio
+                →</a>
 
             {% else %}
             <div class="min-h-42 flex flex-col items-center justify-center border border-white/30">

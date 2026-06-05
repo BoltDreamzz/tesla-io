@@ -13,11 +13,13 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+MODE = 'prod' # can be dev or prod
+# print("MODE:", MODE)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -27,8 +29,8 @@ SECRET_KEY = 'django-insecure-aoz*nq8vyx^23i@m$_undoyn!c!l4)&8uh8qi3^ff=6d6bbz7n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["tesla-io-3455.ue.r.appspot.com", "127.0.0.1", "localhost"]
-CSRF_TRUSTED_ORIGINS = ["https://tesla-io-3455.ue.r.appspot.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["tesla-io-3455.ue.r.appspot.com", "127.0.0.1", "localhost", "www.investwithtesla.com", "investwithtesla.com"]
+CSRF_TRUSTED_ORIGINS = ["https://tesla-io-3455.ue.r.appspot.com", "https://investwithtesla.com", "https://www.investwithtesla.com"]
 
 
 # Application definition
@@ -78,6 +80,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'wallet.context_processors.pending_deposits_count',
+                "investments.context_processors.share_status",
+
             ],
         },
     },
@@ -86,32 +91,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tesla_invest.wsgi.application'
 
 
-
-GS_BUCKET_NAME = "tesla-io-3455.appspot.com"
-
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-        "OPTIONS": {
-            "bucket_name": GS_BUCKET_NAME,
-        },
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
-MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
-
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
+# 
 
 # DATABASE_URL = os.getenv("DATABASE_URL")
 # connection = psycopg2.connect(DATABASE_URL)
@@ -126,50 +109,63 @@ MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
 #     )
 # }
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
 
 # 🔥 THIS LINE FIXES YOUR ERROR
 # if isinstance(DATABASE_URL, bytes):
 #     DATABASE_URL = DATABASE_URL.decode("utf-8")
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
-# import psycopg2
-# from dotenv import load_dotenv
-# import os
-# # 4
-# # 5# Load environment variables from .env
-# load_dotenv()
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# # 8# Fetch variables
-# DATABASE_URL = os.getenv("DATABASE_URL")
-# import dj_database_url
-
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         default=os.getenv("DATABASE_URL"),
-#         conn_max_age=600,
-#         ssl_require=True,
-#     )
-# }
+if MODE == 'prod':
+    DATABASE_URL = os.environ.get("DATABASE_URL")
+    # print("DATABASE_URL:", DATABASE_URL)
 
 
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+    }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'tesla_invest',
-#         'USER': 'postgres',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+    
+
+    GS_BUCKET_NAME = "tesla-io-3455.appspot.com"
+    # GS_DEFAULT_ACL = "publicRead"
+    GS_QUERYSTRING_AUTH = False
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+            "OPTIONS": {
+                "bucket_name": GS_BUCKET_NAME,
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
+
+
+elif MODE == 'dev':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+     }
+    
+    
+
+    # MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
 
 
 # Password validation
@@ -206,13 +202,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

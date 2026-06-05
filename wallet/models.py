@@ -144,11 +144,11 @@ class Transaction(models.Model):
         ('deposit', 'Deposit'),
         ('withdrawal', 'Withdrawal'),
         ('buy_stock', 'Buy Stock'),
-        ('sell_stock', 'Sell Stock'),
-        ('buy_vehicle_share', 'Buy Vehicle Share'),      # New
-        ('buy_vehicle', 'Buy Full Vehicle'),              # New
-        ('vehicle_share_dividend', 'Vehicle Share Dividend'),  # Future
-        ('vehicle_share_sale', 'Vehicle Share Sale'),     # Future
+        ('interest', 'Interest'),
+        # ('buy_vehicle_share', 'Buy Vehicle Share'),      # New
+        # ('buy_vehicle', 'Buy Full Vehicle'),              # New
+        # ('vehicle_share_dividend', 'Vehicle Share Dividend'),  # Future
+        # ('vehicle_share_sale', 'Vehicle Share Sale'),     # Future
     ]
     
     STATUS_CHOICES = [
@@ -162,7 +162,7 @@ class Transaction(models.Model):
     PAYMENT_METHODS = [
         ('bank_transfer (Unavailable)', 'Bank Transfer (Unavailable)'),
         ('usdt', 'USDT'),
-        ('btc', 'Bitcoin'),
+        ('bitcoin', 'Bitcoin'),
         ('usdc', 'USDC'),
         ('ethereum', 'Ethereum'),
     ]
@@ -179,6 +179,27 @@ class Transaction(models.Model):
     reference_id = models.CharField(max_length=20, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    balance_before = models.DecimalField(
+    max_digits=12,
+    decimal_places=2,
+    null=True,
+    blank=True
+    )
+
+    balance_after = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
+
+    performed_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='performed_transactions'
+    )
 
     def save(self, *args, **kwargs):
         if not self.reference_id:
