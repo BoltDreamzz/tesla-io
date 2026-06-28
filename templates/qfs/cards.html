@@ -1,0 +1,61 @@
+{% include 'qfs/qfs_base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="min-h-screen p-3 space-y-3">
+    <h2 class="text-2xl font-bold mb-2">Select your platform</h2>
+    <div class="grid grid-cols-1 gap-3">
+        {% for card in cards %}
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <input type="hidden" name="card_id" value="{{ card.id }}">
+
+            <button type="submit"
+                class="group w-full rounded-3xl bg-slate-900 border border-slate-700 hover:border-blue-500 hover:bg-slate-800 transition duration-300 p-8 text-left shadow-lg">
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        {% if card.title|lower == 'lobstr wallet' %}
+                        <img src="{% static 'home_media/lbst.png' %}" class="w-16 h-16" alt="">
+                        {% elif card.title|lower == 'trust wallet' %}
+                        <img src="{% static 'home_media/tr.png' %}" class="w-16 h-16" alt="">
+                        {% endif %}
+
+                        <h2 class="text-2xl font-semibold capitalize">
+                            {{ card.title }}
+                        </h2>
+                    </div>
+
+
+
+                    <span class="text-blue-400 text-2xl group-hover:translate-x-1 transition">
+                        →
+                    </span>
+
+                </div>
+
+                {% if card.description %}
+                <p class="mt-4 text-slate-400">
+                    {{ card.description }}
+                </p>
+                {% endif %}
+
+                <div class="mt-8 text-blue-400 font-medium">
+                    Continue
+                </div>
+
+            </button>
+
+        </form>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

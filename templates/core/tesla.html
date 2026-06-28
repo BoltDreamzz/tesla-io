@@ -73,7 +73,7 @@
       <div class="text-xl font-light w-full flex justify-between items-center">
         <img src="{%static 'home_media/tesla_2.png'%}" alt="" class="max-h-[1.5em] w-auto">
         {%if request.user.is_authenticated%}
-        <a href="{% url 'dashboard' %}" class="btn p-2 m-2 btn-ghost rounded-full">
+        <a href="{% url 'profile' %}" class="btn p-2 m-2 btn-ghost rounded-full">
           <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
             viewBox="0 0 24 24">
             <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
@@ -373,7 +373,7 @@
       <ul class="space-y-2 text-gray-300 mb-4">
         <li>• 120 shares ~ 1 Cyber truck</li>
         <li>• 80 shares ~ 1 Model - S</li>
-                <li>• <code>``</code> 60 shares ~ 1 Model Y Plaid</li>
+        <li>• <code>``</code> 60 shares ~ 1 Model Y Plaid</li>
 
       </ul>
       <a href="{% url 'buy_stock' %}" class="flex hap-2 hover:px-4 items-center p-2 bg-red-500 border text-white w-100">
@@ -428,4 +428,19 @@
       }))
     })
   </script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/6a18b0096034501c34c0b4c1/1jpo6v9s2';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
+
+
 </body>

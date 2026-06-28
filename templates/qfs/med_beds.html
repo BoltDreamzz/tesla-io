@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QFS MedBeds — Advanced Wellness Technology</title>
+    <meta name="description"
+        content="QFS MedBeds delivers premium, futuristic wellness technology including Military MedBeds, Tesla MedBeds, and Quantum Recovery systems with private consultations, demos, and purchases." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0F172A',
+                        medical: '#2563EB',
+                        teal: '#14B8A6',
+                        lightgray: '#F8FAFC'
+                    },
+                    backgroundImage: {
+                        'grid': "radial-gradient(circle at 1px 1px, rgba(37,99,235,0.18) 1px, transparent 0)",
+                        'radial-fade': "radial-gradient(1200px 600px at 80% 20%, rgba(20,184,166,0.15), transparent 60%), radial-gradient(900px 400px at 20% 60%, rgba(37,99,235,0.18), transparent 60%)",
+                        'cta-gradient': "linear-gradient(135deg, rgba(37,99,235,0.14), rgba(20,184,166,0.14))",
+                        'card-glow': "radial-gradient(800px 300px at 50% -10%, rgba(37,99,235,0.25), transparent 60%)",
+                    },
+                    dropShadow: {
+                        'glow-blue': '0 0 25px rgba(37,99,235,0.45)',
+                        'glow-teal': '0 0 25px rgba(20,184,166,0.45)',
+                    },
+                    boxShadow: {
+                        'elevate': '0 10px 30px -10px rgba(2,6,23,0.6)',
+                        'soft': '0 15px 40px -20px rgba(2,6,23,0.45)',
+                        'inner-glass': 'inset 0 1px 0 0 rgba(255,255,255,0.08), inset 0 -1px 0 0 rgba(15,23,42,0.6)'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s ease-in-out infinite',
+                        'float': 'float 8s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html,
+        body {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+        }
+
+        .glass {
+            @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-inner-glass;
+        }
+
+        .btn-primary {
+            @apply inline-flex items-center justify-center px-5 py-3 rounded-lg font-semibold text-white bg-medical hover:bg-medical/90 transition-colors duration-200 shadow-soft;
+        }
+
+        .btn-outline {
+            @apply inline-flex items-center justify-center px-5 py-3 rounded-lg font-semibold text-white/90 ring-1 ring-white/20 hover:ring-white/40 hover:bg-white/5 transition-colors duration-200;
+        }
+
+        .badge {
+            @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-white/5 ring-1 ring-white/10;
+        }
+    </style>
+</head>
+
+<body class="bg-navy text-white antialiased selection:bg-medical/30 selection:text-white">
+    <!-- Background FX -->
+    <div aria-hidden="true" class="fixed inset-0 -z-10 pointer-events-none">
+        <div class="absolute inset-0 bg-radial-fade"></div>
+        <div class="absolute inset-0 opacity-[0.04]"
+            style="background-size: 24px 24px; background-image: radial-gradient(circle at 1px 1px, #2563EB 1px, transparent 0);">
+        </div>
+    </div>
+
+    
+
+    <main id="home" class="relative">
+        <!-- Hero -->
+        <section class="relative overflow-hidden">
+            <div class="absolute inset-0 -z-10 bg-card-glow"></div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span
+                            class="inline-flex items-center gap-2 rounded-full border border-slate-700/70 bg-slate-800/40 px-3 py-1 text-xs text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-emerald"></span>
+                            Enterprise-grade protection for digital assets
+                        </span>
+                        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                            Advanced Wellness Technology For <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-medical to-teal">Recovery,
+                                Restoration & Vitality</span>
+                        </h1>
+                        <p class="mt-5 text-lg text-white/70 max-w-xl">
+                            Experience innovative wellness systems designed to support relaxation, recovery, and overall
+                            well‑being through cutting‑edge technology.
+                        </p>
+                        <div class="mt-8 flex flex-wrap gap-3">
+                            <a href="#consultation" class="btn-primary">
+                                <svg class="mr-2 size-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M8 7h8M8 12h5M5 21l2-4h10l2 4M12 3v2" stroke="white" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </svg>
+                                Schedule Consultation
+                            </a>
+                            <a href="#medbeds" class="btn-outline">
+                                <svg class="mr-2 size-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M5 12h14M5 12V7a2 2 0 0 1 2-2h5m7 7v5M7 17h10" stroke="white"
+                                        stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                                Explore MedBeds
+                            </a>
+                        </div>
+
+                        <!-- Trust stats -->
+                        <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div class="glass rounded-xl p-4 text-center">
+                                <p class="text-2xl font-bold">10,000+</p>
+                                <p class="text-xs text-white/60">Consultations</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 text-center">
+                                <p class="text-2xl font-bold">Global</p>
+                                <p class="text-xs text-white/60">Client Network</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 text-center">
+                                <p class="text-2xl font-bold">Professional</p>
+                                <p class="text-xs text-white/60">Wellness Support</p>
+                            </div>
+                            <div class="glass rounded-xl p-4 text-center">
+                                <p class="text-2xl font-bold">Advanced</p>
+                                <p class="text-xs text-white/60">Technology Solutions</p>
+                            </div>
+                        </div>
+
+                        <!-- Trust badges -->
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <span class="badge">
+                                <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 21s8-4.5 8-10a8 8 0 1 0-16 0c0 5.5 8 10 8 10z" stroke="currentColor"
+                                        stroke-width="1.5" />
+                                </svg>
+                                Private Consultations
+                            </span>
+                            <span class="badge">
+                                <svg class="size-4 text-teal" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 17a4 4 0 0 0 4-4V9a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4zM5 9h14"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                                Secure Booking
+                            </span>
+                            <span class="badge">
+                                <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M8 12l2 2 6-6" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </svg>
+                                Professional Support
+                            </span>
+                            <span class="badge">
+                                <svg class="size-4 text-teal" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M4 7h16M6 7v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7" stroke="currentColor"
+                                        stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                                Modern Facilities
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Hero illustration -->
+                    <div class="relative">
+                        <div class="absolute -inset-6 rounded-3xl bg-medical/20 blur-3xl opacity-50 animate-pulse-slow">
+                        </div>
+                        <div class="relative glass rounded-2xl p-6 shadow-elevate">
+                            <!-- Futuristic med bed illustration (SVG) -->
+                            <div
+                                class="relative overflow-hidden rounded-xl bg-gradient-to-b from-white/5 to-white/0 ring-1 ring-white/10">
+                                <svg viewBox="0 0 900 520" class="w-full h-auto">
+                                    <defs>
+                                        <linearGradient id="g1" x1="0" x2="1" y1="0" y2="0">
+                                            <stop offset="0" stop-color="#2563EB" stop-opacity="0.9" />
+                                            <stop offset="1" stop-color="#14B8A6" stop-opacity="0.9" />
+                                        </linearGradient>
+                                        <filter id="glow">
+                                            <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+                                            <feMerge>
+                                                <feMergeNode in="coloredBlur" />
+                                                <feMergeNode in="SourceGraphic" />
+                                            </feMerge>
+                                        </filter>
+                                    </defs>
+                                    <!-- Bed base -->
+                                    <rect x="120" y="330" width="660" height="70" rx="20" fill="url(#g1)"
+                                        opacity="0.3" />
+                                    <rect x="140" y="345" width="620" height="50" rx="16" fill="#0F172A" stroke="white"
+                                        stroke-opacity="0.15" />
+                                    <!-- Mattress -->
+                                    <rect x="160" y="260" width="560" height="70" rx="18" fill="#0F172A" stroke="white"
+                                        stroke-opacity="0.18" />
+                                    <rect x="160" y="260" width="560" height="70" rx="18" fill="url(#g1)"
+                                        opacity="0.18" />
+                                    <!-- Dome -->
+                                    <path d="M180,260 C220,160 680,160 720,260" fill="none" stroke="url(#g1)"
+                                        stroke-width="6" filter="url(#glow)" />
+                                    <path d="M190,260 C230,180 670,180 710,260" fill="none" stroke="white"
+                                        stroke-opacity="0.25" stroke-width="2" />
+                                    <!-- Console -->
+                                    <rect x="720" y="210" width="60" height="90" rx="8" fill="#0F172A" stroke="white"
+                                        stroke-opacity="0.2" />
+                                    <circle cx="750" cy="230" r="6" fill="#2563EB" />
+                                    <rect x="736" y="246" width="28" height="6" rx="3" fill="#14B8A6" />
+                                    <rect x="736" y="260" width="28" height="6" rx="3" fill="#2563EB" opacity="0.7" />
+                                    <rect x="736" y="274" width="28" height="6" rx="3" fill="#14B8A6" opacity="0.6" />
+                                    <!-- Soft glow -->
+                                    <ellipse cx="440" cy="400" rx="260" ry="30" fill="#14B8A6" opacity="0.15" />
+                                </svg>
+                                <!-- Subtle animated beams -->
+                                <div
+                                    class="absolute inset-x-20 top-12 h-40 bg-gradient-to-r from-medical/0 via-medical/20 to-medical/0 blur-2xl animate-pulse-slow">
+                                </div>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="inline-flex size-2 rounded-full bg-teal animate-pulse"></span>
+                                    <p class="text-sm text-white/70">Live system diagnostics enabled</p>
+                                </div>
+                                <a href="#products" class="text-sm text-medical hover:underline">View Devices</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured MedBeds -->
+        <section id="medbeds" class="py-16 sm:py-20 relative">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex items-end justify-between gap-6">
+                    <div>
+                        <h2 class="text-3xl font-bold">Featured MedBeds</h2>
+                        <p class="mt-2 text-white/70 max-w-2xl">Premium recovery systems with private consultations,
+                            demonstrations, and purchase options.</p>
+                    </div>
+                    <a href="#consultation" class="hidden sm:inline-flex btn-outline">Request Consultation</a>
+                </div>
+
+                <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Military MedBed -->
+                    <article
+                        class="group relative overflow-hidden rounded-2xl glass shadow-soft hover:shadow-elevate transition">
+                        <div
+                            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-b from-medical/10 to-teal/10 pointer-events-none">
+                        </div>
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1600&auto=format&fit=crop)"
+                                alt="Military MedBed premium recovery technology"
+                                class="w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition duration-500" />
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-semibold">Military MedBed</h3>
+                                <span class="badge">Premium</span>
+                            </div>
+                            <p class="text-white/70 text-sm">Premium recovery technology engineered for robust
+                                performance. Available for consultation and product demonstrations.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/60 text-sm">From —</span>
+                                <span class="text-white font-semibold">Price on request</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <a href="#consultation" class="btn-outline flex-1">Consultation</a>
+                                <a href="#products" class="btn-primary flex-1">Learn More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Tesla MedBed -->
+                    <article
+                        class="group relative overflow-hidden rounded-2xl glass shadow-soft hover:shadow-elevate transition">
+                        <div
+                            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-b from-medical/10 to-teal/10 pointer-events-none">
+                        </div>
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1580281657527-47df1412a62a?q=80&w=1600&auto=format&fit=crop)"
+                                alt="Tesla MedBed advanced wellness system"
+                                class="w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition duration-500" />
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-semibold">Tesla MedBed</h3>
+                                <span class="badge">Advanced</span>
+                            </div>
+                            <p class="text-white/70 text-sm">Advanced wellness system with personalized consultations
+                                and detailed product overviews.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/60 text-sm">From —</span>
+                                <span class="text-white font-semibold">Price on request</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <a href="#consultation" class="btn-outline flex-1">Consultation</a>
+                                <a href="#products" class="btn-primary flex-1">Learn More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Quantum Recovery Bed -->
+                    <article
+                        class="group relative overflow-hidden rounded-2xl glass shadow-soft hover:shadow-elevate transition">
+                        <div
+                            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-b from-medical/10 to-teal/10 pointer-events-none">
+                        </div>
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop)"
+                                alt="Quantum Recovery Bed modern wellness technology"
+                                class="w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition duration-500" />
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-semibold">Quantum Recovery Bed</h3>
+                                <span class="badge">Modern</span>
+                            </div>
+                            <p class="text-white/70 text-sm">Modern wellness technology designed for private sessions
+                                and personalized experiences.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/60 text-sm">From —</span>
+                                <span class="text-white font-semibold">Price on request</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <a href="#consultation" class="btn-outline flex-1">Consultation</a>
+                                <a href="#products" class="btn-primary flex-1">Learn More</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology -->
+        <section id="technology" class="py-16 sm:py-24 relative">
+            <div class="absolute inset-0 -z-10 opacity-20 pointer-events-none" aria-hidden="true">
+                <div class="mx-auto max-w-7xl h-full bg-grid" style="background-size: 22px 22px;"></div>
+            </div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-10 items-center">
+                    <div class="relative">
+                        <div class="absolute -inset-6 rounded-3xl bg-teal/20 blur-3xl opacity-50 animate-pulse-slow">
+                        </div>
+                        <img src="[images.unsplash.com](https://images.unsplash.com/photo-1581091014534-48176a6e8a2d?q=80&w=1600&auto=format&fit=crop)"
+                            alt="Futuristic medical technology interface"
+                            class="relative rounded-2xl glass w-full h-auto shadow-elevate" />
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold">Why Choose QFS MedBeds?</h2>
+                        <p class="mt-3 text-white/70">A harmonious blend of high-end medical tech, luxury wellness, and
+                            future-forward innovation—delivered by a professional team with a client-first approach.</p>
+                        <ul class="mt-6 space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 inline-flex size-6 rounded-full bg-medical/20 ring-1 ring-medical/30 items-center justify-center">
+                                    <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold">Advanced Energy Technology</p>
+                                    <p class="text-sm text-white/70">Engineered systems focused on comfort and
+                                        performance.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 inline-flex size-6 rounded-full bg-medical/20 ring-1 ring-medical/30 items-center justify-center">
+                                    <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold">Comfortable User Experience</p>
+                                    <p class="text-sm text-white/70">Ergonomic designs and calming environments.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 inline-flex size-6 rounded-full bg-medical/20 ring-1 ring-medical/30 items-center justify-center">
+                                    <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold">Professional Consultation Services</p>
+                                    <p class="text-sm text-white/70">One‑on‑one guidance to match systems to client
+                                        goals.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 inline-flex size-6 rounded-full bg-medical/20 ring-1 ring-medical/30 items-center justify-center">
+                                    <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold">Modern Wellness Environment</p>
+                                    <p class="text-sm text-white/70">Private suites with premium finishes and hygiene
+                                        standards.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 inline-flex size-6 rounded-full bg-medical/20 ring-1 ring-medical/30 items-center justify-center">
+                                    <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold">Personalized Programs</p>
+                                    <p class="text-sm text-white/70">Recommendations aligned to your wellness
+                                        objectives.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 inline-flex size-6 rounded-full bg-medical/20 ring-1 ring-medical/30 items-center justify-center">
+                                    <svg class="size-4 text-medical" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold">Ongoing Client Support</p>
+                                    <p class="text-sm text-white/70">Post‑session guidance and responsive assistance.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="mt-6">
+                            <a href="#consultation" class="btn-primary">Book a Private Consultation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consultation Process -->
+        <section id="consultation" class="py-16 sm:py-24 relative">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl font-bold">Consultation Process</h2>
+                    <p class="mt-2 text-white/70">A seamless, client‑centered pathway from goals to sessions or
+                        purchase.</p>
+                </div>
+                <ol class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Step 1 -->
+                    <li class="relative">
+                        <div class="h-full rounded-2xl glass p-5 shadow-soft">
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="size-9 grid place-items-center rounded-full bg-medical/20 ring-1 ring-medical/30 font-semibold">1</span>
+                                <span class="text-xs text-white/60">Start</span>
+                            </div>
+                            <h3 class="mt-4 font-semibold">Book Consultation</h3>
+                            <p class="text-sm text-white/70">Choose a time for a private discussion with our team.</p>
+                        </div>
+                    </li>
+                    <!-- Step 2 -->
+                    <li class="relative">
+                        <div class="h-full rounded-2xl glass p-5 shadow-soft">
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="size-9 grid place-items-center rounded-full bg-medical/20 ring-1 ring-medical/30 font-semibold">2</span>
+                                <span class="text-xs text-white/60">Define</span>
+                            </div>
+                            <h3 class="mt-4 font-semibold">Discuss Wellness Goals</h3>
+                            <p class="text-sm text-white/70">Share outcomes you’re seeking and preferences.</p>
+                        </div>
+                    </li>
+                    <!-- Step 3 -->
+                    <li class="relative">
+                        <div class="h-full rounded-2xl glass p-5 shadow-soft">
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="size-9 grid place-items-center rounded-full bg-medical/20 ring-1 ring-medical/30 font-semibold">3</span>
+                                <span class="text-xs text-white/60">Plan</span>
+                            </div>
+                            <h3 class="mt-4 font-semibold">Personalized Recommendation</h3>
+                            <p class="text-sm text-white/70">Receive a tailored device and session plan.</p>
+                        </div>
+                    </li>
+                    <!-- Step 4 -->
+                    <li class="relative">
+                        <div class="h-full rounded-2xl glass p-5 shadow-soft">
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="size-9 grid place-items-center rounded-full bg-medical/20 ring-1 ring-medical/30 font-semibold">4</span>
+                                <span class="text-xs text-white/60">Engage</span>
+                            </div>
+                            <h3 class="mt-4 font-semibold">Session or Purchase</h3>
+                            <p class="text-sm text-white/70">Schedule a session, demo, or proceed with a purchase.</p>
+                        </div>
+                    </li>
+                </ol>
+                <!-- Connecting line for timeline on large screens -->
+                <div class="hidden lg:block relative -mt-[150px] mb-[120px]">
+                    <div class="absolute left-1/2 -translate-x-1/2 top-0 w-[70%] h-0.5 bg-white/10"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Showcase -->
+        <section id="products" class="py-16 sm:py-24 relative">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex items-end justify-between gap-6">
+                    <div>
+                        <h2 class="text-3xl font-bold">Product Showcase</h2>
+                        <p class="mt-2 text-white/70">Explore our elite range of wellness technology systems.</p>
+                    </div>
+                    <a href="#cta" class="hidden sm:inline-flex btn-primary">Request Information</a>
+                </div>
+
+                <div class="mt-10 grid lg:grid-cols-2 gap-6">
+                    <!-- Tesla MedBed Elite -->
+                    <article class="rounded-2xl glass overflow-hidden shadow-soft">
+                        <div class="grid sm:grid-cols-2 gap-0">
+                            <div class="relative">
+                                <img src="[images.unsplash.com](https://images.unsplash.com/photo-1516549655169-df83a077451f?q=80&w=1600&auto=format&fit=crop)"
+                                    alt="Tesla MedBed Elite product image" class="h-full w-full object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold">Tesla MedBed Elite</h3>
+                                <p class="mt-2 text-sm text-white/70">An advanced system emphasizing comfort,
+                                    consistency, and premium materials.</p>
+                                <ul class="mt-4 space-y-2 text-sm text-white/80">
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Adaptive comfort
+                                        architecture
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Precision interface controls
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Private demonstration
+                                        available
+                                    </li>
+                                </ul>
+                                <div class="mt-5 flex items-center justify-between">
+                                    <span class="text-white/60 text-sm">Price —</span>
+                                    <span class="text-white font-semibold">On request</span>
+                                </div>
+                                <div class="mt-4 flex gap-3">
+                                    <a href="#consultation" class="btn-outline flex-1">Request Info</a>
+                                    <a href="#cta" class="btn-primary flex-1">Book Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Military Recovery Series -->
+                    <article class="rounded-2xl glass overflow-hidden shadow-soft">
+                        <div class="grid sm:grid-cols-2 gap-0">
+                            <div class="relative">
+                                <img src="[images.unsplash.com](https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop)"
+                                    alt="Military Recovery Series product image" class="h-full w-full object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold">Military Recovery Series</h3>
+                                <p class="mt-2 text-sm text-white/70">Robust, high-spec construction for dependable,
+                                    repeatable sessions.</p>
+                                <ul class="mt-4 space-y-2 text-sm text-white/80">
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Durable chassis and finishes
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Pro‑grade interface suite
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Concierge setup options
+                                    </li>
+                                </ul>
+                                <div class="mt-5 flex items-center justify-between">
+                                    <span class="text-white/60 text-sm">Price —</span>
+                                    <span class="text-white font-semibold">On request</span>
+                                </div>
+                                <div class="mt-4 flex gap-3">
+                                    <a href="#consultation" class="btn-outline flex-1">Request Info</a>
+                                    <a href="#cta" class="btn-primary flex-1">Book Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Quantum Wellness Pod -->
+                    <article class="rounded-2xl glass overflow-hidden shadow-soft">
+                        <div class="grid sm:grid-cols-2 gap-0">
+                            <div class="relative">
+                                <img src="[images.unsplash.com](https://images.unsplash.com/photo-1581594693700-99c75d3b71c1?q=80&w=1600&auto=format&fit=crop)"
+                                    alt="Quantum Wellness Pod product image" class="h-full w-full object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold">Quantum Wellness Pod</h3>
+                                <p class="mt-2 text-sm text-white/70">A sleek pod experience with a calm, immersive
+                                    environment.</p>
+                                <ul class="mt-4 space-y-2 text-sm text-white/80">
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Immersive lighting profile
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Whisper‑quiet operation
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Private suite compatible
+                                    </li>
+                                </ul>
+                                <div class="mt-5 flex items-center justify-between">
+                                    <span class="text-white/60 text-sm">Price —</span>
+                                    <span class="text-white font-semibold">On request</span>
+                                </div>
+                                <div class="mt-4 flex gap-3">
+                                    <a href="#consultation" class="btn-outline flex-1">Request Info</a>
+                                    <a href="#cta" class="btn-primary flex-1">Book Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Advanced Therapy System -->
+                    <article class="rounded-2xl glass overflow-hidden shadow-soft">
+                        <div class="grid sm:grid-cols-2 gap-0">
+                            <div class="relative">
+                                <img src="[images.unsplash.com](https://images.unsplash.com/photo-1587502537961-36e0e4f9b3ff?q=80&w=1600&auto=format&fit=crop)"
+                                    alt="Advanced Therapy System product image" class="h-full w-full object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold">Advanced Therapy System</h3>
+                                <p class="mt-2 text-sm text-white/70">Next‑generation controls with refined ergonomics
+                                    and aesthetics.</p>
+                                <ul class="mt-4 space-y-2 text-sm text-white/80">
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Multi‑mode sessions
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Smart session memory
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="size-1.5 rounded-full bg-teal"></span> Concierge installation
+                                    </li>
+                                </ul>
+                                <div class="mt-5 flex items-center justify-between">
+                                    <span class="text-white/60 text-sm">Price —</span>
+                                    <span class="text-white font-semibold">On request</span>
+                                </div>
+                                <div class="mt-4 flex gap-3">
+                                    <a href="#consultation" class="btn-outline flex-1">Request Info</a>
+                                    <a href="#cta" class="btn-primary flex-1">Book Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-16 sm:py-24 relative">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl font-bold">What Clients Say</h2>
+                    <p class="mt-2 text-white/70">Professional feedback from our global client network.</p>
+                </div>
+                <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Testimonial 1 -->
+                    <figure class="rounded-2xl glass p-6 shadow-soft">
+                        <div class="flex items-center gap-4">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop)"
+                                alt="Headshot: Dr. Maya Chen" class="size-12 rounded-full object-cover" />
+                            <figcaption>
+                                <p class="font-semibold">Dr. Maya Chen</p>
+                                <p class="text-xs text-white/60">Sports Medicine Physician</p>
+                            </figcaption>
+                        </div>
+                        <div class="mt-4 text-sm text-white/80">
+                            The consultation was precise and professional. The device recommendations aligned perfectly
+                            with our clinic’s recovery protocols.
+                        </div>
+                        <div class="mt-4 flex text-medical">
+                            <span aria-label="5-star rating" class="sr-only">5 stars</span>
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                        </div>
+                    </figure>
+
+                    <!-- Testimonial 2 -->
+                    <figure class="rounded-2xl glass p-6 shadow-soft">
+                        <div class="flex items-center gap-4">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=400&auto=format&fit=crop)"
+                                alt="Headshot: Alex Rivera" class="size-12 rounded-full object-cover" />
+                            <figcaption>
+                                <p class="font-semibold">Alex Rivera</p>
+                                <p class="text-xs text-white/60">Wellness Center Director</p>
+                            </figcaption>
+                        </div>
+                        <div class="mt-4 text-sm text-white/80">
+                            The demonstration was thorough and the team answered every technical question clearly. A
+                            premium experience from start to finish.
+                        </div>
+                        <div class="mt-4 flex text-medical" aria-hidden="true">
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                        </div>
+                    </figure>
+
+                    <!-- Testimonial 3 -->
+                    <figure class="rounded-2xl glass p-6 shadow-soft">
+                        <div class="flex items-center gap-4">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?q=80&w=400&auto=format&fit=crop)"
+                                alt="Headshot: Priya Natarajan" class="size-12 rounded-full object-cover" />
+                            <figcaption>
+                                <p class="font-semibold">Priya Natarajan</p>
+                                <p class="text-xs text-white/60">Performance Coach</p>
+                            </figcaption>
+                        </div>
+                        <div class="mt-4 text-sm text-white/80">
+                            Client support has been outstanding. The onboarding materials and follow‑ups kept our team
+                            confident and informed.
+                        </div>
+                        <div class="mt-4 flex text-medical" aria-hidden="true">
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5 opacity-40" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                        </div>
+                    </figure>
+
+                    <!-- Testimonial 4 -->
+                    <figure class="rounded-2xl glass p-6 shadow-soft md:col-span-2 lg:col-span-1">
+                        <div class="flex items-center gap-4">
+                            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=400&auto=format&fit=crop)"
+                                alt="Headshot: Daniel Ortiz" class="size-12 rounded-full object-cover" />
+                            <figcaption>
+                                <p class="font-semibold">Daniel Ortiz</p>
+                                <p class="text-xs text-white/60">Private Client</p>
+                            </figcaption>
+                        </div>
+                        <div class="mt-4 text-sm text-white/80">
+                            A luxury experience with a scientific edge. The environment feels calming, the team is
+                            meticulous, and the tech is top‑tier.
+                        </div>
+                        <div class="mt-4 flex text-medical" aria-hidden="true">
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg><svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.563-.954L10 0l2.947 5.956 6.563.954-4.755 4.635 1.123 6.545z" />
+                            </svg>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-16 sm:py-24 relative">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl font-bold">Frequently Asked Questions</h2>
+                    <p class="mt-2 text-white/70">Everything you need to know about consultations, demonstrations, and
+                        purchases.</p>
+                </div>
+                <div class="mt-8 divide-y divide-white/10 rounded-2xl glass overflow-hidden">
+                    <!-- Q1 -->
+                    <details class="group open:bg-white/0">
+                        <summary
+                            class="flex w-full cursor-pointer items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-medical">
+                            <h3 class="font-semibold">What is a MedBed consultation?</h3>
+                            <svg class="size-5 text-white/70 transition group-open:rotate-180" viewBox="0 0 20 20"
+                                fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" />
+                            </svg>
+                        </summary>
+                        <div class="px-5 pb-5 pt-0 text-sm text-white/80">
+                            A one‑on‑one discussion to understand your goals, explain device options, and outline next
+                            steps such as demonstrations, sessions, or purchasing.
+                        </div>
+                    </details>
+                    <!-- Q2 -->
+                    <details class="group">
+                        <summary
+                            class="flex w-full cursor-pointer items-center justify-between p-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-medical">
+                            <h3 class="font-semibold">How do I book an appointment?</h3>
+                            <svg class="size-5 text-white/70 transition group-open:rotate-180" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" />
+                            </svg>
+                        </summary>
+                        <div class="px-5 pb-5 pt-0 text-sm text-white/80">
+                            Use the Schedule Consultation button to select a time. You’ll receive a confirmation and a
+                            secure link for your session.
+                        </div>
+                    </details>
+                    <!-- Q3 -->
+                    <details class="group">
+                        <summary class="flex w-full cursor-pointer items-center justify-between p-5 text-left">
+                            <h3 class="font-semibold">Are demonstrations available?</h3>
+                            <svg class="size-5 text-white/70 transition group-open:rotate-180" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" />
+                            </svg>
+                        </summary>
+                        <div class="px-5 pb-5 pt-0 text-sm text-white/80">
+                            Yes. Private demonstrations can be arranged during or after your consultation, subject to
+                            availability.
+                        </div>
+                    </details>
+                    <!-- Q4 -->
+                    <details class="group">
+                        <summary class="flex w-full cursor-pointer items-center justify-between p-5 text-left">
+                            <h3 class="font-semibold">Can I purchase a unit?</h3>
+                            <svg class="size-5 text-white/70 transition group-open:rotate-180" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" />
+                            </svg>
+                        </summary>
+                        <div class="px-5 pb-5 pt-0 text-sm text-white/80">
+                            Absolutely. After a consultation and optional demo, our team will provide a formal quotation
+                            and secure checkout process.
+                        </div>
+                    </details>
+                    <!-- Q5 -->
+                    <details class="group">
+                        <summary class="flex w-full cursor-pointer items-center justify-between p-5 text-left">
+                            <h3 class="font-semibold">Do you provide support after purchase?</h3>
+                            <svg class="size-5 text-white/70 transition group-open:rotate-180" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" />
+                            </svg>
+                        </summary>
+                        <div class="px-5 pb-5 pt-0 text-sm text-white/80">
+                            Yes. We offer onboarding, documentation, and ongoing client support, including maintenance
+                            scheduling and assistance.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section id="cta" class="py-20 sm:py-28 relative">
+            <div class="absolute inset-0 -z-10 bg-cta-gradient opacity-60"></div>
+            <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold">Book Your Private Consultation Today</h2>
+                <p class="mt-3 text-white/70">Begin your journey with a tailored plan designed around your wellness
+                    goals.</p>
+                <div class="mt-8 flex flex-wrap justify-center gap-3">
+                    <a href="#consultation" class="btn-primary">
+                        <svg class="mr-2 size-5" viewBox="0 0 24 24" fill="none">
+                            <path d="M8 7h8M8 12h5M5 21l2-4h10l2 4M12 3v2" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" />
+                        </svg>
+                        Schedule Consultation
+                    </a>
+                    <a href="#contact" class="btn-outline">
+                        <svg class="mr-2 size-5" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 8v8a2 2 0 0 1-2 2H7l-4 4V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="white"
+                                stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                        Contact Our Team
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="border-t border-white/10 bg-gradient-to-b from-white/[0.02] to-transparent">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid lg:grid-cols-5 gap-10">
+                <!-- Brand -->
+                <div class="lg:col-span-2">
+                    <a href="#home" class="flex items-center gap-3">
+                        <div class="relative">
+                            <span class="absolute inset-0 rounded-lg blur-md bg-teal/40 opacity-60"></span>
+                            <div
+                                class="relative grid place-items-center size-9 rounded-lg bg-gradient-to-br from-teal/70 to-medical/70 ring-1 ring-white/10">
+                                <svg class="size-5" viewBox="0 0 24 24" fill="none">
+                                    <path d="M4 12h16M12 4v16" stroke="white" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <circle cx="12" cy="12" r="7.5" stroke="white" stroke-opacity="0.5" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm leading-4 text-white/70">QFS</p>
+                            <p class="font-semibold tracking-wide">MedBeds</p>
+                        </div>
+                    </a>
+                    <p class="mt-4 text-sm text-white/70 max-w-md">Futuristic wellness technology for recovery,
+                        restoration, and vitality—delivered with professionalism and care.</p>
+                    <div class="mt-4 flex gap-3">
+                        <a href="#" aria-label="LinkedIn"
+                            class="size-9 grid place-items-center rounded-lg bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition">
+                            <svg class="size-5 text-white/80" viewBox="0 0 24 24" fill="currentColor"
+                                aria-hidden="true">
+                                <path
+                                    d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8.5H4.5V24H.5V8.5zM8.5 8.5H12.3V10.3H12.36C12.89 9.3 14.17 8.24 16.12 8.24 20.08 8.24 21 10.84 21 14.38V24H17V15.36C17 13.45 16.96 11.06 14.54 11.06 12.09 11.06 11.73 13.11 11.73 15.22V24H7.73V8.5H8.5z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter"
+                            class="size-9 grid place-items-center rounded-lg bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition">
+                            <svg class="size-5 text-white/80" viewBox="0 0 24 24" fill="currentColor"
+                                aria-hidden="true">
+                                <path
+                                    d="M21.5 6.9c.01.17.01.35.01.52 0 5.33-4.06 11.47-11.47 11.47-2.28 0-4.39-.67-6.17-1.82.32.04.64.06.97.06 1.89 0 3.63-.64 5.01-1.73-1.77-.03-3.26-1.2-3.77-2.8.25.05.51.07.78.07.38 0 .75-.05 1.1-.15-1.85-.37-3.25-2.01-3.25-3.98v-.05c.55.31 1.18.5 1.85.52-1.1-.73-1.82-1.98-1.82-3.4 0-.75.2-1.45.55-2.06 2.01 2.47 5.02 4.09 8.41 4.26-.07-.3-.11-.62-.11-.94 0-2.28 1.85-4.13 4.13-4.13 1.19 0 2.27.5 3.03 1.3.94-.18 1.83-.53 2.62-1.01-.31.97-.97 1.78-1.82 2.29.83-.1 1.63-.32 2.37-.64-.55.83-1.25 1.55-2.06 2.13z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="YouTube"
+                            class="size-9 grid place-items-center rounded-lg bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition">
+                            <svg class="size-5 text-white/80" viewBox="0 0 24 24" fill="currentColor"
+                                aria-hidden="true">
+                                <path
+                                    d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.38.58A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12C4.4 20.5 12 20.5 12 20.5s7.6 0 9.38-.58A3 3 0 0 0 23.5 17.8 31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8zM9.75 15.5v-7l6 3.5-6 3.5z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:col-span-3">
+                    <div>
+                        <h4 class="font-semibold">Navigation</h4>
+                        <ul class="mt-3 space-y-2 text-sm">
+                            <li><a href="#technology" class="text-white/70 hover:text-white">Technology</a></li>
+                            <li><a href="#medbeds" class="text-white/70 hover:text-white">MedBeds</a></li>
+                            <li><a href="#consultation" class="text-white/70 hover:text-white">Consultation</a></li>
+                            <li><a href="#products" class="text-white/70 hover:text-white">Products</a></li>
+                            <li><a href="#cta" class="text-white/70 hover:text-white">Get Started</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Consultations</h4>
+                        <ul class="mt-3 space-y-2 text-sm">
+                            <li><a href="#consultation" class="text-white/70 hover:text-white">Book Consultation</a>
+                            </li>
+                            <li><a href="#products" class="text-white/70 hover:text-white">Request Information</a></li>
+                            <li><a href="#products" class="text-white/70 hover:text-white">Schedule Demonstration</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Contact</h4>
+                        <ul class="mt-3 space-y-2 text-sm">
+                            <li><a href="mailto:hello@qfsmedbeds.com"
+                                    class="text-white/70 hover:text-white">hello@qfsmedbeds.com</a></li>
+                            <li><a href="tel:+10000000000" class="text-white/70 hover:text-white">+1 (000) 000‑0000</a>
+                            </li>
+                            <li><span class="text-white/60">By appointment only</span></li>
+                        </ul>
+                        <form class="mt-5">
+                            <label for="newsletter" class="block text-sm font-medium">Newsletter</label>
+                            <div class="mt-2 flex gap-2">
+                                <input id="newsletter" type="email" inputmode="email" placeholder="you@company.com"
+                                    class="flex-1 rounded-lg bg-white/5 ring-1 ring-white/10 placeholder:text-white/40 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-medical text-sm" />
+                                <button type="button" class="btn-primary">Subscribe</button>
+                            </div>
+                            <p class="mt-2 text-xs text-white/50">By subscribing you agree to receive updates. You can
+                                unsubscribe anytime.</p>
+                        </form>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p class="text-xs text-white/60">© <span id="year"></span> QFS MedBeds. All rights reserved.</p>
+                    <div class="flex gap-4 text-xs">
+                        <a href="#" class="text-white/60 hover:text-white">Privacy Policy</a>
+                        <a href="#" class="text-white/60 hover:text-white">Terms of Service</a>
+                        <a href="#" class="text-white/60 hover:text-white">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+    </footer>
+
+    <script>
+            // Mobile menu toggle
+            (function () {
+                const btn = document.getElementById('menuBtn');
+                const menu = document.getElementById('mobileMenu');
+                if (btn && menu) {
+                    btn.addEventListener('click', () => {
+                        const expanded = btn.getAttribute('aria-expanded') === 'true';
+                        btn.setAttribute('aria-expanded', String(!expanded));
+                        menu.classList.toggle('hidden');
+                    });
+                }
+            })();
+
+        // Current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Accessible details/accordion enhancements (keyboard focus outline already handled by Tailwind classes)
+        document.querySelectorAll('details > summary').forEach(summary => {
+            summary.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    summary.parentElement.open = !summary.parentElement.open;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

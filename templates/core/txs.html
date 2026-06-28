@@ -28,134 +28,79 @@
     <div class="divide-y flex flex-col space-y-2">
         {% if pending_transactions %}
 
-        <div class="sticky top-4 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] " style="
-                z-index: {{ forloop.revcounter }};
-                transform: scale(calc(1 - ({{ forloop.counter0 }} * 0.03)));
-            ">
 
-            <div class="
-                rounded-[28px]
-                backdrop-blur-2xl
-                border border-white/20
-                shadow-2xl
-                bg-white/70 dark:bg-zinc-900/70
-                p-3
-                h-24
-                flex items-start gap-3
-            ">
-
-                <!-- Icon -->
-                <div class="w-10 h-10 rounded-2xl bg-black text-white
-                    flex items-center justify-center shrink-0">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
-
-                    </svg>
-
-                </div>
-
-                <!-- Content -->
-                {% comment %}
-                <div class="flex-1">
-
-                    <div class="flex items-center justify-between">
-
-                        <h3 class="font-semibold text-sm">
-                            <span>pending deposit of {{ pending_transactions.amount|intcomma }}. <div
-                                    class="badge badge-dash badge-accent">{{ pending_transactions.payment_method }}
-                                </div></span>
-
-                        </h3>
-
-                        <span class="text-xs opacity-60">
-                            {{ pending_transactions.created_at|date:"M d" }}
-                        </span>
-
-                    </div>
-
-                    <!-- <p class="text-sm mt-1 ml-2 font-medium">
-                            <span>
-                               
-                            </span>
-                        </p> -->
-
-                </div>
-                {% endcomment %}
-
-            </div>
-            <p class="text-xs mt-4 px-3 py-4 bg-warning text-black">Your deposit of {{ pending_transactions.amount|intcomma }} {{ pending_transactions.payment_method }} is being reviewed. You will be notified
-                    through your email when verification completes.
-                </p>
-
-        </div>
-
-
+        <p class="text-xs mt-4 px-3 py-4 bg-warning text-black">Your deposit of {{
+            pending_transactions.amount|intcomma }} {{ pending_transactions.payment_method }} is being reviewed. You
+            will be notified
+            through your email when verification completes.
+        </p>
         {% endif %}
-        <div class="bg-black border border-white/30 shadow flex flex-col">
-
-
-
-            {% for tx in recent_transactions %}
-
-            <div class="flex flex-col gap-2 w-full sm:text-xs">
-                <div
-                    class="succsess-alert p-3 cursor-default flex items-center justify-between w-full h-12 sm:h-14 bg-black px-[10px]">
-                    <div class="flex gap-2 items-center">
-                        <div class="text-[#2b9875] bg-white/5 backdrop-blur-xl p-2 rounded-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="my-2">
-                            <h4 class="text-white text-lg">{{ tx.get_transaction_type_display }}</h4>
-                            <p class="text-gray-500 text-sm">{{ tx.created_at|date:"M d, H:i" }}</p>
-                            <!--  -->
-                        </div>
-                    </div>
-                    <h4 class="text-2xl font-bold">
-                        {% if tx.transaction_type == 'deposit' and tx.status == 'declined' %}
-                        <span class="text-red-500">${{ tx.amount|floatformat:2|intcomma }}</span>
-
-                        {% elif tx.transaction_type == 'deposit' and tx.status == 'completed' %}
-                        <span class="text-green-500">${{ tx.amount|floatformat:2|intcomma }}</span>
-
-
-
-                        {% elif tx.transaction_type == 'withdrawal' %} ${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'buy_stock' %} ${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'buy_vehicle_share' %} ${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'buy_vehicle' %} ${{ tx.amount|floatformat:2|intcomma }}
-                        {% elif tx.transaction_type == 'sell_stock' %} ${{ tx.amount|floatformat:2|intcomma }}
-                        {% endif %}
-                        {% if tx.get_transaction_type_display == 'buy' %}
-                        <span class="text-red-500">${{ tx.amount|floatformat:2|intcomma }}</span>
-
-                        {% endif %}
-
-                    </h4>
-                </div>
-            </div>
-            <div class="px-3">
-                <hr class="px-3 border-white/30">
-            </div>
-            {% endfor %}
-
-        </div>
-
-
-
 
     </div>
-    {% if not request.path == '/wallet/transactions/' %}
-    <a href="{% url 'transaction_list' %}" class="mt-4 inline-block text-blue-600 hover:underline">View All
-        →</a>
-    {% endif %}
-    {% endif %}
+
+
+    <div class="bg-black border border-white/30 shadow flex flex-col">
+
+
+
+        {% for tx in recent_transactions %}
+
+        <div class="flex flex-col gap-2 w-full sm:text-xs">
+            <div
+                class="succsess-alert p-3 cursor-default flex items-center justify-between w-full h-12 sm:h-14 bg-black px-[10px]">
+                <div class="flex gap-2 items-center">
+                    <div class="text-[#2b9875] bg-white/5 backdrop-blur-xl p-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="my-2">
+                        <h4 class="text-white text-lg">{{ tx.get_transaction_type_display }}</h4>
+                        <p class="text-gray-500 text-sm">{{ tx.created_at|date:"M d, H:i" }}</p>
+                        <!--  -->
+                    </div>
+                </div>
+                <h4 class="text-2xl font-bold">
+                    {% if tx.transaction_type == 'deposit' and tx.status == 'declined' %}
+                    <span class="text-red-500">${{ tx.amount|floatformat:2|intcomma }}</span>
+
+                    {% elif tx.transaction_type == 'deposit' and tx.status == 'completed' %}
+                    <span class="text-green-500">${{ tx.amount|floatformat:2|intcomma }}</span>
+
+
+
+                    {% elif tx.transaction_type == 'withdrawal' %} ${{ tx.amount|floatformat:2|intcomma }}
+                    {% elif tx.transaction_type == 'buy_stock' %} ${{ tx.amount|floatformat:2|intcomma }}
+                    {% elif tx.transaction_type == 'buy_vehicle_share' %} ${{ tx.amount|floatformat:2|intcomma }}
+                    {% elif tx.transaction_type == 'buy_vehicle' %} ${{ tx.amount|floatformat:2|intcomma }}
+                    {% elif tx.transaction_type == 'sell_stock' %} ${{ tx.amount|floatformat:2|intcomma }}
+                    {% endif %}
+                    {% if tx.get_transaction_type_display == 'buy' %}
+                    <span class="text-red-500">${{ tx.amount|floatformat:2|intcomma }}</span>
+
+                    {% endif %}
+
+                </h4>
+            </div>
+        </div>
+        <div class="px-3">
+            <hr class="px-3 border-white/30">
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+{% endif %}
+
+
+
+</div>
+{% if not request.path == '/wallet/transactions/' %}
+<a href="{% url 'transaction_list' %}" class="mt-4 inline-block text-blue-600 hover:underline">View All
+    →</a>
+{% endif %}
 
 </div>

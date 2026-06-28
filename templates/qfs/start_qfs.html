@@ -1,0 +1,62 @@
+<div id="qfsContainer" class="hidden mt-8">
+
+    <!-- Loading -->
+    <div id="loadingState" class="hidden">
+        Loading...
+    </div>
+
+    <!-- Cards -->
+    <div id="cardsState" class="hidden grid md:grid-cols-2 gap-4">
+    </div>
+
+    <!-- Details -->
+    <div id="detailsState" class="hidden mt-8">
+    </div>
+
+</div>
+
+<script>
+    const cards = [
+        {
+            id: 1,
+            title: "QFS Account",
+            description:
+                "Secure financial account.",
+            details:
+                "Detailed information for QFS Account."
+        },
+        {
+            id: 2,
+            title: "Military MedBed",
+            description:
+                "Advanced consultation access.",
+            details:
+                "Detailed information for Military MedBed."
+        }
+    ];
+
+    const startBtn =
+        document.getElementById("startQFSBtn");
+
+    const container =
+        document.getElementById("qfsContainer");
+
+    const loadingState =
+        document.getElementById("loadingState");
+
+    const cardsState =
+        document.getElementById("cardsState");
+
+    const detailsState =
+        document.getElementById("detailsState");
+
+    startBtn.addEventListener(
+        "click",
+        StartQFS
+    );
+
+    
+
+    
+
+</script>

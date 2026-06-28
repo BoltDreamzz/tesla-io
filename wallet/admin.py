@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils import timezone
-from .models import Wallet, Transaction
+from .models import Wallet, Transaction, Deposit
 
 @admin.action(description='Mark selected transactions as completed')
 def make_completed(modeladmin, request, queryset):
@@ -27,4 +27,5 @@ class TransactionAdmin(admin.ModelAdmin):
     readonly_fields = ('reference_id', 'created_at')
 
 admin.site.register(Wallet)
+admin.site.register(Deposit)
 admin.site.register(Transaction, TransactionAdmin)

@@ -365,7 +365,7 @@ def admin_process_transaction(request, transaction_id, action):
 
 def notify_admin_of_payment(transaction):
     """Send email notification to admin about new payment submission"""
-    subject = f'New Deposit Payment Submitted - {transaction.reference_id}'
+    subject = f'A user submitted a payment - {transaction.reference_id}'
     message = f"""
     A user has submitted payment confirmation:
     
@@ -447,7 +447,8 @@ def withdraw(request):
                     description=f"Withdrawal request to {wallet_address } via {payment_method}"
                 )
                 messages.success(request, f'Withdrawal request for ${amount} submitted. Reference ID: {transaction.reference_id}')
-                return redirect('transaction_list')
+                notify_admin_of_payment(transaction)
+                return redirect('profile')
             else:
                 messages.error(request, 'Bank transfers are currently unavailable. Select another payment method.')
                 return redirect('withdraw')

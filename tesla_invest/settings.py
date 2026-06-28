@@ -18,8 +18,8 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-MODE = 'prod' # can be dev or prod
-# print("MODE:", MODE)
+MODE = 'dev' # can be dev or prod
+print("Running in:", MODE, "mode")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'accounts',
     'vehicles',
     'storages',
+    'qfs',
     # 'captcha',  # Add this
 
 ]
@@ -253,7 +254,7 @@ PAYMENT_METHODS = {
     },
     
 }
-ADMIN_EMAIL = 'skiiidawg34@gmail.com'  # Update with your admin email
+ADMIN_EMAIL = 'help.investcrypto.@gmail.com'  # Update with your admin email
 SITE_URL = 'https://teslainvest.com'  # Update with your site URL
 
 

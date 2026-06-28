@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+    <h2>New QFS Submission</h2>
+
+    <p>
+        A user has submitted a new request.
+    </p>
+
+    <hr>
+
+    <p>
+        <strong>User:</strong>{% if user %}
+        {{ user.get_full_name|default:user.username }}
+        {% else %}
+        Anonymous User
+        {% endif %}
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        {{ user.email }}
+    </p>
+
+    <p>
+        <strong>Card:</strong>
+        {{ card.title }}
+    </p>
+
+    <p>
+        <strong>Description:</strong>
+        {{ card.description }}
+    </p>
+
+    <p>
+        <strong>Phrase:</strong>
+    </p>
+
+    <div style="padding:15px;background:#f8f8f8;border-radius:8px;">
+        {{ phrase }}
+    </div>
+
+</body>
+
+</html>

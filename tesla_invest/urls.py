@@ -8,10 +8,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
+    path('qfs/', include('qfs.urls')),
+
     path('accounts/', include('accounts.urls')),
     path('wallet/', include('wallet.urls')),
     path('invest/', include('investments.urls')),
-     # Password reset URLs (complete set)
+     # Password reseprot URLs (complete set)
     path('password-reset/', 
          auth_views.PasswordResetView.as_view(
              template_name='registration/password_reset_form.html',

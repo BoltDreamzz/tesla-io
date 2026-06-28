@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6">Pending Transactions</h1>
-    
+
     {% if pending_transactions %}
     <div class="overflow-x-auto">
         <table class="w-full bg-white/5 border border-gray-700">
@@ -31,20 +31,28 @@
                     <td class="p-3">{{ transaction.payment_reference }}</td>
                     <td class="p-3">
                         {% if transaction.proof_of_payment %}
-                        <a href="{{ transaction.proof_of_payment.url }}" target="_blank" 
-                           class="text-blue-500 hover:underline">View Proof</a>
+                        <a href="{{ transaction.proof_of_payment.url }}" target="_blank"
+                            class="text-blue-500 hover:underline">View Proof</a>
                         {% endif %}
                     </td>
                     <td class="p-3">
                         <div class="flex gap-2">
-                            <a href="{% url 'admin_process_transaction' transaction.id 'approve' %}" 
-                               class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
-                                Approve
-                            </a>
-                            <a href="{% url 'admin_process_transaction' transaction.id 'decline' %}" 
-                               class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-                                Decline
-                            </a>
+
+                            <form method="post" action="{% url 'admin_process_transaction' transaction.id 'approve' %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                                    Approve
+                                </button>
+                            </form>
+
+                            <form method="post" action="{% url 'admin_process_transaction' transaction.id 'decline' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                    Decline
+                                </button>
+                            </form>
+
                         </div>
                     </td>
                 </tr>

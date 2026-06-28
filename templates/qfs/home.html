@@ -1,0 +1,850 @@
+{% include 'qfs/qfs_base.html' %}
+
+{% block content %}
+<!-- Decorative background -->
+    <div aria-hidden="true" class="fixed inset-0 pointer-events-none">
+        <div class="absolute inset-0 bg-radial-fade"></div>
+        <div class="absolute inset-0 bg-grid opacity-[0.25]" style="background-size: var(--bg,28px 28px);"></div>
+    </div>
+
+    <!-- Page Wrapper -->
+    <div class="relative z-10">
+
+        <!-- NAVIGATION -->
+        
+
+        <!-- HERO -->
+        <section id="home" class="relative overflow-hidden">
+            <div
+                class="absolute -top-24 left-1/2 -translate-x-1/2 w-[80rem] h-[80rem] bg-gradient-to-b from-primary/10 via-emerald/10 to-transparent blur-3xl opacity-70 pointer-events-none">
+            </div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-24 lg:py-28">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Copy -->
+                    <div class="fade-in">
+                        <span
+                            class="inline-flex items-center gap-2 rounded-full border border-slate-700/70 bg-slate-800/40 px-3 py-1 text-xs text-slate-300">
+                            <span class="h-1.5 w-1.5 rounded-full bg-emerald"></span>
+                            Enterprise-grade protection for digital assets
+                        </span>
+                        <h1 class="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white">
+                            <!-- Secure Digital Assets With Confidence -->
+                            QFS: Quantum-Powered Crypto Security
+                        </h1>
+                        <p class="mt-5 text-lg text-slate-300 leading-relaxed max-w-2xl">
+                            QFS safeguards your cryptocurrency with layered security: advanced encryption,
+                            multi-signature access, real-time monitoring, and AI-powered threat detection—built for
+                            teams that can’t afford downtime.
+                        </p>
+                        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                            <a href="{% url 'qfs_start' %}"
+                                class="inline-flex items-center justify-center rounded-0 bg-primary px-6 py-3 text-white font-semibold shadow-glow hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/60 transition">
+                                Get Started
+                            </a>
+                            <a href="{% url 'med_beds' %}"
+                                class="inline-flex items-center justify-center rounded-0 border border-slate-700/80 bg-slate-800/40 px-6 py-3 text-slate-200 hover:border-slate-500 hover:bg-slate-700/40 transition">
+                                Med Beds
+                            </a>
+                        </div>
+
+                        <!-- Trust badges -->
+                        <div class="mt-8 flex items-center gap-4 text-sm text-slate-400">
+                            <div class="flex items-center gap-2">
+                                <svg class="h-5 w-5 text-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <path d="M12 22s8-3 8-10V7l-8-4-8 4v5c0 7 8 10 8 10Z" />
+                                    <path d="M9 12l2 2 4-4" />
+                                </svg>
+                                SOC 2 Type II
+                            </div>
+                            <span aria-hidden="true" class="text-slate-600">|</span>
+                            <div class="flex items-center gap-2">
+                                <svg class="h-5 w-5 text-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+                                    <circle cx="12" cy="12" r="9" />
+                                    <path d="M9 12l2 2 4-4" />
+                                </svg>
+                                ISO 27001 Controls
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Illustration -->
+                    <div class="relative">
+                        <div
+                            class="absolute -inset-6 rounded-2xl bg-gradient-to-tr from-primary/20 via-emerald/20 to-transparent blur-2xl opacity-60">
+                        </div>
+                        <div
+                            class="relative rounded-2xl border border-slate-700/70 bg-slate-900/60 backdrop-blur shadow-glow p-6">
+                            <!-- Professional crypto/security illustration (SVG) -->
+                            <svg class="w-full h-auto" viewBox="0 0 680 460" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" role="img"
+                                aria-label="Illustration: secure crypto vault with monitoring">
+                                <defs>
+                                    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#2563EB" stop-opacity="0.9" />
+                                        <stop offset="100%" stop-color="#10B981" stop-opacity="0.9" />
+                                    </linearGradient>
+                                    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#1E293B" />
+                                        <stop offset="100%" stop-color="#0B1220" />
+                                    </linearGradient>
+                                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#020617"
+                                            flood-opacity="0.6" />
+                                    </filter>
+                                </defs>
+
+                                <!-- Background frame -->
+                                <rect x="20" y="20" width="640" height="420" rx="18" fill="url(#g2)" stroke="#1E293B"
+                                    stroke-opacity="0.6" />
+
+                                <!-- Grid lines -->
+                                <g opacity="0.25">
+                                    <g stroke="#475569" stroke-opacity="0.25">
+                                        <path d="M60 60 H620" />
+                                        <path d="M60 110 H620" />
+                                        <path d="M60 160 H620" />
+                                        <path d="M60 210 H620" />
+                                        <path d="M60 260 H620" />
+                                        <path d="M60 310 H620" />
+                                        <path d="M60 360 H620" />
+                                    </g>
+                                    <g stroke="#475569" stroke-opacity="0.2">
+                                        <path d="M120 60 V380" />
+                                        <path d="M220 60 V380" />
+                                        <path d="M320 60 V380" />
+                                        <path d="M420 60 V380" />
+                                        <path d="M520 60 V380" />
+                                    </g>
+                                </g>
+
+                                <!-- Vault shield -->
+                                <g filter="url(#shadow)">
+                                    <path d="M340 345s120-44 120-150v-55l-120-60-120 60v55c0 106 120 150 120 150Z"
+                                        fill="url(#g1)" opacity="0.25" />
+                                    <path d="M340 345s120-44 120-150v-55l-120-60-120 60v55c0 106 120 150 120 150Z"
+                                        stroke="#2563EB" stroke-opacity="0.45" stroke-width="2" />
+                                </g>
+
+                                <!-- Lock and check -->
+                                <circle cx="340" cy="190" r="54" fill="#0B1220" stroke="#1E293B" />
+                                <path d="M314 190h52v22a8 8 0 0 1-8 8h-36a8 8 0 0 1-8-8v-22Z" fill="#111827"
+                                    stroke="#2563EB" stroke-opacity="0.7" />
+                                <path d="M330 186v-6a10 10 0 0 1 20 0v6" stroke="#10B981" stroke-width="3"
+                                    stroke-linecap="round" />
+                                <path d="M328 205l8 8 16-16" stroke="#10B981" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+
+                                <!-- Activity chart -->
+                                <polyline
+                                    points="90,320 160,260 220,280 280,220 340,240 400,200 460,230 520,180 590,210"
+                                    fill="none" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <g fill="#10B981">
+                                    <circle cx="160" cy="260" r="4" />
+                                    <circle cx="280" cy="220" r="4" />
+                                    <circle cx="400" cy="200" r="4" />
+                                    <circle cx="520" cy="180" r="4" />
+                                </g>
+
+                                <!-- Side panels -->
+                                <rect x="70" y="80" width="160" height="90" rx="10" fill="#0B1220" stroke="#1E293B" />
+                                <rect x="450" y="80" width="160" height="90" rx="10" fill="#0B1220" stroke="#1E293B" />
+                                <g opacity="0.85">
+                                    <rect x="88" y="98" width="124" height="14" rx="7" fill="#0F172A" />
+                                    <rect x="88" y="120" width="90" height="10" rx="5" fill="#1F2937" />
+                                    <rect x="468" y="98" width="124" height="14" rx="7" fill="#0F172A" />
+                                    <rect x="468" y="120" width="90" height="10" rx="5" fill="#1F2937" />
+                                </g>
+                            </svg>
+
+                            <!-- Bottom caption row -->
+                            <div class="mt-6 grid grid-cols-3 gap-4 text-xs">
+                                <div class="rounded-lg border border-slate-700/70 bg-slate-800/40 p-3">
+                                    <div class="flex items-center gap-2 text-slate-300">
+                                        <svg class="h-4 w-4 text-emerald" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M12 22s8-3 8-10V7l-8-4-8 4v5c0 7 8 10 8 10Z" />
+                                            <path d="M9 12l2 2 4-4" />
+                                        </svg>
+                                        Vault Status
+                                    </div>
+                                    <p class="mt-1 text-emerald font-medium">Secure</p>
+                                </div>
+                                <div class="rounded-lg border border-slate-700/70 bg-slate-800/40 p-3">
+                                    <div class="flex items-center gap-2 text-slate-300">
+                                        <svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M3 3v18h18" />
+                                            <path d="M19 9l-5 5-4-4-6 6" />
+                                        </svg>
+                                        Threats Blocked
+                                    </div>
+                                    <p class="mt-1 text-slate-200 font-medium">1,248 today</p>
+                                </div>
+                                <div class="rounded-lg border border-slate-700/70 bg-slate-800/40 p-3">
+                                    <div class="flex items-center gap-2 text-slate-300">
+                                        <svg class="h-4 w-4 text-emerald" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <path d="M12 6v6l4 2" />
+                                        </svg>
+                                        Uptime
+                                    </div>
+                                    <p class="mt-1 text-slate-200 font-medium">99.99%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST STATS -->
+        <section aria-labelledby="stats" class="py-10 sm:py-14 bg-slate-900/30 border-y border-slate-800/60">
+            <h2 id="stats" class="sr-only">Platform statistics</h2>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                    <!-- Card -->
+                    <div
+                        class="rounded-xl border border-slate-800/70 bg-slate-900/60 p-6 text-center backdrop-blur hover:shadow-glow transition">
+                        <div class="text-2xl sm:text-3xl font-bold text-white">$5B+</div>
+                        <div class="mt-1 text-slate-400 text-sm">Assets Protected</div>
+                    </div>
+                    <div
+                        class="rounded-xl border border-slate-800/70 bg-slate-900/60 p-6 text-center backdrop-blur hover:shadow-glow transition">
+                        <div class="text-2xl sm:text-3xl font-bold text-white">500K+</div>
+                        <div class="mt-1 text-slate-400 text-sm">Users</div>
+                    </div>
+                    <div
+                        class="rounded-xl border border-slate-800/70 bg-slate-900/60 p-6 text-center backdrop-blur hover:shadow-glow transition">
+                        <div class="text-2xl sm:text-3xl font-bold text-white">99.99%</div>
+                        <div class="mt-1 text-slate-400 text-sm">Uptime</div>
+                    </div>
+                    <div
+                        class="rounded-xl border border-slate-800/70 bg-slate-900/60 p-6 text-center backdrop-blur hover:shadow-glow transition">
+                        <div class="text-2xl sm:text-3xl font-bold text-white">24/7</div>
+                        <div class="mt-1 text-slate-400 text-sm">Monitoring</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section id="features" class="py-16 sm:py-24">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white">Security without compromise</h2>
+                    <p class="mt-4 text-slate-300">Designed for custody teams, funds, and enterprises that demand
+                        verifiable controls and instant visibility.</p>
+                </div>
+
+                <div class="mt-12 grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Feature Card -->
+                    <div
+                        class="group rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:-translate-y-0.5 hover:shadow-glow transition">
+                        <div class="h-11 w-11 rounded-lg bg-primary/15 text-primary flex items-center justify-center">
+                            <!-- Encryption Icon -->
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <rect x="3" y="11" width="18" height="9" rx="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Advanced Encryption</h3>
+                        <p class="mt-2 text-slate-400">State-of-the-art cryptography and HSM-backed key management
+                            safeguard every transaction and secret.</p>
+                    </div>
+
+                    <div
+                        class="group rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:-translate-y-0.5 hover:shadow-glow transition">
+                        <div class="h-11 w-11 rounded-lg bg-primary/15 text-primary flex items-center justify-center">
+                            <!-- Multisig Icon -->
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path d="M12 3l8 4-8 4-8-4 8-4Z" />
+                                <path d="M4 8v6l8 4 8-4V8" />
+                                <path d="M12 11v7" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Multi-Signature Wallets</h3>
+                        <p class="mt-2 text-slate-400">Custom quorum policies ensure no single point of failure for
+                            approvals and withdrawals.</p>
+                    </div>
+
+                    <div
+                        class="group rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:-translate-y-0.5 hover:shadow-glow transition">
+                        <div class="h-11 w-11 rounded-lg bg-primary/15 text-primary flex items-center justify-center">
+                            <!-- Monitoring Icon -->
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path d="M3 3v18h18" />
+                                <path d="M19 9l-5 5-4-4-6 6" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Real-Time Monitoring</h3>
+                        <p class="mt-2 text-slate-400">Continuous on-chain telemetry with anomaly detection and
+                            actionable insights.</p>
+                    </div>
+
+                    <div
+                        class="group rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:-translate-y-0.5 hover:shadow-glow transition">
+                        <div class="h-11 w-11 rounded-lg bg-primary/15 text-primary flex items-center justify-center">
+                            <!-- Fraud Icon -->
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path d="M12 2l9 4-9 4-9-4 9-4Z" />
+                                <path d="M3 10l9 4 9-4" />
+                                <path d="M3 18l9 4 9-4" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Fraud Detection</h3>
+                        <p class="mt-2 text-slate-400">AI models flag suspicious flows and compromised addresses before
+                            losses occur.</p>
+                    </div>
+
+                    <div
+                        class="group rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:-translate-y-0.5 hover:shadow-glow transition">
+                        <div class="h-11 w-11 rounded-lg bg-primary/15 text-primary flex items-center justify-center">
+                            <!-- Cloud Icon -->
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25" />
+                                <path d="M16 16h1a3 3 0 0 1 0 6H7a4 4 0 0 1 0-8" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Secure Cloud Infrastructure</h3>
+                        <p class="mt-2 text-slate-400">Hardened, regionally redundant architecture with zero-trust
+                            networking and audited controls.</p>
+                    </div>
+
+                    <div
+                        class="group rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:-translate-y-0.5 hover:shadow-glow transition">
+                        <div class="h-11 w-11 rounded-lg bg-primary/15 text-primary flex items-center justify-center">
+                            <!-- Alerts Icon -->
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path
+                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+                                <path d="M12 9v4" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-white">Instant Alerts</h3>
+                        <p class="mt-2 text-slate-400">Real-time notifications to Slack, email, and webhooks keep teams
+                            ahead of incidents.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECURITY SECTION -->
+        <section id="security" class="py-16 sm:py-24 bg-slate-900/30 border-y border-slate-800/60">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Illustration left -->
+                    <div class="relative">
+                        <div
+                            class="absolute -inset-6 rounded-2xl bg-gradient-to-tr from-emerald/20 to-primary/10 blur-2xl opacity-70">
+                        </div>
+                        <div class="relative rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 backdrop-blur">
+                            <svg class="w-full h-auto" viewBox="0 0 560 360" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" aria-label="Security layers illustration">
+                                <rect x="20" y="20" width="520" height="320" rx="18" fill="#0B1220" stroke="#1E293B" />
+                                <g>
+                                    <circle cx="130" cy="180" r="60" fill="#0F172A" stroke="#10B981"
+                                        stroke-opacity="0.5" />
+                                    <circle cx="280" cy="180" r="80" fill="#0F172A" stroke="#2563EB"
+                                        stroke-opacity="0.5" />
+                                    <circle cx="430" cy="180" r="60" fill="#0F172A" stroke="#10B981"
+                                        stroke-opacity="0.5" />
+                                    <path d="M130 180h150M430 180H280" stroke="#2563EB" stroke-opacity="0.6"
+                                        stroke-width="2" stroke-linecap="round" />
+                                </g>
+                                <g>
+                                    <rect x="70" y="80" width="100" height="28" rx="6" fill="#111827" />
+                                    <rect x="230" y="80" width="100" height="28" rx="6" fill="#111827" />
+                                    <rect x="390" y="80" width="100" height="28" rx="6" fill="#111827" />
+                                </g>
+                                <g>
+                                    <path d="M280 230v30" stroke="#10B981" stroke-width="3" stroke-linecap="round" />
+                                    <circle cx="280" cy="280" r="6" fill="#10B981" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Content right -->
+                    <div>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white">Enterprise-grade protection</h2>
+                        <p class="mt-4 text-slate-300">Defense-in-depth architecture with rigorous controls, continuous
+                            verification, and transparent auditing.</p>
+                        <ul class="mt-6 space-y-4">
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 h-6 w-6 shrink-0 rounded-full bg-emerald/15 text-emerald flex items-center justify-center">
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold text-white">End-to-end encryption</p>
+                                    <p class="text-slate-400">Keys never leave secure boundaries. Data in transit and at
+                                        rest encrypted with modern ciphers.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 h-6 w-6 shrink-0 rounded-full bg-emerald/15 text-emerald flex items-center justify-center">
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold text-white">AI-powered threat detection</p>
+                                    <p class="text-slate-400">Models trained on on-chain heuristics and adversarial
+                                        patterns to stop fraud in real time.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="mt-1 h-6 w-6 shrink-0 rounded-full bg-emerald/15 text-emerald flex items-center justify-center">
+                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M20 6L9 17l-5-5" />
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="font-semibold text-white">Continuous security audits</p>
+                                    <p class="text-slate-400">Independent assessments, code reviews, and ongoing
+                                        penetration testing.</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="mt-8 flex gap-3">
+                            <a href="#pricing"
+                                class="inline-flex items-center rounded-md bg-primary px-5 py-3 text-white font-semibold hover:bg-primary/90 transition">View
+                                Pricing</a>
+                            <a href="#contact"
+                                class="inline-flex items-center rounded-md border border-slate-700 px-5 py-3 text-slate-200 hover:border-slate-500 hover:bg-slate-800/40 transition">Talk
+                                to Security</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="py-16 sm:py-24">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white">How it works</h2>
+                    <p class="mt-4 text-slate-300">Get protected in minutes with a workflow designed for teams.</p>
+                </div>
+
+                <div class="mt-12 relative">
+                    <!-- connecting line -->
+                    <div
+                        class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/40 via-slate-700/60 to-emerald/40">
+                    </div>
+
+                    <div class="grid gap-6 lg:grid-cols-3">
+                        <!-- Step 1 -->
+                        <div class="relative rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="h-10 w-10 rounded-full bg-primary/15 text-primary flex items-center justify-center font-semibold">1</span>
+                                <h3 class="text-xl font-semibold text-white">Create Account</h3>
+                            </div>
+                            <p class="mt-3 text-slate-400">Set up org policies, add team members, and configure roles
+                                with least-privilege access.</p>
+                            <div class="mt-4 text-sm text-slate-400 flex items-center gap-2">
+                                <svg class="h-4 w-4 text-emerald" viewBox="0 0 24 24" fill="currentColor">
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                                </svg>
+                                SSO & MFA supported
+                            </div>
+                            <!-- Arrow -->
+                            <svg class="hidden lg:block absolute right-[-20px] top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="h-10 w-10 rounded-full bg-primary/15 text-primary flex items-center justify-center font-semibold">2</span>
+                                <h3 class="text-xl font-semibold text-white">Secure Your Assets</h3>
+                            </div>
+                            <p class="mt-3 text-slate-400">Generate or import wallets, set multisig policies, and
+                                connect exchanges and custodians.</p>
+                            <div class="mt-4 text-sm text-slate-400 flex items-center gap-2">
+                                <svg class="h-4 w-4 text-emerald" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+                                    <path d="M2 17l10 5 10-5" />
+                                </svg>
+                                Hardware-backed keys
+                            </div>
+                            <svg class="hidden lg:block absolute right-[-20px] top-1/2 -translate-y-1/2 h-6 w-6 text-slate-600"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="h-10 w-10 rounded-full bg-primary/15 text-primary flex items-center justify-center font-semibold">3</span>
+                                <h3 class="text-xl font-semibold text-white">Monitor & Grow</h3>
+                            </div>
+                            <p class="mt-3 text-slate-400">Enable live monitoring, risk scoring, and automated alerts as
+                                your treasury scales.</p>
+                            <div class="mt-4 text-sm text-slate-400 flex items-center gap-2">
+                                <svg class="h-4 w-4 text-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M3 3v18h18" />
+                                    <path d="M7 13l4 4 7-7" />
+                                </svg>
+                                Real-time insights
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="py-16 sm:py-24 bg-slate-900/30 border-y border-slate-800/60">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white">Trusted by teams worldwide</h2>
+                    <p class="mt-4 text-slate-300">What security and finance leaders say about QFS.</p>
+                </div>
+
+                <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Testimonial -->
+                    <div
+                        class="rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:shadow-glow transition">
+                        <div class="flex items-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop"
+                                alt="Portrait of Ava Patel"
+                                class="h-12 w-12 rounded-full object-cover ring-2 ring-slate-700" />
+                            <div>
+                                <p class="font-semibold text-white">Ava Patel</p>
+                                <p class="text-sm text-slate-400">Head of Treasury, Nexus Fund</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-slate-300">QFS gives us the operational rigor we need—clear policies,
+                            instant alerts, and the confidence to scale globally.</p>
+                        <div class="mt-4 flex text-amber-400" aria-label="5 star rating" role="img">
+                            <span class="sr-only">5 out of 5 stars</span>
+                            <svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div
+                        class="rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:shadow-glow transition">
+                        <div class="flex items-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=200&auto=format&fit=crop"
+                                alt="Portrait of Marco Li"
+                                class="h-12 w-12 rounded-full object-cover ring-2 ring-slate-700" />
+                            <div>
+                                <p class="font-semibold text-white">Marco Li</p>
+                                <p class="text-sm text-slate-400">CISO, Vertex Labs</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-slate-300">The best balance of usability and control I’ve seen. Our incident
+                            response time dropped dramatically.</p>
+                        <div class="mt-4 flex text-amber-400" aria-label="5 star rating" role="img">
+                            <span class="sr-only">5 out of 5 stars</span>
+                            <svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div
+                        class="rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:shadow-glow transition">
+                        <div class="flex items-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=200&auto=format&fit=crop"
+                                alt="Portrait of Sofia Nguyen"
+                                class="h-12 w-12 rounded-full object-cover ring-2 ring-slate-700" />
+                            <div>
+                                <p class="font-semibold text-white">Sofia Nguyen</p>
+                                <p class="text-sm text-slate-400">Operations Lead, LumenX</p>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-slate-300">Implementation was fast, and the visibility we get from QFS
+                            changed how we manage risk.</p>
+                        <div class="mt-4 flex text-amber-400" aria-label="5 star rating" role="img">
+                            <span class="sr-only">5 out of 5 stars</span>
+                            <svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg><svg class="h-5 w-5 fill-current">
+                                <path
+                                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+         {% comment %}
+        <section id="pricing" class="py-16 sm:py-24">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white">Flexible, transparent pricing</h2>
+                    <p class="mt-4 text-slate-300">Start free. Scale with advanced controls, analytics, and priority
+                        support.</p>
+                </div>
+
+                <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Starter -->
+                    <div
+                        class="rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:shadow-glow transition flex flex-col">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold text-white">Starter</h3>
+                            <span
+                                class="text-xs px-2 py-1 rounded-full bg-slate-800/60 border border-slate-700 text-slate-300">Free</span>
+                        </div>
+                        <p class="mt-2 text-slate-400">Essentials for individuals and small teams.</p>
+                        <div class="mt-6">
+                            <div class="text-3xl font-bold text-white">$0</div>
+                            <div class="text-sm text-slate-400">forever</div>
+                        </div>
+                        <ul class="mt-6 space-y-3 text-sm text-slate-300">
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Basic monitoring</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Up to 2 wallets</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Email alerts</li>
+                        </ul>
+                        <a href="#cta"
+                            class="mt-8 inline-flex justify-center rounded-md border border-slate-700 px-4 py-2 text-slate-200 hover:bg-slate-800/40 transition">Get
+                            Started</a>
+                    </div>
+
+                    <!-- Professional (highlight) -->
+                    <div
+                        class="relative rounded-2xl border-2 border-primary/70 bg-slate-900/60 p-6 backdrop-blur shadow-glow scale-100 lg:scale-105">
+                        <div
+                            class="absolute -top-3 right-6 text-xs px-2 py-1 rounded-full bg-primary text-white shadow">
+                            Recommended</div>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold text-white">Professional</h3>
+                            <span
+                                class="text-xs px-2 py-1 rounded-full bg-primary/15 text-primary border border-primary/40">Most
+                                Popular</span>
+                        </div>
+                        <p class="mt-2 text-slate-300">Advanced controls, analytics, and integrations.</p>
+                        <div class="mt-6">
+                            <div class="text-3xl font-bold text-white">$29</div>
+                            <div class="text-sm text-slate-400">per month</div>
+                        </div>
+                        <ul class="mt-6 space-y-3 text-sm text-slate-200">
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Real-time monitoring</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Multisig policies</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Slack & webhook alerts</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Role-based access</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Priority support</li>
+                        </ul>
+                        <a href="#cta"
+                            class="mt-8 inline-flex justify-center w-full rounded-md bg-primary px-5 py-3 text-white font-semibold hover:bg-primary/90 transition">Start
+                            Professional</a>
+                    </div>
+
+                    <!-- Enterprise -->
+                    <div
+                        class="rounded-2xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur hover:shadow-glow transition flex flex-col">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold text-white">Enterprise</h3>
+                            <span
+                                class="text-xs px-2 py-1 rounded-full bg-emerald/15 text-emerald border border-emerald/40">Custom</span>
+                        </div>
+                        <p class="mt-2 text-slate-300">Tailored security at global scale.</p>
+                        <div class="mt-6">
+                            <div class="text-3xl font-bold text-white">Custom Pricing</div>
+                            <div class="text-sm text-slate-400">billed annually</div>
+                        </div>
+                        <ul class="mt-6 space-y-3 text-sm text-slate-200">
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Dedicated HSM tenancy</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> SSO/SAML, SCIM</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Custom policies & approvals</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> 24/7 white-glove support</li>
+                            <li class="flex gap-2"><span class="text-emerald">✓</span> Compliance reporting</li>
+                        </ul>
+                        <a href="#contact"
+                            class="mt-8 inline-flex justify-center rounded-md border border-slate-700 px-4 py-2 text-slate-200 hover:bg-slate-800/40 transition">Contact
+                            Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endcomment %}
+
+        <!-- CALL TO ACTION -->
+        <section id="cta" class="py-16 sm:py-24">
+            <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+                <div
+                    class="relative overflow-hidden rounded-3xl border border-slate-800/70 bg-gradient-to-br from-slate-900/70 via-slate-900/50 to-slate-900/70 backdrop-blur px-6 py-14 sm:py-16 shadow-glow">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-primary/10 via-emerald/10 to-transparent"></div>
+                    <h2 class="relative text-3xl sm:text-4xl font-bold text-white">Start Protecting Your Crypto Today
+                    </h2>
+                    <p class="relative mt-4 text-slate-300 max-w-2xl mx-auto">Deploy QFS in minutes and gain complete
+                        visibility and control over your digital assets.</p>
+                    <div class="relative mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="#pricing"
+                            class="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-white font-semibold hover:bg-primary/90 transition">Get
+                            Started</a>
+                        <a href="#contact"
+                            class="inline-flex items-center justify-center rounded-md border border-slate-700 px-6 py-3 text-slate-200 hover:bg-slate-800/40 transition">Contact
+                            Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer id="contact" class="pt-14 pb-10 bg-slate-950/60 border-t border-slate-800/60">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid gap-10 md:grid-cols-4">
+                    <!-- Brand -->
+                    <div class="md:col-span-1">
+                        <a href="#" class="flex items-center gap-3">
+                            <span
+                                class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary/90 to-emerald/80 ring-1 ring-white/10">
+                                <svg class="h-5 w-5 text-white/90" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.7">
+                                    <path d="M12 22s8-3 8-10V7l-8-4-8 4v5c0 7 8 10 8 10Z" />
+                                    <path d="M9 11a3 3 0 1 1 6 0v2" />
+                                </svg>
+                            </span>
+                            <span class="text-lg font-semibold tracking-tight">QFS</span>
+                        </a>
+                        <p class="mt-4 text-slate-400 text-sm">Enterprise-grade cryptocurrency security and monitoring.
+                        </p>
+                        <div class="mt-5 flex items-center gap-3">
+                            <a href="#" aria-label="Twitter"
+                                class="h-9 w-9 rounded-full border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-500 transition">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M22 5.8c-.7.3-1.4.5-2.2.6.8-.5 1.3-1.2 1.6-2.1-.7.4-1.5.7-2.4.9A3.8 3.8 0 0 0 12 7.8c0 .3 0 .6.1.8A10.8 10.8 0 0 1 3.2 5c-.3.6-.5 1.3-.5 2a3.8 3.8 0 0 0 1.7 3.2c-.6 0-1.2-.2-1.7-.5v.1c0 1.8 1.3 3.3 3 3.7-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.4 1.8 2.5 3.5 2.5A7.7 7.7 0 0 1 2 19.5 10.9 10.9 0 0 0 7.9 21c7.2 0 11.2-6 11.2-11.2v-.5c.8-.5 1.4-1.2 1.9-2Z" />
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="LinkedIn"
+                                class="h-9 w-9 rounded-full border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-500 transition">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M6.94 6.5A2.44 2.44 0 1 1 2.06 6.5a2.44 2.44 0 0 1 4.88 0ZM2.5 8.98h4.99V21H2.5V8.98ZM9.49 8.98H14v1.63h.06c.63-1.2 2.16-2.46 4.45-2.46 4.76 0 5.64 3.13 5.64 7.2V21h-5V16c0-1.2-.02-2.75-1.67-2.75-1.67 0-1.92 1.31-1.92 2.66V21h-5V8.98Z" />
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="GitHub"
+                                class="h-9 w-9 rounded-full border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-500 transition">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.86-.01-1.68-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.1-1.5-1.1-1.5-.9-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.74-.1-.27-.45-1.35.1-2.81 0 0 .85-.28 2.78 1.05a9.22 9.22 0 0 1 5.06 0c1.93-1.33 2.78-1.05 2.78-1.05.55 1.46.2 2.54.1 2.81.64.71 1.03 1.62 1.03 2.74 0 3.93-2.34 4.8-4.57 5.06.36.33.68.98.68 1.99 0 1.44-.01 2.6-.01 2.96 0 .27.18.6.69.49A10.06 10.06 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Links -->
+                    <div class="grid grid-cols-2 gap-8 md:col-span-3 md:grid-cols-3">
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-200">Quick Links</h4>
+                            <ul class="mt-4 space-y-2 text-sm">
+                                <li><a href="#home" class="text-slate-400 hover:text-white transition">Home</a></li>
+                                <li><a href="#features" class="text-slate-400 hover:text-white transition">Features</a>
+                                </li>
+                                <li><a href="#pricing" class="text-slate-400 hover:text-white transition">Pricing</a>
+                                </li>
+                                <li><a href="#cta" class="text-slate-400 hover:text-white transition">Get Started</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-200">Security</h4>
+                            <ul class="mt-4 space-y-2 text-sm">
+                                <li><a href="#" class="text-slate-400 hover:text-white transition">Security Overview</a>
+                                </li>
+                                <li><a href="#" class="text-slate-400 hover:text-white transition">Responsible
+                                        Disclosure</a></li>
+                                <li><a href="#" class="text-slate-400 hover:text-white transition">Status</a></li>
+                                <li><a href="#" class="text-slate-400 hover:text-white transition">Compliance</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-slate-200">Company</h4>
+                            <ul class="mt-4 space-y-2 text-sm">
+                                <li><a href="#contact" class="text-slate-400 hover:text-white transition">Contact</a>
+                                </li>
+                                <li><a href="#" class="text-slate-400 hover:text-white transition">Careers</a></li>
+                                <li><a href="#" class="text-slate-400 hover:text-white transition">Blog</a></li>
+                                <li><a href="#" class="text-slate-400 hover:text-white transition">Legal</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-10 border-t border-slate-800/60 pt-6 text-sm text-slate-500 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <p>© <span id="year"></span> QFS, Inc. All rights reserved.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="hover:text-slate-300">Privacy</a>
+                        <a href="#" class="hover:text-slate-300">Terms</a>
+                        <a href="#" class="hover:text-slate-300">Status</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    {% endblock %}
